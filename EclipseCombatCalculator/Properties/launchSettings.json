@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "EclipseCombatCalculator (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "EclipseCombatCalculator (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
