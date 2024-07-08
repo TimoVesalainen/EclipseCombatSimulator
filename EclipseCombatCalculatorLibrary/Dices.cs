@@ -1,7 +1,4 @@
-﻿using Nintenlord.Distributions;
-using Nintenlord.Distributions.Discrete;
-
-namespace EclipseCombatCalculatorLibrary
+﻿namespace EclipseCombatCalculatorLibrary
 {
     public static class Dices
     {
