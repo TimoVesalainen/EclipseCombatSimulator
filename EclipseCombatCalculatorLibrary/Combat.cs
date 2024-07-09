@@ -11,7 +11,7 @@ namespace EclipseCombatCalculatorLibrary
     {
         static readonly Comparison<(IShipStats blueprint, int count)> initiativeComparer = (x, y) => Comparer<int>.Default.Compare(y.blueprint.Initiative, x.blueprint.Initiative);
 
-        private sealed class CombatShip
+        private sealed class CombatShip : ICombatShip
         {
             public IShipStats Blueprint { get; }
             public bool Attacker { get; }
@@ -39,7 +39,10 @@ namespace EclipseCombatCalculatorLibrary
             }
         }
 
-        public static bool AttackerWin(IEnumerable<(IShipStats blueprint, int count)> attackers, IEnumerable<(IShipStats blueprint, int count)> defenders)
+        public static bool AttackerWin(
+            IEnumerable<(IShipStats blueprint, int count)> attackers,
+            IEnumerable<(IShipStats blueprint, int count)> defenders,
+            Func<ICombatShip, IEnumerable<ICombatShip>, IEnumerable<IDiceFace>, IEnumerable<(ICombatShip, IEnumerable<IDiceFace>)>> damageAssingment)
         {
             (IShipStats blueprint, int count)[] attackersArray = attackers.ToArray();
             (IShipStats blueprint, int count)[] defendersArray = defenders.ToArray();
@@ -60,26 +63,26 @@ namespace EclipseCombatCalculatorLibrary
                         .Distributions().Select(x => x.Flatten());
 
                     var diceResults = distr.Sample();
+                    var targets = shipTypes.Where(target => target.Attacker != attacker.Attacker && target.Count > 0);
 
-                    // TODO: Assign damage smartly
-                    // TODO: Damage splitting
+                    var assignments = damageAssingment(attacker, targets, diceResults);
+
+                    // TODO: Sanity checks?
+
+                    foreach (var (target, dices) in assignments)
+                    {
+                        foreach (var dice in dices)
+                        {
+                            if (attacker.Blueprint.CanHit(target.Blueprint, dice) && target.Count > 0)
+                            {
+                                (target as CombatShip).AddDamage(dice.DamageToOpponent);
+                            }
+                        }
+                    }
+
                     foreach (var diceResult in diceResults)
                     {
                         attacker.AddDamage(diceResult.DamageToSelf);
-
-                        if (diceResult is Miss)
-                        {
-                            continue;
-                        }
-
-                        foreach (var defender in shipTypes.Where(type => type.Attacker != attacker.Attacker).Reverse())
-                        {
-                            if (attacker.Blueprint.CanHit(defender.Blueprint, diceResult) && defender.Count > 0)
-                            {
-                                defender.AddDamage(diceResult.DamageToOpponent);
-                                break;
-                            }
-                        }
                     }
 
                     // TODO: Mutual KO result
