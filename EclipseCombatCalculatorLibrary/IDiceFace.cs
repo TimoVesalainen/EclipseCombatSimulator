@@ -8,6 +8,7 @@ namespace EclipseCombatCalculatorLibrary
 {
     public interface IDiceFace
     {
-
+        int DamageToOpponent { get; }
+        int DamageToSelf { get; }
     }
 }

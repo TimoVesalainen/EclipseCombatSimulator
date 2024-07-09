@@ -1,17 +1,23 @@
 ﻿namespace EclipseCombatCalculatorLibrary
 {
-    public sealed class Number : IDiceFace 
+    public sealed class Number : IDiceFace
     {
         public int Value { get; }
 
-        private Number(int value)
+        public int DamageToOpponent { get; }
+
+        public int DamageToSelf { get; }
+
+        private Number(int value, int damage, int damageToSelf)
         {
             Value = value;
+            DamageToOpponent = damage;
+            DamageToSelf = damageToSelf;
         }
 
-        public static readonly Number Two = new Number(2);
-        public static readonly Number Three = new Number(3);
-        public static readonly Number Four = new Number(4);
-        public static readonly Number Five = new Number(5);
+        public static Number Create(int value, int damage, int damageToSelf = 0)
+        {
+            return new Number(value, damage, damageToSelf);
+        }
     }
 }
