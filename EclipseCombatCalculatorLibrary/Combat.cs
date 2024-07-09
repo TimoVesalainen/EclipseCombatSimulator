@@ -56,7 +56,7 @@ namespace EclipseCombatCalculatorLibrary
                 {
                     // TODO: Check if wants to try to retreat, or complete retreat
 
-                    var distr = attacker.Blueprint.Weapons.Select(w => w.FaceDistribution.ArrayDistribution(attacker.Count))
+                    var distr = attacker.Blueprint.Weapons.Select(weaponDice => weaponDice.FaceDistribution.ArrayDistribution(attacker.Count))
                         .Distributions().Select(x => x.Flatten());
 
                     var diceResults = distr.Sample();
