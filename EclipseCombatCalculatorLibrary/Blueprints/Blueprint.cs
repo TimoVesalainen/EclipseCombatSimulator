@@ -68,7 +68,7 @@ namespace EclipseCombatCalculatorLibrary.Blueprints
 
         IEnumerable<Dice> IShipStats.Missiles => Parts.SelectMany(part => part.Missiles);
 
-        //Default
+        //Default aka Terran, Mechanema, Hydran, Draco, Magellan, Lyra
         public readonly Blueprint TerranInterceptor = new(
             Part.IonCannon,
             Part.NuclearSource, Part.NuclearDrive, null)
