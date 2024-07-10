@@ -19,7 +19,9 @@ namespace EclipseCombatCalculatorLibraryTest
 
             public int Hulls { get; set; }
 
-            IEnumerable<Dice> IShipStats.Weapons => Weapons;
+            public IEnumerable<Dice> Missiles => Array.Empty<Dice>();
+
+            IEnumerable<Dice> IShipStats.Cannons => Weapons;
         }
 
         [Test]

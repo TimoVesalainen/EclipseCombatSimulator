@@ -54,13 +54,15 @@ namespace EclipseCombatCalculatorLibrary
             var shipTypes = attackersArray.Select(shipType => new CombatShip(shipType.blueprint, shipType.count, attacker: true))
                 .Concat(defendersArray.Select(shipType => new CombatShip(shipType.blueprint, shipType.count, attacker: false))).ToList();
 
+            //TODO: Missiles
+
             while (true)
             {
                 foreach (var attacker in shipTypes)
                 {
                     // TODO: Check if wants to try to retreat, or complete retreat
 
-                    var distr = attacker.Blueprint.Weapons.Select(weaponDice => weaponDice.FaceDistribution.ArrayDistribution(attacker.Count))
+                    var distr = attacker.Blueprint.Cannons.Select(weaponDice => weaponDice.FaceDistribution.ArrayDistribution(attacker.Count))
                         .Distributions().Select(x => x.Flatten());
 
                     var diceResults = distr.Sample();
