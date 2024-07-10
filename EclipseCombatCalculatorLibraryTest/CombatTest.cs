@@ -1,3 +1,4 @@
+using EclipseCombatCalculatorLibrary.Blueprints;
 using EclipseCombatCalculatorLibrary.Dices;
 
 namespace EclipseCombatCalculatorLibraryTest
@@ -45,6 +46,20 @@ namespace EclipseCombatCalculatorLibraryTest
                 CombatAssingment);
 
             Assert.IsTrue(result);
+        }
+
+        [Test]
+        public async Task DefaultPlantaVSOrion()
+        {
+            async Task<IEnumerable<(ICombatShip, IEnumerable<IDiceFace>)>> CombatAssingment(ICombatShip attacker, IEnumerable<ICombatShip> defenders, IEnumerable<IDiceFace> diceResult)
+            {
+                return defenders.Zip(diceResult, (x, y) => (x, new[] { y } as IEnumerable<IDiceFace>));
+            }
+
+            var result = await Combat.AttackerWin(
+                new[] { (blueprint: Blueprint.OrionInterceptor as IShipStats, count: 3) },
+                new[] { (blueprint: Blueprint.PlantaInterceptor as IShipStats, count: 1) },
+                CombatAssingment);
         }
     }
 }
