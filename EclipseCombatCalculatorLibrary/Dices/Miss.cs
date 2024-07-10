@@ -1,4 +1,4 @@
-﻿namespace EclipseCombatCalculatorLibrary
+﻿namespace EclipseCombatCalculatorLibrary.Dices
 {
     public sealed class Miss : IDiceFace
     {

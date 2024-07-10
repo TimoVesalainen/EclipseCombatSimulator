@@ -1,6 +1,6 @@
-﻿namespace EclipseCombatCalculatorLibrary
+﻿namespace EclipseCombatCalculatorLibrary.Dices
 {
-    public static class Dices
+    public static class CommonDices
     {
         public readonly static Dice YellowDice = Dice.CreateStandard(1);
         public readonly static Dice OrangeDice = Dice.CreateStandard(2);

@@ -1,6 +1,6 @@
 ﻿using Nintenlord.Distributions.Discrete;
 
-namespace EclipseCombatCalculatorLibrary
+namespace EclipseCombatCalculatorLibrary.Dices
 {
     public sealed class Dice
     {

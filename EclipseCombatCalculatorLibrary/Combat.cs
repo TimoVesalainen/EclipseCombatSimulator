@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EclipseCombatCalculatorLibrary.Dices;
 using Nintenlord.Collections;
 using Nintenlord.Collections.Comparers;
 using Nintenlord.Distributions;

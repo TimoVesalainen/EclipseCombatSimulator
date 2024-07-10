@@ -1,3 +1,5 @@
+using EclipseCombatCalculatorLibrary.Dices;
+
 namespace EclipseCombatCalculatorLibraryTest
 {
     public class CombatTests

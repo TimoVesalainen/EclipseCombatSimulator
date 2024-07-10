@@ -1,4 +1,4 @@
-﻿namespace EclipseCombatCalculatorLibrary
+﻿namespace EclipseCombatCalculatorLibrary.Dices
 {
     public sealed class Damage : IDiceFace
     {
@@ -7,8 +7,8 @@
 
         private Damage(int damageToOpponent, int damageToSelf = 0)
         {
-            this.DamageToOpponent = damageToOpponent;
-            this.DamageToSelf = damageToSelf;
+            DamageToOpponent = damageToOpponent;
+            DamageToSelf = damageToSelf;
         }
 
         public static Damage Create(int damageToOpponent, int damageToSelf = 0)
