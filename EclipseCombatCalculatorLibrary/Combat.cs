@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Nintenlord.Collections;
 using Nintenlord.Collections.Comparers;
 using Nintenlord.Distributions;
@@ -39,10 +40,10 @@ namespace EclipseCombatCalculatorLibrary
             }
         }
 
-        public static bool AttackerWin(
+        public static async Task<bool> AttackerWin(
             IEnumerable<(IShipStats blueprint, int count)> attackers,
             IEnumerable<(IShipStats blueprint, int count)> defenders,
-            Func<ICombatShip, IEnumerable<ICombatShip>, IEnumerable<IDiceFace>, IEnumerable<(ICombatShip, IEnumerable<IDiceFace>)>> damageAssingment)
+            Func<ICombatShip, IEnumerable<ICombatShip>, IEnumerable<IDiceFace>, Task<IEnumerable<(ICombatShip, IEnumerable<IDiceFace>)>>> damageAssingment)
         {
             (IShipStats blueprint, int count)[] attackersArray = attackers.ToArray();
             (IShipStats blueprint, int count)[] defendersArray = defenders.ToArray();
@@ -65,7 +66,7 @@ namespace EclipseCombatCalculatorLibrary
                     var diceResults = distr.Sample();
                     var targets = shipTypes.Where(target => target.Attacker != attacker.Attacker && target.Count > 0);
 
-                    var assignments = damageAssingment(attacker, targets, diceResults);
+                    var assignments = await damageAssingment(attacker, targets, diceResults);
 
                     // TODO: Sanity checks?
 
