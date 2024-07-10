@@ -54,8 +54,43 @@ namespace EclipseCombatCalculatorLibrary
             var shipTypes = attackersArray.Select(shipType => new CombatShip(shipType.blueprint, shipType.count, attacker: true))
                 .Concat(defendersArray.Select(shipType => new CombatShip(shipType.blueprint, shipType.count, attacker: false))).ToList();
 
-            //TODO: Missiles
+            // Fire missiles
+            foreach (var attacker in shipTypes)
+            {
+                var distr = attacker.Blueprint.Missiles.Select(weaponDice => weaponDice.FaceDistribution.ArrayDistribution(attacker.Count))
+                    .Distributions().Select(x => x.Flatten());
 
+                var diceResults = distr.Sample();
+                var targets = shipTypes.Where(target => target.Attacker != attacker.Attacker && target.Count > 0);
+
+                var assignments = await damageAssingment(attacker, targets, diceResults);
+
+                // TODO: Sanity checks?
+
+                foreach (var (target, dices) in assignments)
+                {
+                    foreach (var dice in dices)
+                    {
+                        if (attacker.Blueprint.CanHit(target.Blueprint, dice) && target.Count > 0)
+                        {
+                            (target as CombatShip).AddDamage(dice.DamageToOpponent);
+                        }
+                    }
+                }
+
+                foreach (var diceResult in diceResults)
+                {
+                    attacker.AddDamage(diceResult.DamageToSelf);
+                }
+
+                // TODO: Mutual KO result
+                if (!shipTypes.Any(type => type.Attacker != attacker.Attacker && type.Count > 0))
+                {
+                    return attacker.Attacker;
+                }
+            }
+
+            // Fire cannons
             while (true)
             {
                 foreach (var attacker in shipTypes)
