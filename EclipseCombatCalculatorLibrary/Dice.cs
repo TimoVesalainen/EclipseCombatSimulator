@@ -21,5 +21,18 @@ namespace EclipseCombatCalculatorLibrary
             return new Dice(faces);
         }
 
+        public static Dice CreateStandard(int damage)
+        {
+            var faces = new IDiceFace[] {
+                Damage.Create(damage),
+                Number.Create(5, damage),
+                Number.Create(4, damage),
+                Number.Create(3, damage),
+                Number.Create(2, damage),
+                Miss.Instance
+            };
+
+            return new Dice(faces);
+        }
     }
 }
