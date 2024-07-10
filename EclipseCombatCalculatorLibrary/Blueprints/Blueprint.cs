@@ -30,7 +30,7 @@ namespace EclipseCombatCalculatorLibrary.Blueprints
         readonly Part[] slots;
         readonly bool readOnlyBlueprint;
 
-        public IEnumerable<Part> Parts { get; }
+        IEnumerable<Part> Parts => slots.Where(x => x != null);
 
         private Blueprint(params Part[] parts)
         {
@@ -45,7 +45,7 @@ namespace EclipseCombatCalculatorLibrary.Blueprints
             this.BaseEnergy = other.BaseEnergy;
             this.BaseHull = other.BaseHull;
             this.IsBase = other.IsBase;
-            this.Parts = other.Parts.ToArray(); // Shallow clone
+            this.slots = other.slots.ToArray(); // Shallow clone
             this.readOnlyBlueprint = readOnlyBlueprint;
         }
 
