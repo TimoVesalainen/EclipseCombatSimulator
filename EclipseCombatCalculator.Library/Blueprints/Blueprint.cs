@@ -7,7 +7,7 @@ namespace EclipseCombatCalculator.Library.Blueprints
 {
     public sealed class Blueprint : IShipStats
     {
-        public string Name { get; }
+        public string Name { get; init; }
         public int BaseInitiative { get; init; } = 0;
         public int BaseComputer { get; init; } = 0;
         public int BaseShield { get; init; } = 0;
@@ -59,6 +59,14 @@ namespace EclipseCombatCalculator.Library.Blueprints
             return new Blueprint(this, false);
         }
 
+        private Blueprint Clone(string name)
+        {
+            return new Blueprint(this, true)
+            {
+                Name = name
+            };
+        }
+
         public int TotalEnergy => BaseEnergy + Parts.Sum(part => part.Energy);
 
         int IShipStats.Initiative => BaseInitiative + Parts.Sum(part => part.Initiative);
@@ -89,6 +97,8 @@ namespace EclipseCombatCalculator.Library.Blueprints
             Part.ElectronComputer, Part.IonCannon,
             Part.Hull, null, Part.Hull)
         { BaseInitiative = 4, BaseEnergy = 3, IsBase = true };
+
+        // TODO: Each race gets it's own blueprints
 
         //Eridani
         public static readonly Blueprint EridaniInterceptor = new("Eridani Interceptor",

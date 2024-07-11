@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34302.85
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EclipseCombatCalculator.Library", "EclipseCombatCalculatorLibrary\EclipseCombatCalculator.Library.csproj", "{F87E412B-D247-4F4D-83BD-069C2B83E740}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EclipseCombatCalculator.Library", "EclipseCombatCalculator.Library\EclipseCombatCalculator.Library.csproj", "{F87E412B-D247-4F4D-83BD-069C2B83E740}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nintenlord", "Nintenlord\Nintenlord\Nintenlord.csproj", "{7D66A672-1893-4FA1-979A-32E16AE34DA7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EclipseCombatCalculator.Library.Test", "EclipseCombatCalculatorLibraryTest\EclipseCombatCalculator.Library.Test.csproj", "{013995A0-00A5-4A48-844F-3886FA38509B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EclipseCombatCalculator.Library.Test", "EclipseCombatCalculator.Library.Test\EclipseCombatCalculator.Library.Test.csproj", "{013995A0-00A5-4A48-844F-3886FA38509B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nintenlord.Tests", "Nintenlord\Nintenlord.Tests\Nintenlord.Tests.csproj", "{CC9C8310-9782-4F78-B213-0E2977EAE93A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EclipseCombatCalculator.CommandLine", "EclipseCombatCalculatorCommandLine\EclipseCombatCalculator.CommandLine.csproj", "{E247D8BE-9418-4BB0-9FAB-CFA2502A2CCB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EclipseCombatCalculator.CommandLine", "EclipseCombatCalculator.CommandLine\EclipseCombatCalculator.CommandLine.csproj", "{E247D8BE-9418-4BB0-9FAB-CFA2502A2CCB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EclipseCombatCalculator.WinUI", "EclipseCombatCalculator.WinUI\EclipseCombatCalculator.WinUI.csproj", "{9C3E8F81-1733-4EF9-99CF-6E5116AE4B28}"
 EndProject

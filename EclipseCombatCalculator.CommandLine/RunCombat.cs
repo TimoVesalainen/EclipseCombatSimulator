@@ -140,6 +140,7 @@ namespace EclipseCombatCalculator.CommandLine
                         Blueprint.RhoIndiCruiser,
                         null,
                         Blueprint.RhoIndiStarbase],
+                // TODO: Each race gets it's own blueprints
                 Species.Terran or Species.Hydran or Species.Draco or Species.Mechamena or Species.Magellan or Species.Lyra => [
                         Blueprint.TerranInterceptor,
                         Blueprint.TerranCruiser,
