@@ -14,11 +14,11 @@ namespace EclipseCombatCalculatorCommandLine
         [Option('d', Required = true, HelpText = "Defender species")]
         public Species Defender { get; set; }
 
-        [Option('s', Required = true, HelpText = "Attacker ships")]
-        public int[] AttackerShipCounts { get; set; } = [];
+        [Option('s', Separator = ',', Required = true, HelpText = "Attacker ships")]
+        public IEnumerable<int> AttackerShipCounts { get; set; } = [];
 
-        [Option('t', Required = true, HelpText = "Defender ships aka targets")]
-        public int[] DefenderShipCounts { get; set; } = [];
+        [Option('t', Separator = ',', Required = true, HelpText = "Defender ships aka targets")]
+        public IEnumerable<int> DefenderShipCounts { get; set; } = [];
 
     }
 
