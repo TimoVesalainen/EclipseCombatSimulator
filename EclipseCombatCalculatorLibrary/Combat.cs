@@ -14,7 +14,9 @@ namespace EclipseCombatCalculatorLibrary
 
     public static class Combat
     {
-        static readonly Comparison<(IShipStats blueprint, int count)> initiativeComparer = (x, y) => Comparer<int>.Default.Compare(y.blueprint.Initiative, x.blueprint.Initiative);
+        static readonly IComparer<CombatShip> initiativeComparer =
+             Comparer<int>.Default.Select<int, CombatShip>(ship => ship.Blueprint.Initiative).Reverse().Then(
+                 Comparer<bool>.Default.Select<bool, CombatShip>(ship => ship.Attacker).Reverse());
 
         private sealed class CombatShip : ICombatShip
         {
@@ -22,7 +24,6 @@ namespace EclipseCombatCalculatorLibrary
             public bool Attacker { get; }
             public int Count { get; private set; }
             public int Damage { get; private set; }
-
 
             public CombatShip(IShipStats blueprint, int count, bool attacker)
             {
@@ -49,14 +50,10 @@ namespace EclipseCombatCalculatorLibrary
             IEnumerable<(IShipStats blueprint, int count)> defenders,
             DamageAssigner damageAssingment)
         {
-            (IShipStats blueprint, int count)[] attackersArray = attackers.ToArray();
-            (IShipStats blueprint, int count)[] defendersArray = defenders.ToArray();
+            var shipTypes = attackers.Select(shipType => new CombatShip(shipType.blueprint, shipType.count, attacker: true))
+                .Concat(defenders.Select(shipType => new CombatShip(shipType.blueprint, shipType.count, attacker: false))).ToList();
 
-            Array.Sort(attackersArray, initiativeComparer);
-            Array.Sort(defendersArray, initiativeComparer);
-
-            var shipTypes = attackersArray.Select(shipType => new CombatShip(shipType.blueprint, shipType.count, attacker: true))
-                .Concat(defendersArray.Select(shipType => new CombatShip(shipType.blueprint, shipType.count, attacker: false))).ToList();
+            shipTypes.Sort(initiativeComparer);
 
             async Task<bool?> CombatRound(IEnumerable<Dice> attackerDice, CombatShip attacker)
             {
