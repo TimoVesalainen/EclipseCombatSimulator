@@ -77,7 +77,8 @@ namespace EclipseCombatCalculatorCommandLine
             {
                 if (options.Attack != attacker.Attacker)
                 {
-                    Console.WriteLine("AI are: {0}", string.Join(", ", diceResult.Select(PrintDiceFace)));
+                    await Task.Delay(TimeSpan.FromSeconds(1));
+                    Console.WriteLine("Enemy dice are: {0}", string.Join(", ", diceResult.Select(PrintDiceFace)));
                     var aiAssignment = await AI.BasicAI(attacker, targets, diceResult);
                     if (aiAssignment.Any())
                     {
