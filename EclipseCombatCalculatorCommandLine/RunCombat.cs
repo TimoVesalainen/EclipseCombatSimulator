@@ -17,6 +17,11 @@ namespace EclipseCombatCalculatorCommandLine
             };
         }
 
+        private static string PrintShip(ICombatShip ship)
+        {
+            return $"Ship amount {ship.Count} damage {ship.Damage}";
+        }
+
         public static async Task Run(Options options)
         {
             async Task<IEnumerable<(ICombatShip, IEnumerable<IDiceFace>)>> DamageAssigner(
@@ -26,7 +31,14 @@ namespace EclipseCombatCalculatorCommandLine
                 {
                     Console.WriteLine("AI are: {0}", string.Join(", ", diceResult.Select(PrintDiceFace)));
                     var aiAssignment = await AI.BasicAI(attacker, targets, diceResult);
-                    Console.WriteLine("Assigns {0}", string.Join(", ", aiAssignment.Select(x => $"{string.Join(", ", x.Item2.Select(PrintDiceFace))} -> to ship")));
+                    if (aiAssignment.Any())
+                    {
+                        Console.WriteLine("Assigns {0}", string.Join(", ", aiAssignment.Select(x => $"{string.Join(", ", x.Item2.Select(PrintDiceFace))} -> to {PrintShip(x.Item1)}")));
+                    }
+                    else
+                    {
+                        Console.WriteLine("No hits");
+                    }
                     return aiAssignment;
                 }
 
