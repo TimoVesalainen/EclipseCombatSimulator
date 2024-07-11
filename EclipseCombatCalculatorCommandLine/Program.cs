@@ -1,5 +1,5 @@
 ﻿using CommandLine;
-using EclipseCombatCalculatorCommandLine;
+using EclipseCombatCalculator.CommandLine;
 
 var result = await Parser.Default.ParseArguments<Options>(args)
                    .WithParsedAsync(RunCombat.Run);

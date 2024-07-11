@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using EclipseCombatCalculatorLibrary.Dices;
+using EclipseCombatCalculator.Library.Dices;
 using Nintenlord.Collections;
 using Nintenlord.Collections.Comparers;
 using Nintenlord.Distributions;
 
-namespace EclipseCombatCalculatorLibrary
+namespace EclipseCombatCalculator.Library
 {
     public delegate Task<IEnumerable<(ICombatShip, IEnumerable<IDiceFace>)>> DamageAssigner(
         ICombatShip attacker, IEnumerable<ICombatShip> targets, IEnumerable<IDiceFace> diceResult);

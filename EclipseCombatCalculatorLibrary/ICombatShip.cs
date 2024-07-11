@@ -1,4 +1,4 @@
-﻿namespace EclipseCombatCalculatorLibrary
+﻿namespace EclipseCombatCalculator.Library
 {
     public interface ICombatShip
     {

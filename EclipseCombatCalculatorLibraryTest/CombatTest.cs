@@ -1,7 +1,7 @@
-using EclipseCombatCalculatorLibrary.Blueprints;
-using EclipseCombatCalculatorLibrary.Dices;
+using EclipseCombatCalculator.Library.Blueprints;
+using EclipseCombatCalculator.Library.Dices;
 
-namespace EclipseCombatCalculatorLibraryTest
+namespace EclipseCombatCalculator.Library.Test
 {
     public class CombatTests
     {

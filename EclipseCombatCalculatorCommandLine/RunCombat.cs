@@ -1,8 +1,8 @@
-﻿using EclipseCombatCalculatorLibrary;
-using EclipseCombatCalculatorLibrary.Blueprints;
-using EclipseCombatCalculatorLibrary.Dices;
+﻿using EclipseCombatCalculator.Library;
+using EclipseCombatCalculator.Library.Blueprints;
+using EclipseCombatCalculator.Library.Dices;
 
-namespace EclipseCombatCalculatorCommandLine
+namespace EclipseCombatCalculator.CommandLine
 {
     internal static class RunCombat
     {

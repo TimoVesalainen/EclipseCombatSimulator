@@ -1,2 +1,2 @@
 global using NUnit.Framework;
-global using EclipseCombatCalculatorLibrary;
+global using EclipseCombatCalculator.Library;

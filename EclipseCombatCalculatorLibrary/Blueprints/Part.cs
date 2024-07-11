@@ -1,8 +1,8 @@
-﻿using EclipseCombatCalculatorLibrary.Dices;
+﻿using EclipseCombatCalculator.Library.Dices;
 using System;
 using System.Collections.Generic;
 
-namespace EclipseCombatCalculatorLibrary.Blueprints
+namespace EclipseCombatCalculator.Library.Blueprints
 {
     public sealed class Part
     {

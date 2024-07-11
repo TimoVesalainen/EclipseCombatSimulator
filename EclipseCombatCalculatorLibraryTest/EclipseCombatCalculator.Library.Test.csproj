@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\EclipseCombatCalculatorLibrary\EclipseCombatCalculatorLibrary.csproj" />
+    <ProjectReference Include="..\EclipseCombatCalculatorLibrary\EclipseCombatCalculator.Library.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using EclipseCombatCalculatorLibrary.Dices;
+using EclipseCombatCalculator.Library.Dices;
 
-namespace EclipseCombatCalculatorLibrary
+namespace EclipseCombatCalculator.Library
 {
     public interface IShipStats
     {

@@ -1,9 +1,9 @@
-﻿using EclipseCombatCalculatorLibrary.Dices;
+﻿using EclipseCombatCalculator.Library.Dices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace EclipseCombatCalculatorLibrary.Blueprints
+namespace EclipseCombatCalculator.Library.Blueprints
 {
     public sealed class Blueprint : IShipStats
     {

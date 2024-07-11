@@ -1,7 +1,7 @@
 ﻿using CommandLine;
 using System;
 
-namespace EclipseCombatCalculatorCommandLine
+namespace EclipseCombatCalculator.CommandLine
 {
     public sealed class Options
     {

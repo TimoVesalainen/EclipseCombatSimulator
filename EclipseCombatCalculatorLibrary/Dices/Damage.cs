@@ -1,4 +1,4 @@
-﻿namespace EclipseCombatCalculatorLibrary.Dices
+﻿namespace EclipseCombatCalculator.Library.Dices
 {
     public sealed class Damage : IDiceFace
     {
