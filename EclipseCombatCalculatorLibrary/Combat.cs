@@ -9,6 +9,9 @@ using Nintenlord.Distributions;
 
 namespace EclipseCombatCalculatorLibrary
 {
+    public delegate Task<IEnumerable<(ICombatShip, IEnumerable<IDiceFace>)>> DamageAssigner(
+        ICombatShip attacker, IEnumerable<ICombatShip> targets, IEnumerable<IDiceFace> diceResult);
+
     public static class Combat
     {
         static readonly Comparison<(IShipStats blueprint, int count)> initiativeComparer = (x, y) => Comparer<int>.Default.Compare(y.blueprint.Initiative, x.blueprint.Initiative);
@@ -44,7 +47,7 @@ namespace EclipseCombatCalculatorLibrary
         public static async Task<bool> AttackerWin(
             IEnumerable<(IShipStats blueprint, int count)> attackers,
             IEnumerable<(IShipStats blueprint, int count)> defenders,
-            Func<ICombatShip, IEnumerable<ICombatShip>, IEnumerable<IDiceFace>, Task<IEnumerable<(ICombatShip, IEnumerable<IDiceFace>)>>> damageAssingment)
+            DamageAssigner damageAssingment)
         {
             (IShipStats blueprint, int count)[] attackersArray = attackers.ToArray();
             (IShipStats blueprint, int count)[] defendersArray = defenders.ToArray();
