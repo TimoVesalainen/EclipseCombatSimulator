@@ -63,5 +63,14 @@ namespace EclipseCombatCalculatorLibraryTest
                 new[] { (blueprint: Blueprint.PlantaInterceptor as IShipStats, count: 1) },
                 CombatAssingment);
         }
+
+        [Test]
+        public async Task DefaultAIPlantaVSOrion()
+        {
+            var result = await Combat.AttackerWin(
+                new[] { (blueprint: Blueprint.OrionInterceptor as IShipStats, count: 5) },
+                new[] { (blueprint: Blueprint.PlantaInterceptor as IShipStats, count: 1) },
+                AI.BasicAI);
+        }
     }
 }
