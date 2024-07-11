@@ -55,10 +55,9 @@ namespace EclipseCombatCalculatorLibrary
             var shipTypes = attackersArray.Select(shipType => new CombatShip(shipType.blueprint, shipType.count, attacker: true))
                 .Concat(defendersArray.Select(shipType => new CombatShip(shipType.blueprint, shipType.count, attacker: false))).ToList();
 
-            // Fire missiles
-            foreach (var attacker in shipTypes)
+            async Task<bool?> CombatRound(IEnumerable<Dice> attackerDice, CombatShip attacker)
             {
-                var distr = attacker.Blueprint.Missiles.Select(weaponDice => weaponDice.FaceDistribution.ArrayDistribution(attacker.Count))
+                var distr = attacker.Blueprint.Cannons.Select(weaponDice => weaponDice.FaceDistribution.ArrayDistribution(attacker.Count))
                     .Distributions().Select(x => x.Flatten());
 
                 var diceResults = distr.Sample();
@@ -89,6 +88,17 @@ namespace EclipseCombatCalculatorLibrary
                 {
                     return attacker.Attacker;
                 }
+                return null;
+            }
+
+            // Fire missiles
+            foreach (var attacker in shipTypes)
+            {
+                var result = await CombatRound(attacker.Blueprint.Missiles, attacker);
+                if (result is bool endResult)
+                {
+                    return endResult;
+                }
             }
 
             // Fire cannons
@@ -97,37 +107,10 @@ namespace EclipseCombatCalculatorLibrary
                 foreach (var attacker in shipTypes)
                 {
                     // TODO: Check if wants to try to retreat, or complete retreat
-
-                    var distr = attacker.Blueprint.Cannons.Select(weaponDice => weaponDice.FaceDistribution.ArrayDistribution(attacker.Count))
-                        .Distributions().Select(x => x.Flatten());
-
-                    var diceResults = distr.Sample();
-                    var targets = shipTypes.Where(target => target.Attacker != attacker.Attacker && target.Count > 0);
-
-                    var assignments = await damageAssingment(attacker, targets, diceResults);
-
-                    // TODO: Sanity checks?
-
-                    foreach (var (target, dices) in assignments)
+                    var result = await CombatRound(attacker.Blueprint.Cannons, attacker);
+                    if (result is bool endResult)
                     {
-                        foreach (var dice in dices)
-                        {
-                            if (attacker.Blueprint.CanHit(target.Blueprint, dice) && target.Count > 0)
-                            {
-                                (target as CombatShip).AddDamage(dice.DamageToOpponent);
-                            }
-                        }
-                    }
-
-                    foreach (var diceResult in diceResults)
-                    {
-                        attacker.AddDamage(diceResult.DamageToSelf);
-                    }
-
-                    // TODO: Mutual KO result
-                    if (!shipTypes.Any(type => type.Attacker != attacker.Attacker && type.Count > 0))
-                    {
-                        return attacker.Attacker;
+                        return endResult;
                     }
                 }
             }
