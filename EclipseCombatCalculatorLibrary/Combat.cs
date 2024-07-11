@@ -40,8 +40,9 @@ namespace EclipseCombatCalculatorLibrary
                 while (newDamage > Blueprint.Hulls)
                 {
                     Count--;
-                    newDamage = 0;
+                    newDamage -= Blueprint.Hulls + 1;
                 }
+                Damage = newDamage;
             }
         }
 
