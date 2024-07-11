@@ -6,6 +6,7 @@ namespace EclipseCombatCalculatorLibrary
 {
     public interface IShipStats
     {
+        public string Name { get; }
         public int Initiative { get; }
         public IEnumerable<Dice> Cannons { get; }
         public IEnumerable<Dice> Missiles { get; }

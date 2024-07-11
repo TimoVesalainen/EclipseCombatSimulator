@@ -12,6 +12,7 @@ namespace EclipseCombatCalculatorLibraryTest
 
         private class TestShip : IShipStats
         {
+            public string Name => "Test";
             public int Initiative { get; set; }
 
             public Dice[]? Weapons { get; set; }
