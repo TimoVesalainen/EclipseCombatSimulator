@@ -52,7 +52,10 @@ namespace EclipseCombatCalculatorLibrary
                 {
                     dices.Remove(dice);
                 }
-                assigned.Add((target, assignedDice.AsEnumerable()));
+                if (assignedDice.Count > 0)
+                {
+                    assigned.Add((target, assignedDice.AsEnumerable()));
+                }
             }
 
             return assigned;
