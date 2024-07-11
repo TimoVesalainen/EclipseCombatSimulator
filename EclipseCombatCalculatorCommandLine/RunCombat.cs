@@ -35,7 +35,7 @@ namespace EclipseCombatCalculatorCommandLine
             }
 
             Console.WriteLine("Please choose how to assign them. Possible targets are:");
-            Console.WriteLine(string.Join("\n", targets.Zip(Options).Select((pair) => $"{pair.Second}) {pair.First.Count} {pair.First.Blueprint.Name}{(pair.First.Count > 1 ? "s" : "")}")));
+            Console.WriteLine(string.Join("\n", targets.Zip(Options).Select((pair) => $"{pair.Second}) {pair.First.Count} {pair.First.Blueprint.Name}{(pair.First.Count > 1 ? "s" : "")} with {pair.First.Damage} damage")));
 
             List<(IDiceFace, ICombatShip)> results = [];
             var targetArray = targets.ToArray();
