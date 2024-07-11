@@ -6,6 +6,17 @@ namespace EclipseCombatCalculatorCommandLine
 {
     internal static class RunCombat
     {
+        private static string PrintDiceFace(IDiceFace dice)
+        {
+            return dice switch
+            {
+                Damage damage => string.Join("", Enumerable.Range(0, damage.DamageToOpponent).Select(_ => "*")),
+                Number number => $"{number.Value}({string.Join("", Enumerable.Range(0, number.DamageToOpponent).Select(_ => "*"))})",
+                Miss number => "_",
+                _ => throw new NotImplementedException(),
+            };
+        }
+
         public static async Task Run(Options options)
         {
             async Task<IEnumerable<(ICombatShip, IEnumerable<IDiceFace>)>> DamageAssigner(
