@@ -22,9 +22,12 @@ namespace EclipseCombatCalculatorCommandLine
             async Task<IEnumerable<(ICombatShip, IEnumerable<IDiceFace>)>> DamageAssigner(
                 ICombatShip attacker, IEnumerable<ICombatShip> targets, IEnumerable<IDiceFace> diceResult)
             {
-                if (true)
+                if (options.Attack != attacker.Attacker)
                 {
-                    return await AI.BasicAI(attacker, targets, diceResult);
+                    Console.WriteLine("AI are: {0}", string.Join(", ", diceResult.Select(PrintDiceFace)));
+                    var aiAssignment = await AI.BasicAI(attacker, targets, diceResult);
+                    Console.WriteLine("Assigns {0}", string.Join(", ", aiAssignment.Select(x => $"{string.Join(", ", x.Item2.Select(PrintDiceFace))} -> to ship")));
+                    return aiAssignment;
                 }
 
                 //TODO: Ask human
