@@ -12,6 +12,7 @@ namespace EclipseCombatCalculatorLibrary
         public int Computers { get; }
         public int Shields { get; }
         public int Hulls { get; }
+        public int Size { get; }
     }
 
     public static class ShipStatHelpers

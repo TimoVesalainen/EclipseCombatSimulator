@@ -27,6 +27,8 @@ namespace EclipseCombatCalculatorLibrary.Blueprints
             }
         }
 
+        public int Size => slots.Length;
+
         readonly Part[] slots;
         readonly bool readOnlyBlueprint;
 

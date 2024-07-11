@@ -22,6 +22,8 @@ namespace EclipseCombatCalculatorLibraryTest
 
             public int Hulls { get; set; }
 
+            public int Size { get; set; } = 0;
+
             public IEnumerable<Dice> Missiles => Array.Empty<Dice>();
 
             IEnumerable<Dice> IShipStats.Cannons => Weapons ?? Array.Empty<Dice>();
