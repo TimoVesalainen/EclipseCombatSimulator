@@ -19,7 +19,7 @@ namespace EclipseCombatCalculatorCommandLine
 
         private static string PrintShip(ICombatShip ship)
         {
-            return $"Ship {ship.Blueprint.Name} amount {ship.Count} damage {ship.Damage}";
+            return $"{ship.Blueprint.Name} amount {ship.Count} with {ship.Damage} damage";
         }
 
         private static IEnumerable<(ICombatShip, IEnumerable<IDiceFace>)> PlayerDistribution(
@@ -35,7 +35,7 @@ namespace EclipseCombatCalculatorCommandLine
             }
 
             Console.WriteLine("Please choose how to assign them. Possible targets are:");
-            Console.WriteLine(string.Join("\n", targets.Zip(Options).Select((pair) => $"{pair.Second}) {pair.First.Count} {pair.First.Blueprint.Name}{(pair.First.Count > 1 ? "s" : "")} with {pair.First.Damage} damage")));
+            Console.WriteLine(string.Join("\n", targets.Zip(Options).Select((pair) => $"{pair.Second}) {PrintShip(pair.First)}")));
 
             List<(IDiceFace, ICombatShip)> results = [];
             var targetArray = targets.ToArray();
@@ -81,7 +81,7 @@ namespace EclipseCombatCalculatorCommandLine
                     var aiAssignment = await AI.BasicAI(attacker, targets, diceResult);
                     if (aiAssignment.Any())
                     {
-                        Console.WriteLine("Assigns {0}", string.Join(", ", aiAssignment.Select(x => $"{string.Join(", ", x.Item2.Select(PrintDiceFace))} -> to {PrintShip(x.Item1)}")));
+                        Console.WriteLine("Assigns {0}", string.Join(", ", aiAssignment.Select(x => $"{string.Join(", ", x.Item2.Select(PrintDiceFace))} -> to ship {PrintShip(x.Item1)}")));
                     }
                     else
                     {
