@@ -53,7 +53,7 @@ namespace EclipseCombatCalculatorLibraryTest
         [Test]
         public async Task DefaultPlantaVSOrion()
         {
-            async Task<IEnumerable<(ICombatShip, IEnumerable<IDiceFace>)>> CombatAssingment(ICombatShip attacker, IEnumerable<ICombatShip> defenders, IEnumerable<IDiceFace> diceResult)
+            async Task<IEnumerable<(ICombatShip, IEnumerable<IDiceFace>)>> CombatAssignment(ICombatShip attacker, IEnumerable<ICombatShip> defenders, IEnumerable<IDiceFace> diceResult)
             {
                 return defenders.Zip(diceResult, (x, y) => (x, new[] { y } as IEnumerable<IDiceFace>));
             }
@@ -61,7 +61,7 @@ namespace EclipseCombatCalculatorLibraryTest
             var result = await Combat.AttackerWin(
                 new[] { (blueprint: Blueprint.OrionInterceptor as IShipStats, count: 5) },
                 new[] { (blueprint: Blueprint.PlantaInterceptor as IShipStats, count: 1) },
-                CombatAssingment);
+                CombatAssignment);
         }
 
         [Test]
