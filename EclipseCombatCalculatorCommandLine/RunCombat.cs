@@ -19,7 +19,7 @@ namespace EclipseCombatCalculatorCommandLine
 
         private static string PrintShip(ICombatShip ship)
         {
-            return $"Ship amount {ship.Count} damage {ship.Damage}";
+            return $"Ship {ship.Blueprint.Name} amount {ship.Count} damage {ship.Damage}";
         }
 
         public static async Task Run(Options options)
