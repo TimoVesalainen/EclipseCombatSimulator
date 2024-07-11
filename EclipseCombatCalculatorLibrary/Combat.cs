@@ -72,10 +72,7 @@ namespace EclipseCombatCalculatorLibrary
                 {
                     foreach (var dice in dices)
                     {
-                        if (attacker.Blueprint.CanHit(target.Blueprint, dice) && target.Count > 0)
-                        {
-                            (target as CombatShip).AddDamage(dice.DamageToOpponent);
-                        }
+                        (target as CombatShip).AddDamage(dice.DamageToOpponent);
                     }
                 }
 
