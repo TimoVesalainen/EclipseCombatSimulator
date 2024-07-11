@@ -7,9 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EclipseCombatCalculatorLibr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nintenlord", "Nintenlord\Nintenlord\Nintenlord.csproj", "{7D66A672-1893-4FA1-979A-32E16AE34DA7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EclipseCombatCalculatorLibraryTest", "EclipseCombatCalculatorLibraryTest\EclipseCombatCalculatorLibraryTest.csproj", "{013995A0-00A5-4A48-844F-3886FA38509B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EclipseCombatCalculatorLibraryTest", "EclipseCombatCalculatorLibraryTest\EclipseCombatCalculatorLibraryTest.csproj", "{013995A0-00A5-4A48-844F-3886FA38509B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nintenlord.Tests", "Nintenlord\Nintenlord.Tests\Nintenlord.Tests.csproj", "{CC9C8310-9782-4F78-B213-0E2977EAE93A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EclipseCombatCalculatorCommandLine", "EclipseCombatCalculatorCommandLine\EclipseCombatCalculatorCommandLine.csproj", "{E247D8BE-9418-4BB0-9FAB-CFA2502A2CCB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -87,6 +89,22 @@ Global
 		{CC9C8310-9782-4F78-B213-0E2977EAE93A}.Release|x64.Build.0 = Release|Any CPU
 		{CC9C8310-9782-4F78-B213-0E2977EAE93A}.Release|x86.ActiveCfg = Release|Any CPU
 		{CC9C8310-9782-4F78-B213-0E2977EAE93A}.Release|x86.Build.0 = Release|Any CPU
+		{E247D8BE-9418-4BB0-9FAB-CFA2502A2CCB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E247D8BE-9418-4BB0-9FAB-CFA2502A2CCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E247D8BE-9418-4BB0-9FAB-CFA2502A2CCB}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{E247D8BE-9418-4BB0-9FAB-CFA2502A2CCB}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{E247D8BE-9418-4BB0-9FAB-CFA2502A2CCB}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{E247D8BE-9418-4BB0-9FAB-CFA2502A2CCB}.Debug|x64.Build.0 = Debug|Any CPU
+		{E247D8BE-9418-4BB0-9FAB-CFA2502A2CCB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E247D8BE-9418-4BB0-9FAB-CFA2502A2CCB}.Debug|x86.Build.0 = Debug|Any CPU
+		{E247D8BE-9418-4BB0-9FAB-CFA2502A2CCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E247D8BE-9418-4BB0-9FAB-CFA2502A2CCB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E247D8BE-9418-4BB0-9FAB-CFA2502A2CCB}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{E247D8BE-9418-4BB0-9FAB-CFA2502A2CCB}.Release|ARM64.Build.0 = Release|Any CPU
+		{E247D8BE-9418-4BB0-9FAB-CFA2502A2CCB}.Release|x64.ActiveCfg = Release|Any CPU
+		{E247D8BE-9418-4BB0-9FAB-CFA2502A2CCB}.Release|x64.Build.0 = Release|Any CPU
+		{E247D8BE-9418-4BB0-9FAB-CFA2502A2CCB}.Release|x86.ActiveCfg = Release|Any CPU
+		{E247D8BE-9418-4BB0-9FAB-CFA2502A2CCB}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
