@@ -57,7 +57,7 @@ namespace EclipseCombatCalculatorLibraryTest
             }
 
             var result = await Combat.AttackerWin(
-                new[] { (blueprint: Blueprint.OrionInterceptor as IShipStats, count: 3) },
+                new[] { (blueprint: Blueprint.OrionInterceptor as IShipStats, count: 10) },
                 new[] { (blueprint: Blueprint.PlantaInterceptor as IShipStats, count: 1) },
                 CombatAssingment);
         }
