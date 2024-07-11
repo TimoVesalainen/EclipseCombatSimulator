@@ -24,7 +24,7 @@ namespace EclipseCombatCalculatorLibraryTest
 
             public IEnumerable<Dice> Missiles => Array.Empty<Dice>();
 
-            IEnumerable<Dice> IShipStats.Cannons => Weapons;
+            IEnumerable<Dice> IShipStats.Cannons => Weapons ?? Array.Empty<Dice>();
         }
 
         [Test]
@@ -42,7 +42,7 @@ namespace EclipseCombatCalculatorLibraryTest
 
             var result = await Combat.AttackerWin(
                 new[] { (blueprint: new TestShip { Initiative = 1, Weapons = new Dice[] { CommonDices.YellowDice }, Computers = 0, Shields = 0, Hulls = 0 } as IShipStats, count: 1) },
-                new[] { (blueprint: new TestShip { Initiative = 1, Weapons = new Dice[] { }, Computers = 0, Shields = 0, Hulls = 0 } as IShipStats, count: 1) },
+                new[] { (blueprint: new TestShip { Initiative = 1, Weapons = Array.Empty<Dice>(), Computers = 0, Shields = 0, Hulls = 0 } as IShipStats, count: 1) },
                 CombatAssingment);
 
             Assert.IsTrue(result);
