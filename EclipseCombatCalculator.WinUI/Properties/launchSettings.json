@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "EclipseCombatCalculator.WinUI (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "EclipseCombatCalculator.WinUI (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
