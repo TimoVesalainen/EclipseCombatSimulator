@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "EclipseCombatCalculatorCommandLine": {
+      "commandName": "Project",
+      "commandLineArgs": "-- -r true -a Terran -s 1,2,3 -d Orion -t 0,0,3"
+    }
+  }
+}
