@@ -6,6 +6,7 @@
     xmlns:local="using:EclipseCombatCalculator.WinUI">
     <Application.Resources>
         <ResourceDictionary>
+            <FontFamily x:Key="EclipseFont">/Assets/Eclipse.otf#Eclipse</FontFamily>
             <ResourceDictionary.MergedDictionaries>
                 <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
                 <!-- Other merged dictionaries here -->

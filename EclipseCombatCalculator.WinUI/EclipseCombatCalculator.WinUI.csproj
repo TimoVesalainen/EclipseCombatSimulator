@@ -13,6 +13,9 @@
     <EnableMsixTooling>true</EnableMsixTooling>
   </PropertyGroup>
   <ItemGroup>
+    <Content Remove="Assets\Eclipse.otf" />
+  </ItemGroup>
+  <ItemGroup>
     <None Remove="Assets\OrionNebula.png" />
   </ItemGroup>
 
