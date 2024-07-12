@@ -35,11 +35,16 @@ namespace EclipseCombatCalculator.Library.Blueprints
 
         IEnumerable<Part> Parts => slots.Where(x => x != null);
 
+        readonly static List<Blueprint> blueprints = new();
+
+        public static IEnumerable<Blueprint> Blueprints => blueprints;
+
         private Blueprint(string name, params Part[] parts)
         {
             Name = name;
             this.slots = parts;
             readOnlyBlueprint = true;
+            blueprints.Add(this);
         }
         private Blueprint(Blueprint other, bool readOnlyBlueprint)
         {
@@ -52,6 +57,7 @@ namespace EclipseCombatCalculator.Library.Blueprints
             this.IsBase = other.IsBase;
             this.slots = other.slots.ToArray(); // Shallow clone
             this.readOnlyBlueprint = readOnlyBlueprint;
+            blueprints.Add(this);
         }
 
         public Blueprint CreateEditableClone()
