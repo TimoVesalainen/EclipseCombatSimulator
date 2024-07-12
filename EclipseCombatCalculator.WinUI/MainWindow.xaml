@@ -44,7 +44,7 @@
             Grid.Column="1">
 
             <Grid.Background>
-                <ImageBrush ImageSource="Assets/OrionNebula.png"/>
+                <ImageBrush ImageSource="Assets/OrionNebula.png" Stretch="UniformToFill"/>
             </Grid.Background>
         </Grid>
     </Grid>
