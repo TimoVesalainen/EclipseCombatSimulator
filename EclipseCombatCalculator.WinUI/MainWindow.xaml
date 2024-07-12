@@ -6,9 +6,46 @@
     xmlns:local="using:EclipseCombatCalculator.WinUI"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewmodels="using:EclipseCombatCalculator.WinUI.ViewModel"
     mc:Ignorable="d">
 
-    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-        <Button x:Name="myButton" Click="myButton_Click">Click Me</Button>
-    </StackPanel>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Grid.Resources>
+            <DataTemplate x:Key="LayoutNameList" x:DataType="viewmodels:LayoutListViewModel">
+                <Grid Margin="0,11,0,13">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Text="{x:Bind Name}" />
+                </Grid>
+            </DataTemplate>
+        </Grid.Resources>
+
+        <ListView
+            x:Name="LayoutList"
+            ItemTemplate="{StaticResource LayoutNameList}"
+            IsItemClickEnabled="True"
+            ItemClick="LayoutList_ItemClick"
+            Grid.Column="0"
+            Grid.ColumnSpan="1">
+        </ListView>
+
+        <Grid
+            Grid.Column="1">
+
+            <Grid.Background>
+                <ImageBrush ImageSource="Assets/OrionNebula.png"/>
+            </Grid.Background>
+        </Grid>
+    </Grid>
 </Window>

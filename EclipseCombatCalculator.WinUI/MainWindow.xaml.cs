@@ -1,3 +1,5 @@
+using EclipseCombatCalculator.Library.Blueprints;
+using EclipseCombatCalculator.WinUI.ViewModel;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -26,11 +28,12 @@ namespace EclipseCombatCalculator.WinUI
         public MainWindow()
         {
             this.InitializeComponent();
+            this.LayoutList.ItemsSource = Blueprint.Blueprints.Select(LayoutListViewModel.Create);
         }
 
-        private void myButton_Click(object sender, RoutedEventArgs e)
+        private void LayoutList_ItemClick(object sender, ItemClickEventArgs e)
         {
-            myButton.Content = "Clicked";
+            // TODO:
         }
     }
 }
