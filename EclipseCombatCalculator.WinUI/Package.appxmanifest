@@ -15,8 +15,8 @@
   <mp:PhoneIdentity PhoneProductId="3985ae64-e0b4-4d28-a389-98a17a1183c1" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>EclipseCombatCalculator.WinUI</DisplayName>
-    <PublisherDisplayName>timov</PublisherDisplayName>
+    <DisplayName>Eclipse Combat Simulator</DisplayName>
+    <PublisherDisplayName>Timo Vesalainen</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
@@ -34,7 +34,7 @@
       Executable="$targetnametoken$.exe"
       EntryPoint="$targetentrypoint$">
       <uap:VisualElements
-        DisplayName="EclipseCombatCalculator.WinUI"
+        DisplayName="Eclipse Combat Simulator"
         Description="EclipseCombatCalculator.WinUI"
         BackgroundColor="transparent"
         Square150x150Logo="Assets\Square150x150Logo.png"
