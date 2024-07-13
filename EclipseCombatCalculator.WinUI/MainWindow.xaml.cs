@@ -42,6 +42,10 @@ namespace EclipseCombatCalculator.WinUI
             {
                 rootFrame.Navigate(typeof(BlueprintsPage), args, null);
             }
+            if (args.SelectedItemContainer == Combat)
+            {
+                rootFrame.Navigate(typeof(CombatPage), args, null);
+            }
         }
     }
 }
