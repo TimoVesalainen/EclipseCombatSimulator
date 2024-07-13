@@ -6,6 +6,7 @@ using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
+using Microsoft.UI.Xaml.Media.Animation;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
@@ -28,12 +29,19 @@ namespace EclipseCombatCalculator.WinUI
         public MainWindow()
         {
             this.InitializeComponent();
-            this.LayoutList.ItemsSource = Blueprint.Blueprints.Select(LayoutListViewModel.Create);
         }
 
-        private void LayoutList_ItemClick(object sender, ItemClickEventArgs e)
+        private void NavigationView_Loaded(object sender, RoutedEventArgs e)
         {
-            // TODO:
+
+        }
+
+        private void NavigationView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
+        {
+            if (args.SelectedItemContainer == Blueprints)
+            {
+                rootFrame.Navigate(typeof(BlueprintsPage), args, null);
+            }
         }
     }
 }

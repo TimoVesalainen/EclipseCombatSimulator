@@ -17,6 +17,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Assets\OrionNebula.png" />
+    <None Remove="BlueprintsPage.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -45,6 +46,11 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EclipseCombatCalculator.Library\EclipseCombatCalculator.Library.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="BlueprintsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 
   <!--

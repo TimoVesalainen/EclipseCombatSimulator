@@ -10,43 +10,24 @@
     mc:Ignorable="d"
     Title="Eclipse Combat Simulator">
 
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
-
-        <Grid.Resources>
-            <DataTemplate x:Key="LayoutNameList" x:DataType="viewmodels:LayoutListViewModel">
-                <Grid Margin="0,11,0,13">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-
-                    <TextBlock Text="{x:Bind Name}" FontSize="20" FontFamily="{StaticResource EclipseFont}" />
-                </Grid>
-            </DataTemplate>
-        </Grid.Resources>
-
-        <ListView
-            x:Name="LayoutList"
-            ItemTemplate="{StaticResource LayoutNameList}"
-            IsItemClickEnabled="True"
-            ItemClick="LayoutList_ItemClick"
-            Grid.Column="0"
-            Grid.ColumnSpan="1">
-        </ListView>
-
-        <Grid
-            Grid.Column="1">
-
-            <Grid.Background>
-                <ImageBrush ImageSource="Assets/OrionNebula.png" Stretch="UniformToFill"/>
-            </Grid.Background>
-        </Grid>
-    </Grid>
+    <NavigationView
+        IsSettingsVisible="False"
+        IsBackButtonVisible="Collapsed"
+        Loaded="NavigationView_Loaded"
+        SelectionChanged="NavigationView_SelectionChanged">
+        
+        <Frame
+            x:Name="rootFrame" />
+        <NavigationView.MenuItems>
+            <NavigationViewItem
+                x:Name="Blueprints"
+                Content="Blueprints" />
+            <NavigationViewItem
+                x:Name="BlueprintEditing"
+                Content="BlueprintEditing" />
+            <NavigationViewItem
+                x:Name="Combat"
+                Content="Combat"/>
+        </NavigationView.MenuItems>
+    </NavigationView>
 </Window>

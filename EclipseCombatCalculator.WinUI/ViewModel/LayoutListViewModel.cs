@@ -15,10 +15,11 @@ namespace EclipseCombatCalculator.WinUI.ViewModel
         }
 
         public string Name { get; init; }
+        public Blueprint Blueprint { get; init; }
 
         public static LayoutListViewModel Create(Blueprint blueprint)
         {
-            return new LayoutListViewModel() { Name = blueprint.Name };
+            return new LayoutListViewModel() { Name = blueprint.Name, Blueprint = blueprint };
         }
     }
 }
