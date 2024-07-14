@@ -38,7 +38,7 @@
                         Grid.ColumnSpan="1"
                         Click="PlusButton_Click"
                         >
-                        <FontIcon Glyph="&#x002B;"/>
+                        <SymbolIcon Symbol="Add"/>
                     </Button>
 
                     <TextBlock
@@ -55,7 +55,7 @@
                         Grid.ColumnSpan="1"
                         Click="MinusButton_Click"
                         >
-                        <FontIcon Glyph="&#x002D;"/>
+                        <SymbolIcon Symbol="Remove"/>
                     </Button>
 
                 </Grid>
