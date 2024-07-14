@@ -30,9 +30,7 @@ namespace EclipseCombatCalculator.WinUI
     /// </summary>
     public sealed partial class CombatPage : Page
     {
-        public ObservableCollection<CombatShipType> Attackers { get; } = [CombatShipType.Create(Blueprint.TerranInterceptor)];
-        public ObservableCollection<CombatShipType> Defenders { get; } = [CombatShipType.Create(Blueprint.OrionCruiser)];
-        public ObservableCollection<AIViewModel> AIs { get; } = [new AIViewModel("Basic", AI.BasicAI)];
+        public CombatPageViewModel ViewModel { get; } = new();
 
         public CombatPage()
         {
@@ -49,6 +47,10 @@ namespace EclipseCombatCalculator.WinUI
         {
             var viewModel = (e.OriginalSource as Button).DataContext as CombatShipType;
             viewModel.Count -= 1;
+            if (viewModel.Count == 0)
+            {
+                ViewModel.Remove(viewModel);
+            }
         }
 
         private async void AddAttacker_Click(object sender, RoutedEventArgs e)
@@ -62,7 +64,7 @@ namespace EclipseCombatCalculator.WinUI
 
             if (result == ContentDialogResult.Primary)
             {
-                Attackers.Add(CombatShipType.Create(dialog.SelectedItem));
+                ViewModel.Attackers.Add(CombatShipType.Create(dialog.SelectedItem));
             }
         }
 
@@ -77,7 +79,7 @@ namespace EclipseCombatCalculator.WinUI
 
             if (result == ContentDialogResult.Primary)
             {
-                Defenders.Add(CombatShipType.Create(dialog.SelectedItem));
+                ViewModel.Defenders.Add(CombatShipType.Create(dialog.SelectedItem));
             }
         }
 
@@ -116,8 +118,8 @@ namespace EclipseCombatCalculator.WinUI
             //TODO: Disable/Hide UI.
 
             var result = await Combat.AttackerWin(
-                Attackers.Select(viewModel => (viewModel.Blueprint as IShipStats, viewModel.Count)),
-                Attackers.Select(viewModel => (viewModel.Blueprint as IShipStats, viewModel.Count)),
+                ViewModel.Attackers.Select(viewModel => (viewModel.Blueprint as IShipStats, viewModel.Count)),
+                ViewModel.Defenders.Select(viewModel => (viewModel.Blueprint as IShipStats, viewModel.Count)),
                 AssignDamage);
 
             ContentDialog noWifiDialog = new ContentDialog
