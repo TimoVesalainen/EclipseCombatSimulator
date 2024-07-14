@@ -15,17 +15,23 @@
         IsBackButtonVisible="Collapsed"
         Loaded="NavigationView_Loaded"
         SelectionChanged="NavigationView_SelectionChanged">
-        
+
         <Frame
             x:Name="rootFrame" />
         <NavigationView.MenuItems>
             <NavigationViewItem
+                FontSize="28"
+                FontFamily="{StaticResource EclipseFont}"
                 x:Name="Blueprints"
                 Content="Blueprints" />
             <NavigationViewItem
+                FontSize="28"
+                FontFamily="{StaticResource EclipseFont}"
                 x:Name="BlueprintEditing"
                 Content="Blueprint Editing" />
             <NavigationViewItem
+                FontSize="28"
+                FontFamily="{StaticResource EclipseFont}"
                 x:Name="Combat"
                 Content="Combat"/>
         </NavigationView.MenuItems>
