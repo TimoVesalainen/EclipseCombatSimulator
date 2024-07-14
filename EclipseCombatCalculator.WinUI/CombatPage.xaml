@@ -10,10 +10,10 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
+    <Grid RowSpacing="16">
         <Grid.Resources>
             <DataTemplate x:Key="CombatShipType" x:DataType="viewmodels:CombatShipType">
-                <Grid Margin="0,11,0,13">
+                <Grid Margin="0,11,0,13" ColumnSpacing="16">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
