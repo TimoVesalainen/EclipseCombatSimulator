@@ -45,11 +45,11 @@ namespace EclipseCombatCalculator.WinUI
 
         private void MinusButton_Click(object sender, RoutedEventArgs e)
         {
-            var viewModel = (e.OriginalSource as Button).DataContext as CombatShipType;
-            viewModel.Count -= 1;
-            if (viewModel.Count == 0)
+            var combatShipModel = (e.OriginalSource as Button).DataContext as CombatShipType;
+            combatShipModel.Count -= 1;
+            if (combatShipModel.Count == 0)
             {
-                ViewModel.Remove(viewModel);
+                ViewModel.Remove(combatShipModel);
             }
         }
 
