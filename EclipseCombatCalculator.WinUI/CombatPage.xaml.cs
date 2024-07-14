@@ -18,6 +18,7 @@ using System.Collections.ObjectModel;
 using EclipseCombatCalculator.Library;
 using System.Threading.Tasks;
 using EclipseCombatCalculator.Library.Dices;
+using EclipseCombatCalculator.WinUI.Dialogs;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -42,7 +43,6 @@ namespace EclipseCombatCalculator.WinUI
         {
             var viewModel = (e.OriginalSource as Button).DataContext as CombatShipType;
             viewModel.Count += 1;
-            Attackers.Add(CombatShipType.Create(Blueprint.TerranDreadnaught));
         }
 
         private void MinusButton_Click(object sender, RoutedEventArgs e)
@@ -51,16 +51,34 @@ namespace EclipseCombatCalculator.WinUI
             viewModel.Count -= 1;
         }
 
-        private void AddAttacker_Click(object sender, RoutedEventArgs e)
+        private async void AddAttacker_Click(object sender, RoutedEventArgs e)
         {
-            // TODO: Dialog for choosing blueprint
-            // Attackers.Add();
+            BlueprintSelectionDialog dialog = new()
+            {
+                XamlRoot = this.XamlRoot
+            };
+
+            var result = await dialog.ShowAsync();
+
+            if (result == ContentDialogResult.Primary)
+            {
+                Attackers.Add(CombatShipType.Create(dialog.SelectedItem));
+            }
         }
 
-        private void AddDefender_Click(object sender, RoutedEventArgs e)
+        private async void AddDefender_Click(object sender, RoutedEventArgs e)
         {
-            // TODO: Dialog for choosing blueprint
-            // Defenders.Add();
+            BlueprintSelectionDialog dialog = new()
+            {
+                XamlRoot = this.XamlRoot
+            };
+
+            var result = await dialog.ShowAsync();
+
+            if (result == ContentDialogResult.Primary)
+            {
+                Defenders.Add(CombatShipType.Create(dialog.SelectedItem));
+            }
         }
 
         private async void StartButton_Click(object sender, RoutedEventArgs e)

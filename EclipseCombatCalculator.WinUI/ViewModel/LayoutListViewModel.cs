@@ -9,17 +9,18 @@ namespace EclipseCombatCalculator.WinUI.ViewModel
 {
     public sealed class LayoutListViewModel
     {
-        public LayoutListViewModel()
+        public string Name { get; }
+        public Blueprint Blueprint { get; }
+
+        public LayoutListViewModel(string name, Blueprint blueprint)
         {
-
+            Name = name ?? throw new ArgumentNullException(nameof(name));
+            Blueprint = blueprint ?? throw new ArgumentNullException(nameof(blueprint));
         }
-
-        public string Name { get; init; }
-        public Blueprint Blueprint { get; init; }
 
         public static LayoutListViewModel Create(Blueprint blueprint)
         {
-            return new LayoutListViewModel() { Name = blueprint.Name, Blueprint = blueprint };
+            return new LayoutListViewModel(blueprint.Name, blueprint);
         }
     }
 }
