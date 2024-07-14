@@ -24,7 +24,7 @@
                 Content="Blueprints" />
             <NavigationViewItem
                 x:Name="BlueprintEditing"
-                Content="BlueprintEditing" />
+                Content="Blueprint Editing" />
             <NavigationViewItem
                 x:Name="Combat"
                 Content="Combat"/>
