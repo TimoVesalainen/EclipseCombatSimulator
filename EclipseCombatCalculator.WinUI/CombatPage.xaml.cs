@@ -122,7 +122,7 @@ namespace EclipseCombatCalculator.WinUI
                 ViewModel.Defenders.Select(viewModel => (viewModel.Blueprint as IShipStats, viewModel.Count)),
                 AssignDamage);
 
-            ContentDialog noWifiDialog = new ContentDialog
+            ContentDialog resultDialog = new()
             {
                 Title = "Combat results",
                 Content = result ? "Attacker wins" : "Defender winds",
@@ -130,7 +130,7 @@ namespace EclipseCombatCalculator.WinUI
                 XamlRoot = this.XamlRoot,
             };
 
-            await noWifiDialog.ShowAsync();
+            await resultDialog.ShowAsync();
             //TODO: Enable/show UI.
         }
 
