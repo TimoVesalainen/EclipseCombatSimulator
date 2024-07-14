@@ -171,6 +171,23 @@
             <Grid.Background>
                 <ImageBrush ImageSource="Assets/OrionNebula.png" Stretch="UniformToFill"/>
             </Grid.Background>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Button
+                x:Name="StartButton"
+                Grid.Column="0"
+                Grid.Row="0"
+                Click="StartButton_Click">
+                <TextBlock Text="Start"/>
+            </Button>
         </Grid>
     </Grid>
 </Page>

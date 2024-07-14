@@ -16,6 +16,8 @@ using EclipseCombatCalculator.Library.Blueprints;
 using EclipseCombatCalculator.WinUI.ViewModel;
 using System.Collections.ObjectModel;
 using EclipseCombatCalculator.Library;
+using System.Threading.Tasks;
+using EclipseCombatCalculator.Library.Dices;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -59,6 +61,64 @@ namespace EclipseCombatCalculator.WinUI
         {
             // TODO: Dialog for choosing blueprint
             // Defenders.Add();
+        }
+
+        private async void StartButton_Click(object sender, RoutedEventArgs e)
+        {
+            var attackerAi = (AttackerAISelection.SelectedItem as AIViewModel).Implementation;
+            var defenderAi = (DefenderAISelection.SelectedItem as AIViewModel).Implementation;
+
+            async Task<IEnumerable<(ICombatShip, IEnumerable<IDiceFace>)>> AssignDamage(
+            ICombatShip attacker, IEnumerable<ICombatShip> targets, IEnumerable<IDiceFace> diceResult)
+            {
+                if (attacker.Attacker)
+                {
+                    if (AttackerAI.IsOn)
+                    {
+                        return await attackerAi(attacker, targets, diceResult);
+                    }
+                    else
+                    {
+                        return await ManualAssignment(attacker, targets, diceResult);
+                    }
+                }
+                else
+                {
+                    if (DefenderAI.IsOn)
+                    {
+                        return await defenderAi(attacker, targets, diceResult);
+                    }
+                    else
+                    {
+                        return await ManualAssignment(attacker, targets, diceResult);
+                    }
+                }
+            }
+
+            //TODO: Disable/Hide UI.
+
+            var result = await Combat.AttackerWin(
+                Attackers.Select(viewModel => (viewModel.Blueprint as IShipStats, viewModel.Count)),
+                Attackers.Select(viewModel => (viewModel.Blueprint as IShipStats, viewModel.Count)),
+                AssignDamage);
+
+            ContentDialog noWifiDialog = new ContentDialog
+            {
+                Title = "Combat results",
+                Content = result ? "Attacker wins" : "Defender winds",
+                CloseButtonText = "OK",
+                XamlRoot = this.XamlRoot,
+            };
+
+            await noWifiDialog.ShowAsync();
+            //TODO: Enable/show UI.
+        }
+
+        async Task<IEnumerable<(ICombatShip, IEnumerable<IDiceFace>)>> ManualAssignment(
+            ICombatShip attacker, IEnumerable<ICombatShip> targets, IEnumerable<IDiceFace> diceResult)
+        {
+            // TODO: Ask with UI
+            return [];
         }
     }
 }
