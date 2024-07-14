@@ -60,6 +60,15 @@
 
                 </Grid>
             </DataTemplate>
+
+            <DataTemplate x:Key="AIName" x:DataType="viewmodels:AIViewModel">
+                <TextBlock
+                        Grid.Column="0"
+                        Grid.ColumnSpan="1"
+                        Text="{x:Bind Name}"
+                        FontSize="20"
+                        FontFamily="{StaticResource EclipseFont}" />
+            </DataTemplate>
         </Grid.Resources>
 
         <Grid.ColumnDefinitions>
@@ -102,7 +111,8 @@
             x:Name="AttackerAISelection"
             IsEnabled="{x:Bind AttackerAI.IsOn, Mode=OneWay}"
             SelectedIndex="0"
-            ItemsSource="{x:Bind AIs}"/>
+            ItemsSource="{x:Bind AIs}"
+            ItemTemplate="{StaticResource AIName}"/>
 
         <ListView
             x:Name="AttackerShips"
@@ -140,7 +150,8 @@
             x:Name="DefenderAISelection"
             IsEnabled="{x:Bind DefenderAI.IsOn, Mode=OneWay}"
             SelectedIndex="0"
-            ItemsSource="{x:Bind AIs}"/>
+            ItemsSource="{x:Bind AIs}"
+            ItemTemplate="{StaticResource AIName}"/>
 
         <ListView
             x:Name="DefenderShips"

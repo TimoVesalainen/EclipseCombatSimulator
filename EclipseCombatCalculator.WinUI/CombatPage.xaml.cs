@@ -15,6 +15,7 @@ using Microsoft.UI.Xaml.Navigation;
 using EclipseCombatCalculator.Library.Blueprints;
 using EclipseCombatCalculator.WinUI.ViewModel;
 using System.Collections.ObjectModel;
+using EclipseCombatCalculator.Library;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -28,7 +29,7 @@ namespace EclipseCombatCalculator.WinUI
     {
         public ObservableCollection<CombatShipType> Attackers { get; } = [CombatShipType.Create(Blueprint.TerranInterceptor)];
         public ObservableCollection<CombatShipType> Defenders { get; } = [CombatShipType.Create(Blueprint.OrionCruiser)];
-        public ObservableCollection<string> AIs { get; } = ["Test1", "Test2"];
+        public ObservableCollection<AIViewModel> AIs { get; } = [new AIViewModel("Basic", AI.BasicAI)];
 
         public CombatPage()
         {
