@@ -28,6 +28,7 @@ namespace EclipseCombatCalculator.WinUI
     {
         public ObservableCollection<CombatShipType> Attackers { get; } = [CombatShipType.Create(Blueprint.TerranInterceptor)];
         public ObservableCollection<CombatShipType> Defenders { get; } = [CombatShipType.Create(Blueprint.OrionCruiser)];
+        public ObservableCollection<string> AIs { get; } = ["Test1", "Test2"];
 
         public CombatPage()
         {
@@ -45,6 +46,18 @@ namespace EclipseCombatCalculator.WinUI
         {
             var viewModel = (e.OriginalSource as Button).DataContext as CombatShipType;
             viewModel.Count -= 1;
+        }
+
+        private void AddAttacker_Click(object sender, RoutedEventArgs e)
+        {
+            // TODO: Dialog for choosing blueprint
+            // Attackers.Add();
+        }
+
+        private void AddDefender_Click(object sender, RoutedEventArgs e)
+        {
+            // TODO: Dialog for choosing blueprint
+            // Defenders.Add();
         }
     }
 }
