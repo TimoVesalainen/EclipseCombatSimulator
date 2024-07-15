@@ -130,7 +130,7 @@ namespace EclipseCombatCalculator.Library
                 var attackersRemaining = attackers.Any(type => type.InCombat > 0 || type.InRetreat > 0);
                 var defendersRemaining = defenders.Any(type => type.InCombat > 0 || type.InRetreat > 0);
                 var isEnded = !attackersRemaining || !defendersRemaining;
-                var attackerWin = isEnded && attackersRemaining && !defendersRemaining;
+                bool? attackerWin = isEnded ? attackersRemaining && !defendersRemaining : null;
 
                 return new CombatState(
                     step,
