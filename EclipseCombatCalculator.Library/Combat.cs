@@ -94,10 +94,13 @@ namespace EclipseCombatCalculator.Library
 
             shipTypes.Sort(initiativeComparer);
 
+            // Attack with either missiles or cannons
             async Task ActivateShips(IEnumerable<Dice> attackerDice, CombatShip attacker)
             {
-                var distr = attackerDice.Select(weaponDice => weaponDice.FaceDistribution.ArrayDistribution(attacker.InCombat))
-                    .Distributions().Select(x => x.Flatten());
+                var distr = attackerDice
+                    .Select(weaponDice => weaponDice.FaceDistribution.ArrayDistribution(attacker.InCombat))
+                    .Distributions()
+                    .Select(x => x.Flatten());
 
                 var diceResults = distr.Sample();
                 var targets = shipTypes.Where(target => target.IsAttacker != attacker.IsAttacker && target.InCombat > 0);
