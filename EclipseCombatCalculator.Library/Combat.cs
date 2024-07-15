@@ -10,7 +10,7 @@ using Nintenlord.Distributions;
 namespace EclipseCombatCalculator.Library
 {
     public delegate Task<IEnumerable<(ICombatShip, IEnumerable<IDiceFace>)>> DamageAssigner(
-        ICombatShip attacker, IEnumerable<ICombatShip> targets, IEnumerable<IDiceFace> diceResult);
+        ICombatShip activeShips, IEnumerable<ICombatShip> targets, IEnumerable<IDiceFace> diceResult);
 
     public delegate Task<(int startRetreat, int completeRetreat)> RetreatAsker(ICombatShip activeShips);
 
@@ -142,8 +142,7 @@ namespace EclipseCombatCalculator.Library
                     isEnded);
             }
 
-            var missilesStartState = CommunicateCombatState(CombatStep.MissilesStart, null);
-            yield return missilesStartState;
+            yield return CommunicateCombatState(CombatStep.MissilesStart, null);
 
             // Fire missiles
             foreach (var attacker in shipTypes)
@@ -152,8 +151,7 @@ namespace EclipseCombatCalculator.Library
                 {
                     continue;
                 }
-                var state2 = CommunicateCombatState(CombatStep.MissileActivationStart, attacker);
-                yield return state2;
+                yield return CommunicateCombatState(CombatStep.MissileActivationStart, attacker);
                 await ActivateShips(attacker.Blueprint.Missiles, attacker);
                 var state = CommunicateCombatState(CombatStep.MissilesDamageApplied, attacker);
                 yield return state;
@@ -163,8 +161,7 @@ namespace EclipseCombatCalculator.Library
                 }
             }
 
-            var cannonsStartState = CommunicateCombatState(CombatStep.CannonsStart, null);
-            yield return cannonsStartState;
+            yield return CommunicateCombatState(CombatStep.CannonsStart, null);
 
             // Fire cannons
             while (true)
@@ -175,23 +172,22 @@ namespace EclipseCombatCalculator.Library
                     {
                         continue;
                     }
-                    var state2 = CommunicateCombatState(CombatStep.CannonActivationStart, attacker);
-                    yield return state2;
+                    yield return CommunicateCombatState(CombatStep.CannonActivationStart, attacker);
                     var (startRetreat, completeRetreat) = await retreatAsker(attacker);
                     // TODO: Sanity checks?
                     attacker.HandleRetreat(startRetreat, completeRetreat);
 
-                    var state1 = CommunicateCombatState(CombatStep.Retreat, attacker);
-                    yield return state1;
-                    if (state1.Ended)
+                    var retreatState = CommunicateCombatState(CombatStep.Retreat, attacker);
+                    yield return retreatState;
+                    if (retreatState.Ended)
                     {
                         yield break;
                     }
 
                     await ActivateShips(attacker.Blueprint.Cannons, attacker);
-                    var state = CommunicateCombatState(CombatStep.CannonDamageApplied, attacker);
-                    yield return state;
-                    if (state.Ended)
+                    var attackState = CommunicateCombatState(CombatStep.CannonDamageApplied, attacker);
+                    yield return attackState;
+                    if (attackState.Ended)
                     {
                         yield break;
                     }
