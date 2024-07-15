@@ -143,10 +143,18 @@ namespace EclipseCombatCalculator.WinUI
 
             //TODO: Disable/Hide UI.
 
-            var result = await Combat.AttackerWin(
+            bool result = false;
+            await foreach (var state in Combat.DoCombat(
                 ViewModel.Attackers.Select(viewModel => (viewModel.Blueprint as IShipStats, viewModel.Count)),
                 ViewModel.Defenders.Select(viewModel => (viewModel.Blueprint as IShipStats, viewModel.Count)),
-                AssignDamage, (a) => Task.FromResult((0, 0)));
+                AssignDamage, RetreatAsker))
+            {
+                // TODO: Update UI
+                if (state.Ended)
+                {
+                    result = state.AttackerWinner.Value;
+                }
+            }
 
             ContentDialog resultDialog = new()
             {
