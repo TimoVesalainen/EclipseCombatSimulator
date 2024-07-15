@@ -115,6 +115,32 @@ namespace EclipseCombatCalculator.WinUI
                 }
             }
 
+            async Task<(int startRetreat, int completeRetreat)> RetreatAsker(ICombatShip activeShips)
+            {
+                if (activeShips.IsAttacker)
+                {
+                    if (AttackerAI.IsOn)
+                    {
+                        return (0, 0);
+                    }
+                    else
+                    {
+                        return await Retreater(activeShips);
+                    }
+                }
+                else
+                {
+                    if (DefenderAI.IsOn)
+                    {
+                        return (0, 0);
+                    }
+                    else
+                    {
+                        return await Retreater(activeShips);
+                    }
+                }
+            }
+
             //TODO: Disable/Hide UI.
 
             var result = await Combat.AttackerWin(
@@ -139,6 +165,12 @@ namespace EclipseCombatCalculator.WinUI
         {
             // TODO: Ask with UI
             return [];
+        }
+
+        async Task<(int startRetreat, int completeRetreat)> Retreater(ICombatShip activeShips)
+        {
+            // TODO: Ask with UI
+            return (0, 0);
         }
     }
 }
