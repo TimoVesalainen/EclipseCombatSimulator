@@ -63,8 +63,8 @@ namespace EclipseCombatCalculator.Library
             public void HandleRetreat(int startRetreat, int completeRetreat)
             {
                 InCombat -= startRetreat;
-                InRetreat += startRetreat;
-                InRetreat -= completeRetreat;
+                InCombat += InRetreat - completeRetreat;
+                InRetreat = startRetreat;
                 Retreated += completeRetreat;
             }
         }
