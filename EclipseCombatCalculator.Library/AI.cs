@@ -35,7 +35,7 @@ namespace EclipseCombatCalculator.Library
                     break;
                 }
                 List<IDiceFace> assignedDice = new();
-                int remainingHealth = target.Count * (target.Blueprint.Hulls + 1) - target.Damage;
+                int remainingHealth = target.InCombat * (target.Blueprint.Hulls + 1) - target.Damage;
                 foreach (var dice in dices)
                 {
                     if (attacker.Blueprint.CanHit(target.Blueprint, dice))

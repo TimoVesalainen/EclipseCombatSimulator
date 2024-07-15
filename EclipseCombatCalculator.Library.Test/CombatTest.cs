@@ -30,6 +30,8 @@ namespace EclipseCombatCalculator.Library.Test
             IEnumerable<Dice> IShipStats.Cannons => Weapons ?? Array.Empty<Dice>();
         }
 
+        static readonly RetreatAsker NoRetreat = (ICombatShip ship) => Task.FromResult((0, 0));
+
         [Test]
         public async Task BasicCombatTest()
         {
@@ -46,7 +48,7 @@ namespace EclipseCombatCalculator.Library.Test
             var result = await Combat.AttackerWin(
                 new[] { (blueprint: new TestShip { Initiative = 1, Weapons = new Dice[] { CommonDices.YellowDice }, Computers = 0, Shields = 0, Hulls = 0 } as IShipStats, count: 1) },
                 new[] { (blueprint: new TestShip { Initiative = 1, Weapons = Array.Empty<Dice>(), Computers = 0, Shields = 0, Hulls = 0 } as IShipStats, count: 1) },
-                CombatAssingment);
+                CombatAssingment, NoRetreat);
 
             Assert.IsTrue(result);
         }
@@ -62,7 +64,7 @@ namespace EclipseCombatCalculator.Library.Test
             var result = await Combat.AttackerWin(
                 new[] { (blueprint: Blueprint.OrionInterceptor as IShipStats, count: 5) },
                 new[] { (blueprint: Blueprint.PlantaInterceptor as IShipStats, count: 1) },
-                CombatAssignment);
+                CombatAssignment, NoRetreat);
         }
 
         [Test]
@@ -71,7 +73,7 @@ namespace EclipseCombatCalculator.Library.Test
             var result = await Combat.AttackerWin(
                 new[] { (blueprint: Blueprint.OrionInterceptor as IShipStats, count: 5) },
                 new[] { (blueprint: Blueprint.PlantaInterceptor as IShipStats, count: 1) },
-                AI.BasicAI);
+                AI.BasicAI, NoRetreat);
         }
     }
 }

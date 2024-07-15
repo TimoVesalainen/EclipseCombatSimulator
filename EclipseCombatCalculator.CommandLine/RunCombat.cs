@@ -19,7 +19,7 @@ namespace EclipseCombatCalculator.CommandLine
 
         private static string PrintShip(ICombatShip ship)
         {
-            return $"{ship.Blueprint.Name} amount {ship.Count} with {ship.Damage} damage";
+            return $"{ship.Blueprint.Name} amount {ship.InCombat} with {ship.Damage} damage";
         }
 
         private static IEnumerable<(ICombatShip, IEnumerable<IDiceFace>)> PlayerDistribution(
@@ -75,7 +75,7 @@ namespace EclipseCombatCalculator.CommandLine
             async Task<IEnumerable<(ICombatShip, IEnumerable<IDiceFace>)>> DamageAssigner(
                 ICombatShip attacker, IEnumerable<ICombatShip> targets, IEnumerable<IDiceFace> diceResult)
             {
-                if (options.Attack != attacker.Attacker)
+                if (options.Attack != attacker.IsAttacker)
                 {
                     await Task.Delay(TimeSpan.FromSeconds(1));
                     Console.WriteLine("Enemy dice are: {0}", string.Join(", ", diceResult.Select(PrintDiceFace)));
@@ -99,7 +99,7 @@ namespace EclipseCombatCalculator.CommandLine
             var attacker = GetBlueprints(options.Attacker).Zip(options.AttackerShipCounts).Where(x => x.First != null);
             var defender = GetBlueprints(options.Defender).Zip(options.DefenderShipCounts).Where(x => x.First != null);
 
-            var run = await Combat.AttackerWin(attacker, defender, DamageAssigner);
+            var run = await Combat.AttackerWin(attacker, defender, DamageAssigner, (type) => Task.FromResult((0,0)));
 
             if (run)
             {

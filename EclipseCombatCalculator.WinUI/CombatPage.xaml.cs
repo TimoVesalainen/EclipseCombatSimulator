@@ -91,7 +91,7 @@ namespace EclipseCombatCalculator.WinUI
             async Task<IEnumerable<(ICombatShip, IEnumerable<IDiceFace>)>> AssignDamage(
             ICombatShip attacker, IEnumerable<ICombatShip> targets, IEnumerable<IDiceFace> diceResult)
             {
-                if (attacker.Attacker)
+                if (attacker.IsAttacker)
                 {
                     if (AttackerAI.IsOn)
                     {
@@ -120,7 +120,7 @@ namespace EclipseCombatCalculator.WinUI
             var result = await Combat.AttackerWin(
                 ViewModel.Attackers.Select(viewModel => (viewModel.Blueprint as IShipStats, viewModel.Count)),
                 ViewModel.Defenders.Select(viewModel => (viewModel.Blueprint as IShipStats, viewModel.Count)),
-                AssignDamage);
+                AssignDamage, (a) => Task.FromResult((0, 0)));
 
             ContentDialog resultDialog = new()
             {

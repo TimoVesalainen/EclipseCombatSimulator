@@ -2,9 +2,15 @@
 {
     public interface ICombatShip
     {
-        bool Attacker { get; } // TODO: Use other way to check who does assignment of damage
+        bool IsAttacker { get; } // TODO: Use other way to check who does assignment of damage
         IShipStats Blueprint { get; }
-        int Count { get; }
+
+        int InCombat { get; }
+        int InRetreat { get; }
+        int Retreated { get; }
+        int Defeated { get; }
+
         int Damage { get; }
+
     }
 }
