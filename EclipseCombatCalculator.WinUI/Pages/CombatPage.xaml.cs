@@ -165,6 +165,7 @@ namespace EclipseCombatCalculator.WinUI
             };
 
             await resultDialog.ShowAsync();
+
             //TODO: Enable/show UI.
         }
 
