@@ -174,7 +174,18 @@ namespace EclipseCombatCalculator.Library
                     }
                     yield return CommunicateCombatState(CombatStep.CannonActivationStart, attacker);
                     var (startRetreat, completeRetreat) = await retreatAsker(attacker);
-                    // TODO: Sanity checks?
+                    if (startRetreat < 0 || completeRetreat < 0)
+                    {
+                        throw new Exception("Negative value returned from callback");
+                    }
+                    if (startRetreat > attacker.InCombat)
+                    {
+                        throw new Exception("Cannot retreat more ships that are in combat");
+                    }
+                    if (completeRetreat > attacker.InRetreat)
+                    {
+                        throw new Exception("Cannot complete retreat more ships that are in retreat");
+                    }
                     attacker.HandleRetreat(startRetreat, completeRetreat);
 
                     var retreatState = CommunicateCombatState(CombatStep.Retreat, attacker);
