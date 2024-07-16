@@ -14,6 +14,7 @@ namespace EclipseCombatCalculator.WinUI.ViewModel
 {
     public sealed class TargetShipViewModel : INotifyPropertyChanged
     {
+        public ICombatShip Ship { get; set; }
         public Blueprint Blueprint { get; set; }
         public int Count { get; set; }
         public int Damage { get; set; }
@@ -23,6 +24,7 @@ namespace EclipseCombatCalculator.WinUI.ViewModel
         {
             return new TargetShipViewModel
             {
+                Ship = target,
                 Blueprint = target.Blueprint as Blueprint,
                 Count = target.InCombat,
                 Damage = target.Damage

@@ -188,8 +188,33 @@ namespace EclipseCombatCalculator.WinUI
         async Task<IEnumerable<(ICombatShip, IEnumerable<IDiceFace>)>> ManualAssignment(
             ICombatShip attacker, IEnumerable<ICombatShip> targets, IEnumerable<IDiceFace> diceResult)
         {
-            // TODO: Ask with UI
-            return [];
+            if (!diceResult.Any())
+            {
+                return [];
+            }
+
+            var dialog = new DiceAssingmentDialog
+            {
+                XamlRoot = this.XamlRoot
+            };
+
+            foreach (var dice in diceResult)
+            {
+                var viewModel = new DiceViewModel { Dice = dice };
+                dialog.ViewModel.AllDice.Add(viewModel);
+                dialog.ViewModel.UnAssignedFaces.Add(viewModel);
+            }
+            foreach (var target in targets)
+            {
+                dialog.ViewModel.Ships.Add(TargetShipViewModel.Create(target));
+            }
+            var attackerVM = CombatShipType.Create(attacker.Blueprint as Blueprint);
+            attackerVM.Count = attacker.InCombat;
+            dialog.ViewModel.AttackerShip = attackerVM;
+
+            await dialog.ShowAsync();
+
+            return dialog.Result;
         }
 
         async Task<(int startRetreat, int completeRetreat)> Retreater(ICombatShip activeShips)

@@ -17,6 +17,8 @@ using EclipseCombatCalculator.WinUI.ViewModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Windows.ApplicationModel.DataTransfer;
+using EclipseCombatCalculator.Library.Blueprints;
+using EclipseCombatCalculator.Library;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -26,6 +28,9 @@ namespace EclipseCombatCalculator.WinUI.Dialogs
     public sealed partial class DiceAssingmentDialog : ContentDialog
     {
         public DiceAssignmentViewModel ViewModel { get; } = new();
+
+        public IEnumerable<(ICombatShip, IEnumerable<IDiceFace>)> Result =>
+            ViewModel.Ships.Select(shipVM => (shipVM.Ship, shipVM.AssignedDiceFaces.Select(diceVm => diceVm.Dice)));
 
         public DiceAssingmentDialog()
         {
