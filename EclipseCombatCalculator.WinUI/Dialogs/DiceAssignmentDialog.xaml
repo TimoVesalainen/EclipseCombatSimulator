@@ -60,6 +60,7 @@
                             Grid.Column="1"
                             Text="{x:Bind Damage}" FontSize="20"/>
 
+                        <!-- TODO: Indicate if dice do not hit when -->
                         <ListView
                             x:Name="DiceList"
                             Grid.Row="2"
@@ -105,6 +106,8 @@
                     </ItemsPanelTemplate>
                 </ListView.ItemsPanel>
             </ListView>
+
+            <!-- TODO: Show attacker -->
         </Grid>
     </ContentDialog.Content>
 </ContentDialog>
