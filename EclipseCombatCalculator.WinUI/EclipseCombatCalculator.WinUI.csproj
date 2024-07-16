@@ -13,16 +13,13 @@
     <EnableMsixTooling>true</EnableMsixTooling>
   </PropertyGroup>
   <ItemGroup>
-    <Content Remove="Assets\Eclipse.otf" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Remove="Assets\OrionNebula.png" />
-    <None Remove="BlueprintsPage.xaml" />
-    <None Remove="CombatPage.xaml" />
-    <None Remove="Dialogs\BlueprintSelectionDialog.xaml" />
+	  <None Remove="BlueprintsPage.xaml" />
+	  <None Remove="CombatPage.xaml" />
+	  <None Remove="Dialogs\BlueprintSelectionDialog.xaml" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Assets\Eclipse.otf" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\Square150x150Logo.scale-200.png" />
