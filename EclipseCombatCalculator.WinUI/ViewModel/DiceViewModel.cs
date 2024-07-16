@@ -19,7 +19,13 @@ namespace EclipseCombatCalculator.WinUI.ViewModel
 
         private static string TextCreator(IDiceFace diceFace)
         {
-            return "Dice";
+            return diceFace switch
+            {
+                Damage damage => string.Join("", Enumerable.Range(0, damage.DamageToOpponent).Select(_ => "*")),
+                Number number => $"{number.Value}({string.Join("", Enumerable.Range(0, number.DamageToOpponent).Select(_ => "*"))})",
+                Miss number => "_",
+                _ => throw new NotImplementedException(),
+            };
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
