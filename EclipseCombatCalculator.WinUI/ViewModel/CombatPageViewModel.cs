@@ -8,6 +8,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections.Specialized;
 
 namespace EclipseCombatCalculator.WinUI.ViewModel
 {
@@ -18,11 +19,42 @@ namespace EclipseCombatCalculator.WinUI.ViewModel
         public ObservableCollection<AIViewModel> AIs { get; } = [new AIViewModel("Basic", AI.BasicAI)];
         public bool CanStartCombat => Attackers.Count > 0 && Defenders.Count > 0;
 
+        public CombatPageViewModel()
+        {
+            Attackers.CollectionChanged += Attackers_CollectionChanged;
+            Defenders.CollectionChanged += Attackers_CollectionChanged;
+        }
+
+        private void Attackers_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Add:
+                    if ((sender as ObservableCollection<CombatShipType>).Count == e.NewItems.Count)
+                    {
+                        NotifyPropertyChanged(nameof(CanStartCombat));
+                    }
+                    break;
+                case NotifyCollectionChangedAction.Remove:
+                    if ((sender as ObservableCollection<CombatShipType>).Count == 0)
+                    {
+                        NotifyPropertyChanged(nameof(CanStartCombat));
+                    }
+                    break;
+                case NotifyCollectionChangedAction.Reset:
+                    NotifyPropertyChanged(nameof(CanStartCombat));
+                    break;
+                case NotifyCollectionChangedAction.Replace:
+                case NotifyCollectionChangedAction.Move:
+                    break;
+            }
+            NotifyPropertyChanged(nameof(CanStartCombat));
+        }
+
         public void Remove(CombatShipType ship)
         {
             Attackers.Remove(ship);
             Defenders.Remove(ship);
-            NotifyPropertyChanged(nameof(CanStartCombat));
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
