@@ -87,7 +87,7 @@ namespace EclipseCombatCalculator.Library
         public static async IAsyncEnumerable<CombatState> DoCombat(
             IEnumerable<(IShipStats blueprint, int count)> attackers,
             IEnumerable<(IShipStats blueprint, int count)> defenders,
-            DamageAssigner damageAssingment, RetreatAsker retreatAsker)
+            DamageAssigner damageAssignment, RetreatAsker retreatAsker)
         {
             var shipTypes = attackers.Select(shipType => new CombatShip(shipType.blueprint, shipType.count, attacker: true))
                 .Concat(defenders.Select(shipType => new CombatShip(shipType.blueprint, shipType.count, attacker: false))).ToList();
@@ -103,9 +103,9 @@ namespace EclipseCombatCalculator.Library
                     .Select(x => x.Flatten());
 
                 var diceResults = distr.Sample();
-                var targets = shipTypes.Where(target => target.IsAttacker != attacker.IsAttacker && target.InCombat > 0);
+                var targets = shipTypes.Where(target => target.IsAttacker != attacker.IsAttacker && (target.InCombat + target.InRetreat > 0));
 
-                var assignments = await damageAssingment(attacker, targets, diceResults);
+                var assignments = await damageAssignment(attacker, targets, diceResults);
 
                 // TODO: Sanity checks?
 
