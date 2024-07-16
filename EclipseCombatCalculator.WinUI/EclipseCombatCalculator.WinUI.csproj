@@ -16,6 +16,7 @@
 	  <None Remove="BlueprintsPage.xaml" />
 	  <None Remove="CombatPage.xaml" />
 	  <None Remove="Dialogs\BlueprintSelectionDialog.xaml" />
+	  <None Remove="Dialogs\DiceAssingmentDialog.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -58,6 +59,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Pages\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Dialogs\DiceAssingmentDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 
   <!--

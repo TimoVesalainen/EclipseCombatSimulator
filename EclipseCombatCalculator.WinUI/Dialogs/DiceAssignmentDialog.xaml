@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentDialog
+    x:Class="EclipseCombatCalculator.WinUI.Dialogs.DiceAssingmentDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:EclipseCombatCalculator.WinUI.Dialogs"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewmodels="using:EclipseCombatCalculator.WinUI.ViewModel"
+    mc:Ignorable="d"
+    PrimaryButtonText="Done">
+
+
+    <ContentDialog.TitleTemplate>
+        <DataTemplate>
+            <TextBlock Text="Assing attack dice"/>
+        </DataTemplate>
+    </ContentDialog.TitleTemplate>
+
+    <ContentDialog.Content>
+        <Grid>
+            <Grid.Resources>
+                <DataTemplate x:Key="Dice" x:DataType="viewmodels:DiceViewModel">
+                    <Grid Margin="0,11,0,13" CanDrag="True">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Text="{x:Bind Text}" FontSize="20" FontFamily="{StaticResource EclipseFont}" />
+                    </Grid>
+                </DataTemplate>
+                <DataTemplate x:Key="Ship" x:DataType="viewmodels:TargetShipViewModel">
+                    <Grid Margin="0,11,0,13" AllowDrop="True" DragOver="Grid_DragOver" Drop="Grid_Drop">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock 
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="2"
+                            Text="{x:Bind Blueprint.Name}" FontSize="20" FontFamily="{StaticResource EclipseFont}" />
+                        <TextBlock
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            Text="{x:Bind Count}" FontSize="20"/>
+                        <TextBlock
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            Text="{x:Bind Damage}" FontSize="20"/>
+
+                        <ListView
+                            x:Name="DiceList"
+                            Grid.Row="2"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="2"
+                            ItemTemplate="{StaticResource Dice}"
+                            ItemsSource="{x:Bind AssignedDiceFaces}">
+                            <ListView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <ItemsStackPanel Orientation="Horizontal"/>
+                                </ItemsPanelTemplate>
+                            </ListView.ItemsPanel>
+                        </ListView>
+                    </Grid>
+                </DataTemplate>
+            </Grid.Resources>
+            
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <ListView
+                x:Name="Ship"
+                Grid.Row="0"
+                ItemTemplate="{StaticResource Ship}"
+                ItemsSource="{x:Bind ViewModel.Ships}">
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <ItemsStackPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+            </ListView>
+
+            <ListView
+                x:Name="DiceList"
+                Grid.Row="1"
+                ItemTemplate="{StaticResource Dice}"
+                ItemsSource="{x:Bind ViewModel.UnAssignedFaces}">
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <ItemsStackPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+            </ListView>
+        </Grid>
+    </ContentDialog.Content>
+</ContentDialog>
