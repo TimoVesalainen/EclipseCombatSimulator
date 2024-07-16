@@ -11,6 +11,8 @@ namespace EclipseCombatCalculator.WinUI.ViewModel
 {
     public sealed class DiceViewModel : INotifyPropertyChanged
     {
+        public Guid ID { get; } = Guid.NewGuid();
+
         public IDiceFace Dice { get; set; }
 
         public string Text => TextCreator(Dice);

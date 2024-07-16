@@ -21,7 +21,7 @@
         <Grid>
             <Grid.Resources>
                 <DataTemplate x:Key="Dice" x:DataType="viewmodels:DiceViewModel">
-                    <Grid Margin="0,11,0,13" CanDrag="True">
+                    <Grid Margin="0,11,0,13" CanDrag="True" DragStarting="Grid_DragStarting">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>

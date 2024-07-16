@@ -17,7 +17,7 @@ namespace EclipseCombatCalculator.WinUI.ViewModel
         public Blueprint Blueprint { get; set; }
         public int Count { get; set; }
         public int Damage { get; set; }
-        public ObservableCollection<IDiceFace> AssignedDiceFaces { get; set; } = [];
+        public ObservableCollection<DiceViewModel> AssignedDiceFaces { get; set; } = [];
 
         public static TargetShipViewModel Create(ICombatShip target)
         {
