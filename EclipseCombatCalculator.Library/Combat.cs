@@ -107,13 +107,26 @@ namespace EclipseCombatCalculator.Library
 
                 var assignments = await damageAssignment(attacker, targets, diceResults);
 
-                // TODO: Sanity checks?
+                HashSet<IDiceFace> usedDice = new();
 
                 foreach (var (target, dices) in assignments)
                 {
                     var targetShip = target as CombatShip;
+                    if (!targets.Contains(targetShip))
+                    {
+                        throw new Exception("Targetting invalid ship");
+                    }
                     foreach (var dice in dices)
                     {
+                        if (!diceResults.Contains(dice))
+                        {
+                            throw new Exception("Attempting to cheat by creating new dice");
+                        }
+                        if (usedDice.Contains(dice))
+                        {
+                            throw new Exception("Attempting to cheat by re-using dice");
+                        }
+                        usedDice.Add(dice);
                         if (attacker.Blueprint.CanHit(targetShip.Blueprint, dice))
                         {
                             targetShip.AddDamage(dice.DamageToOpponent);
