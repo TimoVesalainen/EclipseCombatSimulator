@@ -111,9 +111,13 @@ namespace EclipseCombatCalculator.Library
 
                 foreach (var (target, dices) in assignments)
                 {
+                    var targetShip = target as CombatShip;
                     foreach (var dice in dices)
                     {
-                        (target as CombatShip).AddDamage(dice.DamageToOpponent);
+                        if (attacker.Blueprint.CanHit(targetShip.Blueprint, dice))
+                        {
+                            targetShip.AddDamage(dice.DamageToOpponent);
+                        }
                     }
                 }
 
