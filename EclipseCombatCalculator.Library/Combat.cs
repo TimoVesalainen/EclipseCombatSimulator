@@ -145,15 +145,15 @@ namespace EclipseCombatCalculator.Library
             yield return CommunicateCombatState(CombatStep.MissilesStart, null);
 
             // Fire missiles
-            foreach (var attacker in shipTypes)
+            foreach (var activeShipType in shipTypes)
             {
-                if (attacker.InCombat == 0)
+                if (activeShipType.InCombat == 0)
                 {
                     continue;
                 }
-                yield return CommunicateCombatState(CombatStep.MissileActivationStart, attacker);
-                await ActivateShips(attacker.Blueprint.Missiles, attacker);
-                var state = CommunicateCombatState(CombatStep.MissilesDamageApplied, attacker);
+                yield return CommunicateCombatState(CombatStep.MissileActivationStart, activeShipType);
+                await ActivateShips(activeShipType.Blueprint.Missiles, activeShipType);
+                var state = CommunicateCombatState(CombatStep.MissilesDamageApplied, activeShipType);
                 yield return state;
                 if (state.Ended)
                 {
@@ -166,37 +166,37 @@ namespace EclipseCombatCalculator.Library
             // Fire cannons
             while (true)
             {
-                foreach (var attacker in shipTypes)
+                foreach (var activeShipType in shipTypes)
                 {
-                    if (attacker.InCombat == 0)
+                    if (activeShipType.InCombat == 0 && activeShipType.InRetreat == 0)
                     {
                         continue;
                     }
-                    yield return CommunicateCombatState(CombatStep.CannonActivationStart, attacker);
-                    var (startRetreat, completeRetreat) = await retreatAsker(attacker);
+                    yield return CommunicateCombatState(CombatStep.CannonActivationStart, activeShipType);
+                    var (startRetreat, completeRetreat) = await retreatAsker(activeShipType);
                     if (startRetreat < 0 || completeRetreat < 0)
                     {
                         throw new Exception("Negative value returned from callback");
                     }
-                    if (startRetreat > attacker.InCombat)
+                    if (startRetreat > activeShipType.InCombat)
                     {
                         throw new Exception("Cannot retreat more ships that are in combat");
                     }
-                    if (completeRetreat > attacker.InRetreat)
+                    if (completeRetreat > activeShipType.InRetreat)
                     {
                         throw new Exception("Cannot complete retreat more ships that are in retreat");
                     }
-                    attacker.HandleRetreat(startRetreat, completeRetreat);
+                    activeShipType.HandleRetreat(startRetreat, completeRetreat);
 
-                    var retreatState = CommunicateCombatState(CombatStep.Retreat, attacker);
+                    var retreatState = CommunicateCombatState(CombatStep.Retreat, activeShipType);
                     yield return retreatState;
                     if (retreatState.Ended)
                     {
                         yield break;
                     }
 
-                    await ActivateShips(attacker.Blueprint.Cannons, attacker);
-                    var attackState = CommunicateCombatState(CombatStep.CannonDamageApplied, attacker);
+                    await ActivateShips(activeShipType.Blueprint.Cannons, activeShipType);
+                    var attackState = CommunicateCombatState(CombatStep.CannonDamageApplied, activeShipType);
                     yield return attackState;
                     if (attackState.Ended)
                     {
