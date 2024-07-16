@@ -171,15 +171,42 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
 
             <Button
                 x:Name="StartButton"
                 Grid.Column="0"
+                Grid.Row="1"
                 Click="StartButton_Click"
                 IsEnabled="{x:Bind ViewModel.CanStartCombat, Mode=OneWay}">
                 <TextBlock Text="Start"/>
             </Button>
+
+            <TextBlock
+                x:Name="AttackerState"
+                Grid.Column="1"
+                Grid.Row="0"
+                />
+
+            <TextBlock
+                x:Name="DefenderState"
+                Grid.Column="1"
+                Grid.Row="2"
+                />
+
+            <TextBlock
+                x:Name="PriorityList"
+                Grid.Column="2"
+                Grid.Row="0"
+                Grid.RowSpan="3"
+                />
         </Grid>
     </Grid>
 </Page>

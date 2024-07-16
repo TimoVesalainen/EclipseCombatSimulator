@@ -149,7 +149,19 @@ namespace EclipseCombatCalculator.WinUI
                 ViewModel.Defenders.Select(viewModel => (viewModel.Blueprint as IShipStats, viewModel.Count)),
                 AssignDamage, RetreatAsker))
             {
-                // TODO: Update UI
+                string PriorityLine(ICombatShip ship)
+                {
+                    var prefix = state.Active == ship ? "=> " : "";
+                    return $"{prefix}{ship.Blueprint.Name} in combat {ship.InCombat} in retreat {ship.InRetreat} retreated {ship.Retreated} destroyed {ship.Defeated}";
+                }
+
+                PriorityList.Text = string.Join("\n", state.EngagementRoundOrder.Select(PriorityLine));
+
+                AttackerState.Text = string.Join("\n", state.Attackers.Where(ship => ship.InCombat > 0).Select(ship => $"{ship.Blueprint.Name} count {ship.InCombat} damage {ship.Damage}"));
+                DefenderState.Text = string.Join("\n", state.Defenders.Where(ship => ship.InCombat > 0).Select(ship => $"{ship.Blueprint.Name} count {ship.InCombat} damage {ship.Damage}"));
+
+                await Task.Delay(TimeSpan.FromSeconds(1));
+
                 if (state.Ended)
                 {
                     result = state.AttackerWinner.Value;
@@ -165,6 +177,10 @@ namespace EclipseCombatCalculator.WinUI
             };
 
             await resultDialog.ShowAsync();
+
+            PriorityList.Text = "";
+            AttackerState.Text = "";
+            DefenderState.Text = "";
 
             //TODO: Enable/show UI.
         }
