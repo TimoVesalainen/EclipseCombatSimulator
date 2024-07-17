@@ -25,6 +25,8 @@ namespace EclipseCombatCalculator.WinUI
     /// </summary>
     public sealed partial class BlueprintsPage : Page
     {
+        public Blueprint SelectedBlueprint { get; set; } = Blueprint.OrionInterceptor;
+
         public BlueprintsPage()
         {
             this.InitializeComponent();
