@@ -219,8 +219,19 @@ namespace EclipseCombatCalculator.WinUI
 
         async Task<(int startRetreat, int completeRetreat)> Retreater(ICombatShip activeShips)
         {
-            // TODO: Ask with UI
-            return (0, 0);
+            if (activeShips.InCombat == 0 && activeShips.InRetreat == 0)
+            {
+                return (0, 0);
+            }
+
+            var dialog = new Dialogs.RetreatAsker
+            {
+                XamlRoot = this.XamlRoot
+            };
+            dialog.ViewModel.Ship = activeShips;
+
+            await dialog.ShowAsync();
+            return (dialog.ViewModel.StartRetreat, dialog.ViewModel.CompleteRetreat);
         }
     }
 }

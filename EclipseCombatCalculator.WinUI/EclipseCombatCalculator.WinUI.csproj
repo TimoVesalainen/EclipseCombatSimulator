@@ -17,6 +17,7 @@
 	  <None Remove="CombatPage.xaml" />
 	  <None Remove="Dialogs\BlueprintSelectionDialog.xaml" />
 	  <None Remove="Dialogs\DiceAssignmentDialog.xaml" />
+	  <None Remove="Dialogs\RetreatAsker.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -59,6 +60,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Pages\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Dialogs\RetreatAsker.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Dialogs\DiceAssignmentDialog.xaml">
