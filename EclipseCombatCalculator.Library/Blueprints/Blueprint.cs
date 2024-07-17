@@ -19,7 +19,8 @@ namespace EclipseCombatCalculator.Library.Blueprints
         public Part this[int index]
         {
             get => slots[index];
-            set {
+            set
+            {
                 if (readOnlyBlueprint)
                 {
                     throw new InvalidOperationException("Trying to edit read only Blueprint");
