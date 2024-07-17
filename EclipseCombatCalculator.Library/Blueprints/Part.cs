@@ -83,7 +83,7 @@ namespace EclipseCombatCalculator.Library.Blueprints
 
         // Esoteric parts
         public static readonly Part JumpDrive = new("Jump Drive") { Energy = -2, Source = PartSource.Discovery };
-        public static readonly Part MorphShield = new("Morph Shield") { Initiative = 1, Shields = 1, Source = PartSource.Discovery }; // TODO
+        public static readonly Part MorphShield = new("Morph Shield") { Initiative = 1, Shields = 1, Source = PartSource.Discovery }; // TODO: Implement
         public static readonly Part MuonSource = new("Muon Source") { Initiative = 1, Energy = 2, Source = PartSource.Discovery, OutsideBlueprint = true };
     }
 }

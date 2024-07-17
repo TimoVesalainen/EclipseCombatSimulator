@@ -219,6 +219,7 @@ namespace EclipseCombatCalculator.Library
                     {
                         yield break;
                     }
+                    // TODO: Implement Morph shield
                 }
             }
         }
