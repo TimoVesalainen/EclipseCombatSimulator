@@ -13,8 +13,9 @@
     <EnableMsixTooling>true</EnableMsixTooling>
   </PropertyGroup>
   <ItemGroup>
-	  <None Remove="BlueprintsPage.xaml" />
-	  <None Remove="CombatPage.xaml" />
+	  <None Remove="BlueprintControl.xaml" />
+	  <None Remove="Pages/BlueprintsPage.xaml" />
+	  <None Remove="Pages/CombatPage.xaml" />
 	  <None Remove="Dialogs\BlueprintSelectionDialog.xaml" />
 	  <None Remove="Dialogs\DiceAssignmentDialog.xaml" />
 	  <None Remove="Dialogs\RetreatAsker.xaml" />
@@ -29,6 +30,11 @@
     <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
     <Content Include="Assets\StoreLogo.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Assets\Parts\" />
+    <Folder Include="Pages\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -49,17 +55,19 @@
     <ProjectReference Include="..\EclipseCombatCalculator.Library\EclipseCombatCalculator.Library.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Page Update="CombatPage.xaml">
+    <Page Update="Page/CombatPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="BlueprintsPage.xaml">
+    <Page Update="Page/BlueprintsPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Pages\" />
+    <Page Update="BlueprintControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Dialogs\RetreatAsker.xaml">
