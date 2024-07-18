@@ -8,6 +8,7 @@ namespace EclipseCombatCalculator.Library
     {
         public string Name { get; }
         public int Initiative { get; }
+        public ShipType ShipType { get; }
         public IEnumerable<Dice> Cannons { get; }
         public IEnumerable<Dice> Missiles { get; }
         public int Computers { get; }
@@ -80,6 +81,26 @@ namespace EclipseCombatCalculator.Library
                 return number.Value + attacker.Computers - target.Shields >= 6 ? number.DamageToOpponent : 0;
             }
             throw new NotImplementedException("Not implemented");
+        }
+
+        public static bool MustHaveDrive(this IShipStats attacker)
+        {
+            return attacker.ShipType switch
+            {
+                ShipType.Interceptor or ShipType.Cruiser or ShipType.Dreadnaught => true,
+                ShipType.Starbase => false,
+                _ => throw new ArgumentOutOfRangeException(nameof(attacker)),
+            };
+        }
+
+        public static bool CannotHaveDrive(this IShipStats attacker)
+        {
+            return attacker.ShipType switch
+            {
+                ShipType.Interceptor or ShipType.Cruiser or ShipType.Dreadnaught => false,
+                ShipType.Starbase => true,
+                _ => throw new ArgumentOutOfRangeException(nameof(attacker)),
+            };
         }
     }
 }

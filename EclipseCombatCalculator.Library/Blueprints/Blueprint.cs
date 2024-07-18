@@ -7,6 +7,7 @@ namespace EclipseCombatCalculator.Library.Blueprints
 {
     public sealed class Blueprint : IShipStats
     {
+        public ShipType ShipType { get; }
         public string Name { get; init; }
         public int BaseInitiative { get; init; } = 0;
         public int BaseComputer { get; init; } = 0;
@@ -40,9 +41,10 @@ namespace EclipseCombatCalculator.Library.Blueprints
 
         public static IEnumerable<Blueprint> Blueprints => blueprints;
 
-        private Blueprint(string name, params Part[] parts)
+        private Blueprint(string name, ShipType type, params Part[] parts)
         {
             Name = name;
+            this.ShipType = type;
             this.slots = parts;
             readOnlyBlueprint = true;
             blueprints.Add(this);
@@ -89,18 +91,18 @@ namespace EclipseCombatCalculator.Library.Blueprints
         IEnumerable<Dice> IShipStats.Missiles => Parts.SelectMany(part => part.Missiles);
 
         //Default aka Terran, Mechanema, Hydran, Draco, Magellan, Lyra
-        public static readonly Blueprint TerranInterceptor = new("Terran Interceptor",
+        public static readonly Blueprint TerranInterceptor = new("Terran Interceptor", ShipType.Interceptor,
             Part.IonCannon,
             Part.NuclearSource, Part.NuclearDrive, null)
         { BaseInitiative = 2 };
-        public static readonly Blueprint TerranCruiser = new("Terran Cruiser",
+        public static readonly Blueprint TerranCruiser = new("Terran Cruiser", ShipType.Cruiser,
             Part.ElectronComputer, Part.IonCannon, null,
             Part.NuclearSource, Part.Hull, Part.NuclearDrive)
         { BaseInitiative = 1 };
-        public static readonly Blueprint TerranDreadnaught = new("Terran Dreadnaught",
+        public static readonly Blueprint TerranDreadnaught = new("Terran Dreadnaught", ShipType.Dreadnaught,
             Part.ElectronComputer, Part.IonCannon, Part.IonCannon, null,
             Part.NuclearSource, Part.Hull, Part.Hull, Part.NuclearDrive);
-        public static readonly Blueprint TerranStarbase = new("Terran Starbase",
+        public static readonly Blueprint TerranStarbase = new("Terran Starbase", ShipType.Starbase,
             Part.ElectronComputer, Part.IonCannon,
             Part.Hull, null, Part.Hull)
         { BaseInitiative = 4, BaseEnergy = 3, IsBase = true };
@@ -108,86 +110,86 @@ namespace EclipseCombatCalculator.Library.Blueprints
         // TODO: Each race gets it's own blueprints
 
         //Eridani
-        public static readonly Blueprint EridaniInterceptor = new("Eridani Interceptor",
+        public static readonly Blueprint EridaniInterceptor = new("Eridani Interceptor", ShipType.Interceptor,
             Part.IonCannon,
             Part.NuclearSource, Part.NuclearDrive, null)
         { BaseInitiative = 2, BaseEnergy = 1 };
-        public static readonly Blueprint EridaniCruiser = new("Eridani Cruiser",
+        public static readonly Blueprint EridaniCruiser = new("Eridani Cruiser", ShipType.Cruiser,
             Part.ElectronComputer, Part.IonCannon, null,
             Part.NuclearSource, Part.Hull, Part.NuclearDrive)
         { BaseInitiative = 1, BaseEnergy = 1 };
-        public static readonly Blueprint EridaniDreadnaught = new("Eridani Dreadnaught",
+        public static readonly Blueprint EridaniDreadnaught = new("Eridani Dreadnaught", ShipType.Dreadnaught,
             Part.ElectronComputer, Part.IonCannon, Part.IonCannon, null,
             Part.NuclearSource, Part.Hull, Part.Hull, Part.NuclearDrive)
         { BaseEnergy = 1 };
-        public static readonly Blueprint EridaniStarbase = new("Eridani Starbase",
+        public static readonly Blueprint EridaniStarbase = new("Eridani Starbase", ShipType.Starbase,
             Part.ElectronComputer, Part.IonCannon,
             Part.Hull, null, Part.Hull)
         { BaseInitiative = 4, BaseEnergy = 3, IsBase = true };
 
         //Orion
-        public static readonly Blueprint OrionInterceptor = new("Orion Interceptor",
+        public static readonly Blueprint OrionInterceptor = new("Orion Interceptor", ShipType.Interceptor,
             Part.IonCannon,
             Part.NuclearSource, Part.NuclearDrive, Part.GaussShield)
         { BaseInitiative = 3, BaseEnergy = 1 };
-        public static readonly Blueprint OrionCruiser = new("Orion Cruiser",
+        public static readonly Blueprint OrionCruiser = new("Orion Cruiser", ShipType.Cruiser,
             Part.ElectronComputer, Part.IonCannon, Part.GaussShield,
             Part.NuclearSource, Part.Hull, Part.NuclearDrive)
         { BaseInitiative = 2, BaseEnergy = 2 };
-        public static readonly Blueprint OrionDreadnaught = new("Orion Dreadnaught",
+        public static readonly Blueprint OrionDreadnaught = new("Orion Dreadnaught", ShipType.Dreadnaught,
             Part.ElectronComputer, Part.IonCannon, Part.IonCannon, Part.GaussShield,
             Part.NuclearSource, Part.Hull, Part.Hull, Part.NuclearDrive)
         { BaseInitiative = 1, BaseEnergy = 3 };
-        public static readonly Blueprint OrionStarbase = new("Orion Starbase",
+        public static readonly Blueprint OrionStarbase = new("Orion Starbase", ShipType.Starbase,
             Part.ElectronComputer, Part.GaussShield,
             Part.Hull, Part.IonCannon, Part.Hull)
         { BaseInitiative = 5, BaseEnergy = 3, IsBase = true };
 
         //Planta
-        public static readonly Blueprint PlantaInterceptor = new("Planta Interceptor",
+        public static readonly Blueprint PlantaInterceptor = new("Planta Interceptor", ShipType.Interceptor,
             Part.IonCannon,
             Part.NuclearSource, Part.NuclearDrive)
         { BaseEnergy = 2, BaseComputer = 1 };
-        public static readonly Blueprint PlantaCruiser = new("Planta Cruiser",
+        public static readonly Blueprint PlantaCruiser = new("Planta Cruiser", ShipType.Cruiser,
             Part.NuclearSource, Part.IonCannon, null,
             Part.Hull, Part.NuclearDrive)
         { BaseEnergy = 2, BaseComputer = 1 };
-        public static readonly Blueprint PlantaDreadnaught = new("Planta Dreadnaught",
+        public static readonly Blueprint PlantaDreadnaught = new("Planta Dreadnaught", ShipType.Dreadnaught,
             Part.NuclearSource, Part.IonCannon, Part.IonCannon, null,
             Part.Hull, Part.Hull, Part.NuclearDrive)
         { BaseEnergy = 2, BaseComputer = 1 };
-        public static readonly Blueprint PlantaStarbase = new("Planta Starbase",
+        public static readonly Blueprint PlantaStarbase = new("Planta Starbase", ShipType.Starbase,
             Part.ElectronComputer, Part.Hull,
             Part.IonCannon, Part.Hull)
         { BaseInitiative = 2, BaseEnergy = 5, BaseComputer = 1, IsBase = true };
 
         //Rho Indi
-        public static readonly Blueprint RhoIndiInterceptor = new("Rho Indi Interceptor",
+        public static readonly Blueprint RhoIndiInterceptor = new("Rho Indi Interceptor", ShipType.Interceptor,
             Part.IonCannon,
             Part.NuclearSource, Part.NuclearDrive, null)
         { BaseInitiative = 3, BaseShield = 1 };
-        public static readonly Blueprint RhoIndiCruiser = new("Rho Indi Cruiser",
+        public static readonly Blueprint RhoIndiCruiser = new("Rho Indi Cruiser", ShipType.Cruiser,
             Part.ElectronComputer, Part.IonCannon, null,
             Part.NuclearSource, Part.Hull, Part.NuclearDrive)
         { BaseInitiative = 2, BaseShield = 1 };
-        public static readonly Blueprint RhoIndiStarbase = new("Rho Indi Starbase",
+        public static readonly Blueprint RhoIndiStarbase = new("Rho Indi Starbase", ShipType.Starbase,
             Part.ElectronComputer, Part.IonCannon,
             Part.Hull, null, Part.Hull)
         { BaseInitiative = 4, BaseEnergy = 3, BaseShield = 1, IsBase = true };
 
         //The Exiles
-        public static readonly Blueprint ExilesInterceptor = new("Exiles Interceptor",
+        public static readonly Blueprint ExilesInterceptor = new("Exiles Interceptor", ShipType.Interceptor,
             Part.IonCannon,
             Part.NuclearSource, Part.NuclearDrive, Part.ElectronComputer)
         { BaseInitiative = 2 };
-        public static readonly Blueprint ExilesCruiser = new("Exiles Cruiser",
+        public static readonly Blueprint ExilesCruiser = new("Exiles Cruiser", ShipType.Cruiser,
             Part.ElectronComputer, Part.IonCannon, Part.ElectronComputer,
             Part.NuclearSource, Part.Hull, Part.NuclearDrive)
         { BaseInitiative = 1 };
-        public static readonly Blueprint ExilesDreadnaught = new("Exiles Dreadnaught",
+        public static readonly Blueprint ExilesDreadnaught = new("Exiles Dreadnaught", ShipType.Dreadnaught,
             Part.ElectronComputer, Part.IonCannon, Part.IonCannon, Part.ElectronComputer,
             Part.NuclearSource, Part.Hull, Part.Hull, Part.NuclearDrive);
-        public static readonly Blueprint ExilesOrbital = new("Exiles Orbital",
+        public static readonly Blueprint ExilesOrbital = new("Exiles Orbital", ShipType.Starbase,
             Part.Hull, Part.IonTurret, Part.ElectronComputer)
         { BaseHull = 2, BaseEnergy = 4, IsBase = true };
     }
