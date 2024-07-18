@@ -28,6 +28,8 @@ namespace EclipseCombatCalculator.Library.Test
 
             public IEnumerable<Dice> Missiles => Array.Empty<Dice>();
 
+            public ShipType ShipType { get; set; }
+
             IEnumerable<Dice> IShipStats.Cannons => Weapons ?? Array.Empty<Dice>();
         }
 
