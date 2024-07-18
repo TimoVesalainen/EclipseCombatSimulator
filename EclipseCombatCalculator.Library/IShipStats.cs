@@ -102,5 +102,31 @@ namespace EclipseCombatCalculator.Library
                 _ => throw new ArgumentOutOfRangeException(nameof(attacker)),
             };
         }
+
+        public static int CompareByShipType(this IShipStats ship1, IShipStats ship2)
+        {
+            // TODO: Starbase comparison might be wrong?
+
+            if (ship1.ShipType == ship2.ShipType)
+            {
+                return 0;
+            }
+            else if (ship1.ShipType == ShipType.Interceptor)
+            {
+                return -1;
+            }
+            else if (ship1.ShipType == ShipType.Cruiser)
+            {
+                return ship2.ShipType == ShipType.Interceptor ? 1 : -1;
+            }
+            else if (ship1.ShipType == ShipType.Dreadnaught)
+            {
+                return ship2.ShipType == ShipType.Starbase ? -1 : 1;
+            }
+            else
+            {
+                return 1;
+            }
+        }
     }
 }
