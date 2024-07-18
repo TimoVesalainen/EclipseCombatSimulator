@@ -1,5 +1,5 @@
 ﻿using CommandLine;
-using System;
+using EclipseCombatCalculator.Library;
 
 namespace EclipseCombatCalculator.CommandLine
 {
@@ -21,22 +21,4 @@ namespace EclipseCombatCalculator.CommandLine
         public IEnumerable<int> DefenderShipCounts { get; set; } = [];
 
     }
-
-    public enum Species
-    {
-        Terran,
-
-        Planta,
-        Draco,
-        Orion,
-        Mechamena,
-        Eridani,
-        Hydran,
-
-        Magellan,
-        Lyra,
-        Exiles,
-        RhoIndi,
-    }
-
 }
