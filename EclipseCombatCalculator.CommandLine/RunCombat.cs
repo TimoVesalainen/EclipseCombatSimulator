@@ -1,5 +1,6 @@
 ﻿using EclipseCombatCalculator.Library;
 using EclipseCombatCalculator.Library.Blueprints;
+using EclipseCombatCalculator.Library.Combat;
 using EclipseCombatCalculator.Library.Dices;
 
 namespace EclipseCombatCalculator.CommandLine
@@ -99,7 +100,7 @@ namespace EclipseCombatCalculator.CommandLine
             var attacker = GetBlueprints(options.Attacker).Zip(options.AttackerShipCounts).Where(x => x.First != null);
             var defender = GetBlueprints(options.Defender).Zip(options.DefenderShipCounts).Where(x => x.First != null);
 
-            var run = await Combat.AttackerWin(attacker, defender, DamageAssigner, (type) => Task.FromResult((0,0)));
+            var run = await CombatLogic.AttackerWin(attacker, defender, DamageAssigner, (type) => Task.FromResult((0,0)));
 
             if (run)
             {

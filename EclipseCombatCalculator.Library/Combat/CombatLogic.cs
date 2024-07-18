@@ -7,14 +7,14 @@ using Nintenlord.Collections;
 using Nintenlord.Collections.Comparers;
 using Nintenlord.Distributions;
 
-namespace EclipseCombatCalculator.Library
+namespace EclipseCombatCalculator.Library.Combat
 {
     public delegate Task<IEnumerable<(ICombatShip, IEnumerable<IDiceFace>)>> DamageAssigner(
         ICombatShip activeShips, IEnumerable<ICombatShip> targets, IEnumerable<IDiceFace> diceResult);
 
     public delegate Task<(int startRetreat, int completeRetreat)> RetreatAsker(ICombatShip activeShips);
 
-    public static class Combat
+    public static class CombatLogic
     {
         static readonly IComparer<CombatShip> initiativeComparer =
              Comparer<int>.Default.Select<int, CombatShip>(ship => ship.Blueprint.Initiative).Reverse().Then(
@@ -103,7 +103,7 @@ namespace EclipseCombatCalculator.Library
                     .Select(x => x.Flatten());
 
                 var diceResults = distr.Sample();
-                var targets = shipTypes.Where(target => target.IsAttacker != attacker.IsAttacker && (target.InCombat + target.InRetreat > 0));
+                var targets = shipTypes.Where(target => target.IsAttacker != attacker.IsAttacker && target.InCombat + target.InRetreat > 0);
 
                 var assignments = await damageAssignment(attacker, targets, diceResults);
 

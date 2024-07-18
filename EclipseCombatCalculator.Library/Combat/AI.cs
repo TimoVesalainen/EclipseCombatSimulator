@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EclipseCombatCalculator.Library
+namespace EclipseCombatCalculator.Library.Combat
 {
     public static class AI
     {

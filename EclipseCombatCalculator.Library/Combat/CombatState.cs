@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace EclipseCombatCalculator.Library
+namespace EclipseCombatCalculator.Library.Combat
 {
     public readonly struct CombatState
     {

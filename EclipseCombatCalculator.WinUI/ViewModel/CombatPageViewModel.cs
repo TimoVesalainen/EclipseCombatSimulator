@@ -1,5 +1,4 @@
 ﻿using EclipseCombatCalculator.Library.Blueprints;
-using EclipseCombatCalculator.Library;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -9,6 +8,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Collections.Specialized;
+using EclipseCombatCalculator.Library.Combat;
 
 namespace EclipseCombatCalculator.WinUI.ViewModel
 {

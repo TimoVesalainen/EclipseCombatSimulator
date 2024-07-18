@@ -19,6 +19,7 @@ using EclipseCombatCalculator.Library;
 using System.Threading.Tasks;
 using EclipseCombatCalculator.Library.Dices;
 using EclipseCombatCalculator.WinUI.Dialogs;
+using EclipseCombatCalculator.Library.Combat;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -144,7 +145,7 @@ namespace EclipseCombatCalculator.WinUI
             //TODO: Disable/Hide UI.
 
             bool result = false;
-            await foreach (var state in Combat.DoCombat(
+            await foreach (var state in CombatLogic.DoCombat(
                 ViewModel.Attackers.Select(viewModel => (viewModel.Blueprint as IShipStats, viewModel.Count)),
                 ViewModel.Defenders.Select(viewModel => (viewModel.Blueprint as IShipStats, viewModel.Count)),
                 AssignDamage, RetreatAsker))

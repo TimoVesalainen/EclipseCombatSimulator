@@ -1,5 +1,5 @@
-﻿using EclipseCombatCalculator.Library;
-using EclipseCombatCalculator.Library.Blueprints;
+﻿using EclipseCombatCalculator.Library.Blueprints;
+using EclipseCombatCalculator.Library.Combat;
 using EclipseCombatCalculator.Library.Dices;
 using System;
 using System.Collections.Generic;

@@ -18,7 +18,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Windows.ApplicationModel.DataTransfer;
 using EclipseCombatCalculator.Library.Blueprints;
-using EclipseCombatCalculator.Library;
+using EclipseCombatCalculator.Library.Combat;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.

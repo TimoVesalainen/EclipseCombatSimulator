@@ -1,4 +1,5 @@
 using EclipseCombatCalculator.Library.Blueprints;
+using EclipseCombatCalculator.Library.Combat;
 using EclipseCombatCalculator.Library.Dices;
 
 namespace EclipseCombatCalculator.Library.Test
@@ -45,7 +46,7 @@ namespace EclipseCombatCalculator.Library.Test
                 return Result();
             }
 
-            var result = await Combat.AttackerWin(
+            var result = await CombatLogic.AttackerWin(
                 new[] { (blueprint: new TestShip { Initiative = 1, Weapons = new Dice[] { CommonDices.YellowDice }, Computers = 0, Shields = 0, Hulls = 0 } as IShipStats, count: 1) },
                 new[] { (blueprint: new TestShip { Initiative = 1, Weapons = Array.Empty<Dice>(), Computers = 0, Shields = 0, Hulls = 0 } as IShipStats, count: 1) },
                 CombatAssingment, NoRetreat);
@@ -61,7 +62,7 @@ namespace EclipseCombatCalculator.Library.Test
                 return defenders.Zip(diceResult, (x, y) => (x, new[] { y } as IEnumerable<IDiceFace>));
             }
 
-            var result = await Combat.AttackerWin(
+            var result = await CombatLogic.AttackerWin(
                 new[] { (blueprint: Blueprint.OrionInterceptor as IShipStats, count: 5) },
                 new[] { (blueprint: Blueprint.PlantaInterceptor as IShipStats, count: 1) },
                 CombatAssignment, NoRetreat);
@@ -70,7 +71,7 @@ namespace EclipseCombatCalculator.Library.Test
         [Test]
         public async Task DefaultAIPlantaVSOrion()
         {
-            var result = await Combat.AttackerWin(
+            var result = await CombatLogic.AttackerWin(
                 new[] { (blueprint: Blueprint.OrionInterceptor as IShipStats, count: 5) },
                 new[] { (blueprint: Blueprint.PlantaInterceptor as IShipStats, count: 1) },
                 AI.BasicAI, NoRetreat);
