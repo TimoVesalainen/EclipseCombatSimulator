@@ -157,9 +157,11 @@ namespace EclipseCombatCalculator.WinUI
                     yield return (false, null);
                     yield return (false, null);
                     yield return (true, p1);
+                    yield return (false, null);
 
                     yield return (true, p2);
                     yield return (true, p3);
+                    yield return (false, null);
                     yield return (false, null);
                 }
                 return OrbitalParts();
