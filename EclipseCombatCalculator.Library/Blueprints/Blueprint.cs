@@ -33,10 +33,11 @@ namespace EclipseCombatCalculator.Library.Blueprints
 
         public int Size => slots.Length;
 
+        public IEnumerable<Part> Parts => slots;
+
         readonly Part[] slots;
         readonly bool readOnlyBlueprint;
 
-        IEnumerable<Part> Parts => slots.Where(x => x != null);
 
         private Blueprint(string name, ShipType type, Species species, params Part[] parts)
         {
@@ -75,19 +76,19 @@ namespace EclipseCombatCalculator.Library.Blueprints
             };
         }
 
-        public int TotalEnergy => BaseEnergy + Parts.Sum(part => part.Energy);
+        public int TotalEnergy => BaseEnergy + slots.Sum(part => part?.Energy) ?? 0;
 
-        int IShipStats.Initiative => BaseInitiative + Parts.Sum(part => part.Initiative);
+        int IShipStats.Initiative => BaseInitiative + slots.Sum(part => part?.Initiative) ?? 0;
 
-        int IShipStats.Computers => BaseComputer + Parts.Sum(part => part.Computers);
+        int IShipStats.Computers => BaseComputer + slots.Sum(part => part?.Computers) ?? 0;
 
-        int IShipStats.Shields => BaseShield + Parts.Sum(part => part.Shields);
+        int IShipStats.Shields => BaseShield + slots.Sum(part => part?.Shields) ?? 0;
 
-        int IShipStats.Hulls => BaseHull + Parts.Sum(part => part.Hulls);
+        int IShipStats.Hulls => BaseHull + slots.Sum(part => part?.Hulls) ?? 0;
 
-        IEnumerable<Dice> IShipStats.Cannons => Parts.SelectMany(part => part.Cannons);
+        IEnumerable<Dice> IShipStats.Cannons => slots.SelectMany(part => part?.Cannons ?? Array.Empty<Dice>());
 
-        IEnumerable<Dice> IShipStats.Missiles => Parts.SelectMany(part => part.Missiles);
+        IEnumerable<Dice> IShipStats.Missiles => slots.SelectMany(part => part?.Missiles ?? Array.Empty<Dice>());
 
 
         readonly static List<Blueprint> blueprints = new();
