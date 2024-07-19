@@ -34,7 +34,8 @@ namespace EclipseCombatCalculator.WinUI
             set
             {
                 blueprint = value;
-                SetBLueprintParts(value);
+                SetBlueprintParts(value);
+                SetTexts(value);
             }
         }
 
@@ -46,7 +47,7 @@ namespace EclipseCombatCalculator.WinUI
             this.InitializeComponent();
         }
 
-        void SetBLueprintParts(Blueprint blueprint)
+        void SetBlueprintParts(Blueprint blueprint)
         {
             if (blueprint == null)
             {
@@ -63,6 +64,19 @@ namespace EclipseCombatCalculator.WinUI
                 view.Source = part?.GetImage() ?? PartImages.EmptyPart;
                 view.Visibility = isUsed ? Visibility.Visible : Visibility.Collapsed;
             }
+        }
+
+        private void SetTexts(Blueprint value)
+        {
+            if (value == null)
+            {
+                return;
+            }
+            this.Initiative.Text = $"Initiative: {value.BaseInitiative}";
+            this.Computer.Text = $"Computer: {value.BaseComputer}";
+            this.Shield.Text = $"Shield: {value.BaseShield}";
+            this.Energy.Text = $"Energy: {value.BaseEnergy}";
+            this.Hull.Text = $"Hull: {value.BaseHull}";
         }
 
         static private IEnumerable<(bool isUsed, Part part)> GetPartSlots(Blueprint blueprint)

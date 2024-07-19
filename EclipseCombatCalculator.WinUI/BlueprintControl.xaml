@@ -19,6 +19,7 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
 
         <Image
@@ -71,5 +72,18 @@
             Width="200"
             Height="200"
             />
+
+        <StackPanel
+            Grid.Row="0"
+            Grid.RowSpan="2"
+            Grid.Column="4"
+            Orientation="Vertical">
+            <TextBlock Text="Additionally:"/>
+            <TextBlock x:Name="Initiative"/>
+            <TextBlock x:Name="Computer"/>
+            <TextBlock x:Name="Shield"/>
+            <TextBlock x:Name="Energy"/>
+            <TextBlock x:Name="Hull"/>
+        </StackPanel>
     </Grid>
 </UserControl>
