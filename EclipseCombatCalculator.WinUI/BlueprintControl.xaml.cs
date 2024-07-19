@@ -57,76 +57,78 @@ namespace EclipseCombatCalculator.WinUI
                 return;
             }
 
-            foreach (var (part, view) in GetPartSlots(blueprint).Zip(Images))
+            foreach (var (pair, view) in GetPartSlots(blueprint).Zip(Images))
             {
-                view.Source = part?.GetImage();
+                var (isUsed, part) = pair;
+                view.Source = part?.GetImage() ?? PartImages.EmptyPart;
+                view.Visibility = isUsed ? Visibility.Visible : Visibility.Collapsed;
             }
         }
 
-        static private IEnumerable<Part> GetPartSlots(Blueprint blueprint)
+        static private IEnumerable<(bool isUsed, Part part)> GetPartSlots(Blueprint blueprint)
         {
             if (blueprint.Species == Species.Planta)
             {
                 switch (blueprint.ShipType)
                 {
                     case ShipType.Interceptor:
-                        IEnumerable<Part> InterceptorParts()
+                        IEnumerable<(bool isUsed, Part part)> InterceptorParts()
                         {
                             var (p1, p2, p3) = blueprint.Parts.GetFirst3();
-                            yield return null;
-                            yield return p1;
-                            yield return null;
-                            yield return null;
+                            yield return (false, null);
+                            yield return (true, p1);
+                            yield return (false, null);
+                            yield return (false, null);
 
-                            yield return p2;
-                            yield return null;
-                            yield return p3;
-                            yield return null;
+                            yield return (true, p2);
+                            yield return (false, null);
+                            yield return (true, p3);
+                            yield return (false, null);
                         }
                         return InterceptorParts();
                     case ShipType.Cruiser:
-                        IEnumerable<Part> CruiserParts()
+                        IEnumerable<(bool isUsed, Part part)> CruiserParts()
                         {
                             var (p1, p2, p3, p4, p5) = blueprint.Parts.GetFirst5();
-                            yield return p1;
-                            yield return p2;
-                            yield return p3;
-                            yield return null;
+                            yield return (true, p1);
+                            yield return (true, p2);
+                            yield return (true, p3);
+                            yield return (false, null);
 
-                            yield return null;
-                            yield return p4;
-                            yield return p5;
-                            yield return null;
+                            yield return (false, null);
+                            yield return (true, p4);
+                            yield return (true, p5);
+                            yield return (false, null);
                         }
                         return CruiserParts();
                     case ShipType.Dreadnaught:
-                        IEnumerable<Part> DreadnaughtParts()
+                        IEnumerable<(bool isUsed, Part part)> DreadnaughtParts()
                         {
                             var (p1, p2, p3, p4, p5, p6, p7) = blueprint.Parts.GetFirst7();
-                            yield return p1;
-                            yield return p2;
-                            yield return p3;
-                            yield return p4;
+                            yield return (true, p1);
+                            yield return (true, p2);
+                            yield return (true, p3);
+                            yield return (true, p4);
 
-                            yield return null;
-                            yield return p5;
-                            yield return p6;
-                            yield return p7;
+                            yield return (false, null);
+                            yield return (true, p5);
+                            yield return (true, p6);
+                            yield return (true, p7);
                         }
                         return DreadnaughtParts();
                     case ShipType.Starbase:
-                        IEnumerable<Part> StarBaseParts()
+                        IEnumerable<(bool isUsed, Part part)> StarBaseParts()
                         {
                             var (p1, p2, p3, p4, p5) = blueprint.Parts.GetFirst5();
-                            yield return p1;
-                            yield return null;
-                            yield return p2;
-                            yield return null;
+                            yield return (true, p1);
+                            yield return (false, null);
+                            yield return (true, p2);
+                            yield return (false, null);
 
-                            yield return null;
-                            yield return p3;
-                            yield return p4;
-                            yield return null;
+                            yield return (false, null);
+                            yield return (true, p3);
+                            yield return (true, p4);
+                            yield return (false, null);
                         }
                         return StarBaseParts();
                 }
@@ -135,16 +137,16 @@ namespace EclipseCombatCalculator.WinUI
             if (blueprint.Species == Species.Exiles && blueprint.ShipType == ShipType.Starbase)
             {
                 // Exiles orbital
-                IEnumerable<Part> OrbitalParts()
+                IEnumerable<(bool isUsed, Part part)> OrbitalParts()
                 {
                     var (p1, p2, p3) = blueprint.Parts.GetFirst3();
-                    yield return null;
-                    yield return null;
-                    yield return p1;
+                    yield return (false, null);
+                    yield return (false, null);
+                    yield return (true, p1);
 
-                    yield return p2;
-                    yield return p3;
-                    yield return null;
+                    yield return (true, p2);
+                    yield return (true, p3);
+                    yield return (false, null);
                 }
                 return OrbitalParts();
             }
@@ -152,42 +154,42 @@ namespace EclipseCombatCalculator.WinUI
             switch (blueprint.ShipType)
             {
                 case ShipType.Interceptor:
-                    IEnumerable<Part> InterceptorParts()
+                    IEnumerable<(bool isUsed, Part part)> InterceptorParts()
                     {
                         var (p1, p2, p3, p4) = blueprint.Parts.GetFirst4();
-                        yield return null;
-                        yield return p1;
-                        yield return null;
-                        yield return null;
+                        yield return (false, null);
+                        yield return (true, p1);
+                        yield return (false, null);
+                        yield return (false, null);
 
-                        yield return p2;
-                        yield return p3;
-                        yield return p4;
-                        yield return null;
+                        yield return (true, p2);
+                        yield return (true, p3);
+                        yield return (true, p4);
+                        yield return (false, null);
                     }
                     return InterceptorParts();
 
                 case ShipType.Cruiser:
                     return blueprint.Parts
                         .GetPartitions3s()
-                        .SelectMany(triple => triple.Enumerate().Concat(default(Part)));
+                        .SelectMany(triple => triple.Enumerate().Select(p => (true, p)).Concat((false, null)));
 
                 case ShipType.Dreadnaught:
-                    return blueprint.Parts;
+                    return blueprint.Parts.Select(part => (true, part));
 
                 case ShipType.Starbase:
-                    IEnumerable<Part> StarbaseParts()
+                    IEnumerable<(bool isUsed, Part part)> StarbaseParts()
                     {
                         var (p1, p2, p3, p4, p5) = blueprint.Parts.GetFirst5();
-                        yield return p1;
-                        yield return p2;
-                        yield return p3;
-                        yield return null;
+                        yield return (true, p1);
+                        yield return (true, p2);
+                        yield return (true, p3);
+                        yield return (false, null);
 
-                        yield return p4;
-                        yield return null;
-                        yield return p5;
-                        yield return null;
+                        yield return (true, p4);
+                        yield return (false, null);
+                        yield return (true, p5);
+                        yield return (false, null);
                     }
                     return StarbaseParts();
             }

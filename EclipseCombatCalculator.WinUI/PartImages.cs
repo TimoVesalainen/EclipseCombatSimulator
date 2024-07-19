@@ -94,5 +94,14 @@ namespace EclipseCombatCalculator.WinUI
                 { Part.MuonSource, "MuonSource" },
             };
         }
+
+        public static BitmapImage EmptyPart => bitmap.Value;
+        private static readonly Lazy<BitmapImage> bitmap = new(EmptyPartCreator);
+        static BitmapImage EmptyPartCreator()
+        {
+            string fullPath = $"{Package.Current.InstalledPath}/Assets/EmptyPart.png";
+
+            return new BitmapImage(new Uri(fullPath));
+        }
     }
 }

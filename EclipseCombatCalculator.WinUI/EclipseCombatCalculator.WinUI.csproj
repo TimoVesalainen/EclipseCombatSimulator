@@ -14,6 +14,7 @@
     <SupportedOSPlatformVersion>10.0.19041.0</SupportedOSPlatformVersion>
   </PropertyGroup>
   <ItemGroup>
+	  <None Remove="Assets\EmptyPart.png" />
 	  <None Remove="BlueprintControl.xaml" />
 	  <None Remove="Pages/BlueprintsPage.xaml" />
 	  <None Remove="Pages/CombatPage.xaml" />
@@ -55,6 +56,9 @@
     <ProjectReference Include="..\EclipseCombatCalculator.Library\EclipseCombatCalculator.Library.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <Content Update="Assets\EmptyPart.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Update="Assets\Parts\AbsorptionShield.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
