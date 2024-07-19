@@ -213,6 +213,6 @@ namespace EclipseCombatCalculator.WinUI
             throw new NotImplementedException($"Not implemented blueprint control for {blueprint}");
         }
 
-        public IEnumerable<Image> Images => BlueprintGrid.Children.OfType<Image>();
+        IEnumerable<Image> Images => BlueprintGrid.Children.OfType<Image>();
     }
 }
