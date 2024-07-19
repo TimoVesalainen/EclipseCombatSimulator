@@ -41,8 +41,6 @@
             Grid.Column="0"
             Grid.ColumnSpan="1"/>
 
-
-
         <Grid
             Grid.Column="1">
 
@@ -56,13 +54,12 @@
 
             <TextBlock
                 Grid.Row="0"
-                Grid.RowSpan="1"
-                Text="Test"
+                Text="{x:Bind ViewModel.SelectedBlueprint.Name, Mode=OneWay}"
                 FontSize="20"
-                FontFamily="{StaticResource EclipseFont}"
-                Foreground="White"/>
+                FontFamily="{StaticResource EclipseFont}"/>
 
             <controls:BlueprintControl
+                Grid.Row="1"
                 Blueprint="{x:Bind ViewModel.SelectedBlueprint, Mode=OneWay}"/>
 
 
