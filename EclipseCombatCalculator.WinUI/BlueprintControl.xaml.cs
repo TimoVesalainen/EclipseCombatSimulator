@@ -66,7 +66,7 @@ namespace EclipseCombatCalculator.WinUI
         {
             return Enumerable.Range(0, blueprint.Size)
                 .Select(index => blueprint[index])
-                .Concat(EnumerableExtensions.Repeat<Part>(null));
+                .ConcatInfinite(null);
         }
 
         public IEnumerable<Image> Images => BlueprintGrid.Children.OfType<Image>();
