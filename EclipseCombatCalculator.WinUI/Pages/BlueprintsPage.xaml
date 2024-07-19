@@ -42,6 +42,8 @@
             Grid.ColumnSpan="1"/>
 
         <Grid
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
             Grid.Column="1">
 
             <Grid.ColumnDefinitions>
