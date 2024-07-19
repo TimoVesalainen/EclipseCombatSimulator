@@ -60,7 +60,6 @@ namespace EclipseCombatCalculator.Library.Blueprints
             this.IsBase = other.IsBase;
             this.slots = other.slots.ToArray(); // Shallow clone
             this.readOnlyBlueprint = readOnlyBlueprint;
-            blueprints.Add(this);
         }
 
         public Blueprint CreateEditableClone()
