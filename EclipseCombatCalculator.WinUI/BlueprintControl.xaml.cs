@@ -16,6 +16,7 @@ using EclipseCombatCalculator.Library.Blueprints;
 using Microsoft.UI.Xaml.Media.Imaging;
 using Windows.Storage;
 using Windows.ApplicationModel;
+using Nintenlord.Collections;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -55,13 +56,17 @@ namespace EclipseCombatCalculator.WinUI
                 return;
             }
 
-            var parts = Enumerable.Range(0, blueprint.Size)
-                .Select(index => blueprint[index]);
-
-            foreach (var (part, view) in parts.Zip(Images))
+            foreach (var (part, view) in GetPartSlots().Zip(Images))
             {
                 view.Source = part?.GetImage();
             }
+        }
+
+        IEnumerable<Part> GetPartSlots()
+        {
+            return Enumerable.Range(0, blueprint.Size)
+                .Select(index => blueprint[index])
+                .Concat(EnumerableExtensions.Repeat<Part>(null));
         }
 
         public IEnumerable<Image> Images => BlueprintGrid.Children.OfType<Image>();
