@@ -110,86 +110,86 @@ namespace EclipseCombatCalculator.Library.Blueprints
         { BaseInitiative = 4, BaseEnergy = 3, IsBase = true };
 
         //Mechanema
-        public static readonly Blueprint MechamenaInterceptor = new("Terran Interceptor", ShipType.Interceptor, Species.Mechamena,
+        public static readonly Blueprint MechamenaInterceptor = new("Mechamena Interceptor", ShipType.Interceptor, Species.Mechamena,
             Part.IonCannon,
             Part.NuclearSource, Part.NuclearDrive, null)
         { BaseInitiative = 2 };
-        public static readonly Blueprint MechamenaCruiser = new("Terran Cruiser", ShipType.Cruiser, Species.Mechamena,
+        public static readonly Blueprint MechamenaCruiser = new("Mechamena Cruiser", ShipType.Cruiser, Species.Mechamena,
             Part.ElectronComputer, Part.IonCannon, null,
             Part.NuclearSource, Part.Hull, Part.NuclearDrive)
         { BaseInitiative = 1 };
-        public static readonly Blueprint MechamenaDreadnaught = new("Terran Dreadnaught", ShipType.Dreadnaught, Species.Mechamena,
+        public static readonly Blueprint MechamenaDreadnaught = new("Mechamena Dreadnaught", ShipType.Dreadnaught, Species.Mechamena,
             Part.ElectronComputer, Part.IonCannon, Part.IonCannon, null,
             Part.NuclearSource, Part.Hull, Part.Hull, Part.NuclearDrive);
-        public static readonly Blueprint MechamenaStarbase = new("Terran Starbase", ShipType.Starbase, Species.Mechamena,
+        public static readonly Blueprint MechamenaStarbase = new("Mechamena Starbase", ShipType.Starbase, Species.Mechamena,
             Part.ElectronComputer, Part.IonCannon,
             Part.Hull, null, Part.Hull)
         { BaseInitiative = 4, BaseEnergy = 3, IsBase = true };
 
         //Hydran
-        public static readonly Blueprint HydranInterceptor = new("Terran Interceptor", ShipType.Interceptor, Species.Hydran,
+        public static readonly Blueprint HydranInterceptor = new("Hydran Interceptor", ShipType.Interceptor, Species.Hydran,
             Part.IonCannon,
             Part.NuclearSource, Part.NuclearDrive, null)
         { BaseInitiative = 2 };
-        public static readonly Blueprint HydranCruiser = new("Terran Cruiser", ShipType.Cruiser, Species.Hydran,
+        public static readonly Blueprint HydranCruiser = new("Hydran Cruiser", ShipType.Cruiser, Species.Hydran,
             Part.ElectronComputer, Part.IonCannon, null,
             Part.NuclearSource, Part.Hull, Part.NuclearDrive)
         { BaseInitiative = 1 };
-        public static readonly Blueprint HydranDreadnaught = new("Terran Dreadnaught", ShipType.Dreadnaught, Species.Hydran,
+        public static readonly Blueprint HydranDreadnaught = new("Hydran Dreadnaught", ShipType.Dreadnaught, Species.Hydran,
             Part.ElectronComputer, Part.IonCannon, Part.IonCannon, null,
             Part.NuclearSource, Part.Hull, Part.Hull, Part.NuclearDrive);
-        public static readonly Blueprint HydranStarbase = new("Terran Starbase", ShipType.Starbase, Species.Hydran,
+        public static readonly Blueprint HydranStarbase = new("Hydran Starbase", ShipType.Starbase, Species.Hydran,
             Part.ElectronComputer, Part.IonCannon,
             Part.Hull, null, Part.Hull)
         { BaseInitiative = 4, BaseEnergy = 3, IsBase = true };
 
         //Draco
-        public static readonly Blueprint DracoInterceptor = new("Terran Interceptor", ShipType.Interceptor, Species.Draco,
+        public static readonly Blueprint DracoInterceptor = new("Draco Interceptor", ShipType.Interceptor, Species.Draco,
             Part.IonCannon,
             Part.NuclearSource, Part.NuclearDrive, null)
         { BaseInitiative = 2 };
-        public static readonly Blueprint DracoCruiser = new("Terran Cruiser", ShipType.Cruiser, Species.Draco,
+        public static readonly Blueprint DracoCruiser = new("Draco Cruiser", ShipType.Cruiser, Species.Draco,
             Part.ElectronComputer, Part.IonCannon, null,
             Part.NuclearSource, Part.Hull, Part.NuclearDrive)
         { BaseInitiative = 1 };
-        public static readonly Blueprint DracoDreadnaught = new("Terran Dreadnaught", ShipType.Dreadnaught, Species.Draco,
+        public static readonly Blueprint DracoDreadnaught = new("Draco Dreadnaught", ShipType.Dreadnaught, Species.Draco,
             Part.ElectronComputer, Part.IonCannon, Part.IonCannon, null,
             Part.NuclearSource, Part.Hull, Part.Hull, Part.NuclearDrive);
-        public static readonly Blueprint DracoStarbase = new("Terran Starbase", ShipType.Starbase, Species.Draco,
+        public static readonly Blueprint DracoStarbase = new("Draco Starbase", ShipType.Starbase, Species.Draco,
             Part.ElectronComputer, Part.IonCannon,
             Part.Hull, null, Part.Hull)
         { BaseInitiative = 4, BaseEnergy = 3, IsBase = true };
 
         //Magellan
-        public static readonly Blueprint MagellanInterceptor = new("Terran Interceptor", ShipType.Interceptor, Species.Magellan,
+        public static readonly Blueprint MagellanInterceptor = new("Magellan Interceptor", ShipType.Interceptor, Species.Magellan,
             Part.IonCannon,
             Part.NuclearSource, Part.NuclearDrive, null)
         { BaseInitiative = 2 };
-        public static readonly Blueprint MagellanCruiser = new("Terran Cruiser", ShipType.Cruiser, Species.Magellan,
+        public static readonly Blueprint MagellanCruiser = new("Magellan Cruiser", ShipType.Cruiser, Species.Magellan,
             Part.ElectronComputer, Part.IonCannon, null,
             Part.NuclearSource, Part.Hull, Part.NuclearDrive)
         { BaseInitiative = 1 };
-        public static readonly Blueprint MagellanDreadnaught = new("Terran Dreadnaught", ShipType.Dreadnaught, Species.Magellan,
+        public static readonly Blueprint MagellanDreadnaught = new("Magellan Dreadnaught", ShipType.Dreadnaught, Species.Magellan,
             Part.ElectronComputer, Part.IonCannon, Part.IonCannon, null,
             Part.NuclearSource, Part.Hull, Part.Hull, Part.NuclearDrive);
-        public static readonly Blueprint MagellanStarbase = new("Terran Starbase", ShipType.Starbase, Species.Magellan,
+        public static readonly Blueprint MagellanStarbase = new("Magellan Starbase", ShipType.Starbase, Species.Magellan,
             Part.ElectronComputer, Part.IonCannon,
             Part.Hull, null, Part.Hull)
         { BaseInitiative = 4, BaseEnergy = 3, IsBase = true };
 
         //Lyra
-        public static readonly Blueprint LyraInterceptor = new ("Terran Interceptor", ShipType.Interceptor, Species.Lyra,
+        public static readonly Blueprint LyraInterceptor = new ("Lyra Interceptor", ShipType.Interceptor, Species.Lyra,
             Part.IonCannon,
             Part.NuclearSource, Part.NuclearDrive, null)
         { BaseInitiative = 2 };
-        public static readonly Blueprint LyraCruiser = new ("Terran Cruiser", ShipType.Cruiser, Species.Lyra,
+        public static readonly Blueprint LyraCruiser = new ("Lyra Cruiser", ShipType.Cruiser, Species.Lyra,
             Part.ElectronComputer, Part.IonCannon, null,
             Part.NuclearSource, Part.Hull, Part.NuclearDrive)
         { BaseInitiative = 1 };
-        public static readonly Blueprint LyraDreadnaught = new ("Terran Dreadnaught", ShipType.Dreadnaught, Species.Lyra,
+        public static readonly Blueprint LyraDreadnaught = new ("Lyra Dreadnaught", ShipType.Dreadnaught, Species.Lyra,
             Part.ElectronComputer, Part.IonCannon, Part.IonCannon, null,
             Part.NuclearSource, Part.Hull, Part.Hull, Part.NuclearDrive);
-        public static readonly Blueprint LyraStarbase = new("Terran Starbase", ShipType.Starbase, Species.Lyra,
+        public static readonly Blueprint LyraStarbase = new("Lyra Starbase", ShipType.Starbase, Species.Lyra,
             Part.ElectronComputer, Part.IonCannon,
             Part.Hull, null, Part.Hull)
         { BaseInitiative = 4, BaseEnergy = 3, IsBase = true };
