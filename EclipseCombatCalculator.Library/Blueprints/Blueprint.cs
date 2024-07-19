@@ -92,8 +92,6 @@ namespace EclipseCombatCalculator.Library.Blueprints
 
         readonly static List<Blueprint> blueprints = new();
 
-        public static IEnumerable<Blueprint> Blueprints => blueprints;
-
         //Terran
         public static readonly Blueprint TerranInterceptor = new("Terran Interceptor", ShipType.Interceptor, Species.Terran,
             Part.IonCannon,
@@ -279,5 +277,12 @@ namespace EclipseCombatCalculator.Library.Blueprints
         public static readonly Blueprint ExilesOrbital = new("Exiles Orbital", ShipType.Starbase, Species.Exiles,
             Part.Hull, Part.IonTurret, Part.ElectronComputer)
         { BaseHull = 2, BaseEnergy = 4, IsBase = true };
+
+        public static IEnumerable<Blueprint> Blueprints => blueprints;
+
+        public static IEnumerable<Blueprint> GetBlueprints(Species species)
+        {
+            return Blueprints.Where(blueprint => blueprint.Species == species);
+        }
     }
 }
