@@ -9,6 +9,7 @@ using Nintenlord.Distributions;
 
 namespace EclipseCombatCalculator.Library.Combat
 {
+    // TODO: Make support assigning damage per ship, not ship type
     public delegate Task<IEnumerable<(ICombatShip, IEnumerable<IDiceFace>)>> DamageAssigner(
         ICombatShip activeShips, IEnumerable<ICombatShip> targets, IEnumerable<IDiceFace> diceResult);
 
