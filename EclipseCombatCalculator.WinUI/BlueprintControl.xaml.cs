@@ -170,7 +170,7 @@ namespace EclipseCombatCalculator.WinUI
                 case ShipType.Cruiser:
                     return blueprint.Parts
                         .GetPartitions3s()
-                        .SelectMany(triple => triple.Enumerate().Concat(null));
+                        .SelectMany(triple => triple.Enumerate().Concat(default(Part)));
 
                 case ShipType.Dreadnaught:
                     return blueprint.Parts;
