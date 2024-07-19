@@ -133,7 +133,7 @@ namespace EclipseCombatCalculator.WinUI
                     case ShipType.Starbase:
                         IEnumerable<(bool isUsed, Part part)> StarBaseParts()
                         {
-                            var (p1, p2, p3, p4, p5) = blueprint.Parts.GetFirst5();
+                            var (p1, p2, p3, p4) = blueprint.Parts.GetFirst4();
                             yield return (true, p1);
                             yield return (false, null);
                             yield return (true, p2);
