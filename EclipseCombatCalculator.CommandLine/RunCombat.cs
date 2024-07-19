@@ -97,8 +97,8 @@ namespace EclipseCombatCalculator.CommandLine
                 }
             }
 
-            var attacker = GetBlueprints(options.Attacker).Zip(options.AttackerShipCounts).Where(x => x.First != null);
-            var defender = GetBlueprints(options.Defender).Zip(options.DefenderShipCounts).Where(x => x.First != null);
+            var attacker = Blueprint.GetBlueprints(options.Attacker).Cast<IShipStats>().Zip(options.AttackerShipCounts);
+            var defender = Blueprint.GetBlueprints(options.Defender).Cast<IShipStats>().Zip(options.DefenderShipCounts);
 
             var run = await CombatLogic.AttackerWin(attacker, defender, DamageAssigner, (type) => Task.FromResult((0,0)));
 
@@ -110,45 +110,6 @@ namespace EclipseCombatCalculator.CommandLine
             {
                 Console.WriteLine("You lose");
             }
-        }
-
-        private static IShipStats?[] GetBlueprints(Species species)
-        {
-            return species switch
-            {
-                Species.Planta => [
-                        Blueprint.PlantaInterceptor,
-                        Blueprint.PlantaCruiser,
-                        Blueprint.PlantaDreadnaught,
-                        Blueprint.PlantaStarbase],
-                Species.Orion => [
-                        Blueprint.OrionInterceptor,
-                        Blueprint.OrionCruiser,
-                        Blueprint.OrionDreadnaught,
-                        Blueprint.OrionStarbase],
-                Species.Eridani => [
-                        Blueprint.EridaniInterceptor,
-                        Blueprint.EridaniCruiser,
-                        Blueprint.EridaniDreadnaught,
-                        Blueprint.EridaniStarbase],
-                Species.Exiles => [
-                        Blueprint.ExilesInterceptor,
-                        Blueprint.ExilesCruiser,
-                        Blueprint.ExilesDreadnaught,
-                        Blueprint.ExilesOrbital],
-                Species.RhoIndi => [
-                        Blueprint.RhoIndiInterceptor,
-                        Blueprint.RhoIndiCruiser,
-                        null,
-                        Blueprint.RhoIndiStarbase],
-                // TODO: Each race gets it's own blueprints
-                Species.Terran or Species.Hydran or Species.Draco or Species.Mechamena or Species.Magellan or Species.Lyra => [
-                        Blueprint.TerranInterceptor,
-                        Blueprint.TerranCruiser,
-                        Blueprint.TerranDreadnaught,
-                        Blueprint.TerranStarbase],
-                _ => throw new NotImplementedException(),
-            };
         }
     }
 }
