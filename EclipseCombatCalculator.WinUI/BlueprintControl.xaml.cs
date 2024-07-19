@@ -32,13 +32,7 @@ namespace EclipseCombatCalculator.WinUI
             set
             {
                 blueprint = value;
-                var parts = Enumerable.Range(0, value.Size)
-                    .Select(index => value[index]);
-
-                foreach (var (part, view) in parts.Zip(Images))
-                {
-                    view.Source = part?.GetImage();
-                }
+                SetBLueprintParts(value);
             }
         }
 
@@ -50,21 +44,26 @@ namespace EclipseCombatCalculator.WinUI
             this.InitializeComponent();
         }
 
-        public IEnumerable<Image> Images => BlueprintGrid.Children.OfType<Image>();
-
-
-        private static BitmapImage empty = null;
-        public static BitmapImage EmptyImage()
+        void SetBLueprintParts(Blueprint blueprint)
         {
-            if (empty != null)
+            if (blueprint == null)
             {
-                return empty;
+                foreach (var view in Images)
+                {
+                    view.Source = null;
+                }
+                return;
             }
-            string fullPath = $"{Package.Current.InstalledPath}/Assets/Parts/EmptyPart.png";
 
-            var newImage = new BitmapImage(new Uri(fullPath));
-            empty = newImage;
-            return newImage;
+            var parts = Enumerable.Range(0, blueprint.Size)
+                .Select(index => blueprint[index]);
+
+            foreach (var (part, view) in parts.Zip(Images))
+            {
+                view.Source = part?.GetImage();
+            }
         }
+
+        public IEnumerable<Image> Images => BlueprintGrid.Children.OfType<Image>();
     }
 }

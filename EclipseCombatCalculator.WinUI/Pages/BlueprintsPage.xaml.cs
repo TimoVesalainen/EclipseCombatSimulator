@@ -25,7 +25,7 @@ namespace EclipseCombatCalculator.WinUI
     /// </summary>
     public sealed partial class BlueprintsPage : Page
     {
-        public Blueprint SelectedBlueprint { get; set; } = Blueprint.OrionInterceptor;
+        public BlueprintsViewModel ViewModel { get; } = new();
 
         public BlueprintsPage()
         {
@@ -35,7 +35,7 @@ namespace EclipseCombatCalculator.WinUI
 
         private void LayoutList_ItemClick(object sender, ItemClickEventArgs e)
         {
-            var blueprint = (e.ClickedItem as LayoutListViewModel).Blueprint;
+            ViewModel.SelectedBlueprint = (e.ClickedItem as LayoutListViewModel).Blueprint;
         }
     }
 }

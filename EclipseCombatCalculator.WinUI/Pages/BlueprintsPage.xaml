@@ -63,7 +63,7 @@
                 Foreground="White"/>
 
             <controls:BlueprintControl
-                Blueprint="{x:Bind SelectedBlueprint}"/>
+                Blueprint="{x:Bind ViewModel.SelectedBlueprint, Mode=OneWay}"/>
 
 
 
