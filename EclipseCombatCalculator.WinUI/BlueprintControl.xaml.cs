@@ -12,6 +12,8 @@ namespace EclipseCombatCalculator.WinUI
 {
     public sealed partial class BlueprintControl : UserControl
     {
+        public int Size { get; set; } = 200;
+
         private Blueprint blueprint;
 
         public Blueprint Blueprint
