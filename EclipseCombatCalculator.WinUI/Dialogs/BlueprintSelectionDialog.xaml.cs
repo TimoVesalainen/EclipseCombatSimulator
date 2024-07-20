@@ -1,6 +1,7 @@
 using Microsoft.UI.Xaml.Controls;
 using EclipseCombatCalculator.Library.Blueprints;
 using EclipseCombatCalculator.WinUI.ViewModel;
+using Microsoft.UI.Xaml;
 
 namespace EclipseCombatCalculator.WinUI.Dialogs
 {
@@ -13,6 +14,11 @@ namespace EclipseCombatCalculator.WinUI.Dialogs
         public BlueprintSelectionDialog()
         {
             foreach (var item in Blueprint.Blueprints)
+            {
+                ViewModel.Blueprints.Add(LayoutListViewModel.Create(item));
+            }
+            var app = Application.Current as App;
+            foreach (var item in app.CustomBlueprints)
             {
                 ViewModel.Blueprints.Add(LayoutListViewModel.Create(item));
             }
