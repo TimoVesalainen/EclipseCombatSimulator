@@ -15,7 +15,6 @@ namespace EclipseCombatCalculator.Library.Blueprints
         public int BaseShield { get; init; } = 0;
         public int BaseEnergy { get; init; } = 0;
         public int BaseHull { get; init; } = 0;
-
         public bool IsBase { get; init; } = false;
 
         public Part this[int index]
@@ -66,6 +65,7 @@ namespace EclipseCombatCalculator.Library.Blueprints
             readOnlyBlueprint = true;
             blueprints.Add(this);
         }
+
         private Blueprint(Blueprint other, bool readOnlyBlueprint)
         {
             this.name = other.Name;
@@ -79,6 +79,27 @@ namespace EclipseCombatCalculator.Library.Blueprints
             this.IsBase = other.IsBase;
             this.slots = other.slots.ToArray(); // Shallow clone
             this.readOnlyBlueprint = readOnlyBlueprint;
+        }
+
+        public sealed class SerializedPart
+        {
+            public string Name { get; set; }
+        }
+
+        [JsonConstructor]
+        public Blueprint(ShipType shipType, Species species, int baseInitiative, int baseComputer,
+            int baseShield, int baseEnergy, int baseHull, bool isBase, string name, IEnumerable<Part> parts)
+        {
+            this.ShipType = shipType;
+            this.Species = species;
+            this.BaseInitiative = baseInitiative;
+            this.BaseComputer = baseComputer;
+            this.BaseShield = baseShield;
+            this.BaseEnergy = baseEnergy;
+            this.BaseHull = baseHull;
+            this.IsBase = isBase;
+            this.Name = name;
+            this.slots = parts.Select(part => part != null ? Part.FindByName(part.Name) : null).ToArray();
         }
 
         public Blueprint CreateEditableClone()
