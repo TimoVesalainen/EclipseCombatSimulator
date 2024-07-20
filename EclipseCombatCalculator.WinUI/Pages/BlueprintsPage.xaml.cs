@@ -73,6 +73,11 @@ namespace EclipseCombatCalculator.WinUI
 
         private void BlueprintName_TextChanged(object sender, TextChangedEventArgs e)
         {
+            if (!ViewModel.SelectedBlueprint.CanEdit)
+            {
+                // Happens when changing from editable blueprint to read-only
+                return;
+            }
             ViewModel.SelectedBlueprint.Name = (sender as TextBox).Text;
         }
     }
