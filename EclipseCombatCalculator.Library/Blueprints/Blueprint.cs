@@ -276,7 +276,7 @@ namespace EclipseCombatCalculator.Library.Blueprints
             Part.ElectronComputer, Part.IonCannon, Part.IonCannon, Part.ElectronComputer,
             Part.NuclearSource, Part.Hull, Part.Hull, Part.NuclearDrive);
         public static readonly Blueprint ExilesOrbital = new("Exiles Orbital", ShipType.Starbase, Species.Exiles,
-            Part.Hull, Part.IonTurret, Part.ElectronComputer)
+            Part.ElectronComputer, Part.Hull, Part.IonTurret)
         { BaseHull = 2, BaseEnergy = 4, IsBase = true };
 
         public static IEnumerable<Blueprint> Blueprints => blueprints;

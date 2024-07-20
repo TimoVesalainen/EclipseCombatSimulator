@@ -35,6 +35,7 @@ namespace EclipseCombatCalculator.WinUI
             {
                 blueprint = value;
                 SetBlueprintParts(value);
+                AdjustOffset(value);
                 SetTexts(value);
             }
         }
@@ -64,6 +65,69 @@ namespace EclipseCombatCalculator.WinUI
                 view.Source = part?.GetImage() ?? PartImages.EmptyPart;
                 view.Visibility = isUsed ? Visibility.Visible : Visibility.Collapsed;
             }
+        }
+
+        private void AdjustOffset(Blueprint value)
+        {
+            if (value == null)
+            {
+                return;
+            }
+
+            var (c0, c1, c2, c3) = GetOffsets(value.ShipType, value.Species);
+            var offset = 50;
+
+            foreach (var image in Images)
+            {
+                switch (Grid.GetColumn(image))
+                {
+                    case 0:
+                        image.Margin = new Thickness(0, -offset * c0, 0, offset * c0);
+                        break;
+                    case 1:
+                        image.Margin = new Thickness(0, -offset * c1, 0, offset * c1);
+                        break;
+                    case 2:
+                        image.Margin = new Thickness(0, -offset * c2, 0, offset * c2);
+                        break;
+                    case 3:
+                        image.Margin = new Thickness(0, -offset * c3, 0, offset * c3);
+                        break;
+                    default:
+                        throw new IndexOutOfRangeException("Abnormal column in grid image view");
+                }
+            }
+        }
+
+        private (int, int, int, int) GetOffsets(ShipType shipType, Species species)
+        {
+            if (species == Species.Exiles && shipType == ShipType.Starbase)
+            {
+                //Exiles orbital
+                // Row 2: Down
+                return (0, 2, 0, 0);
+            }
+            if (species == Species.Planta && shipType == ShipType.Starbase)
+            {
+                // Row 2: Down
+                return (0, 2, 0, 0);
+            }
+
+            return shipType switch
+            {
+                // Row 1: Up
+                // Row 3: Up
+                ShipType.Interceptor => (1, 0, 1, 0),
+                // Row 1: Down
+                // Row 3: Down
+                ShipType.Cruiser => (-1, 0, -1, 0),
+                // Row 1: Down
+                // Row 4: Down
+                ShipType.Dreadnaught => (-1, 0, 0, -1),
+                // Row 2: Up
+                ShipType.Starbase => (0, -2, 0, 0),
+                _ => throw new ArgumentOutOfRangeException(nameof(shipType)),
+            };
         }
 
         private void SetTexts(Blueprint value)
