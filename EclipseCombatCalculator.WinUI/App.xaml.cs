@@ -76,7 +76,7 @@ namespace EclipseCombatCalculator.WinUI
         private async void Window_Closed(object sender, WindowEventArgs args)
         {
             var path = Package.Current.InstalledPath + "/" + SaveFileName;
-            using var stream = File.OpenWrite(path);
+            using var stream = File.Open(path, FileMode.Create);
             using var textWriter = new StreamWriter(stream);
 
             string jsonString = JsonSerializer.Serialize(new { CustomBlueprints }, options);
