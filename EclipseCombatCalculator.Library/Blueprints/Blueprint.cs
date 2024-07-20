@@ -81,11 +81,6 @@ namespace EclipseCombatCalculator.Library.Blueprints
             this.readOnlyBlueprint = readOnlyBlueprint;
         }
 
-        public sealed class SerializedPart
-        {
-            public string Name { get; set; }
-        }
-
         [JsonConstructor]
         public Blueprint(ShipType shipType, Species species, int baseInitiative, int baseComputer,
             int baseShield, int baseEnergy, int baseHull, bool isBase, string name, IEnumerable<Part> parts)
