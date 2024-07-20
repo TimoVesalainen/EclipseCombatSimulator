@@ -27,8 +27,8 @@
             <NavigationViewItem
                 FontSize="28"
                 FontFamily="{StaticResource EclipseFont}"
-                x:Name="BlueprintEditing"
-                Content="Blueprint Editing" />
+                x:Name="Calculations"
+                Content="Calculations" />
             <NavigationViewItem
                 FontSize="28"
                 FontFamily="{StaticResource EclipseFont}"
