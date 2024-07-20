@@ -84,7 +84,7 @@ namespace EclipseCombatCalculator.WinUI.ViewModel
                 ? Visibility.Visible
                 : Visibility.Collapsed;
 
-            Warnings = string.Join("\n", GetWarnings());
+            UpdateWarnings();
         }
 
         private IEnumerable<string> GetWarnings()
@@ -120,6 +120,11 @@ namespace EclipseCombatCalculator.WinUI.ViewModel
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public void UpdateWarnings()
+        {
+            Warnings = string.Join("\n", GetWarnings());
         }
     }
 }

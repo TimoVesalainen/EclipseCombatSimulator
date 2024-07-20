@@ -66,5 +66,10 @@ namespace EclipseCombatCalculator.WinUI
             }
             ViewModel.SelectedBlueprint.Name = (sender as TextBox).Text;
         }
+
+        private void SelectedBlueprintView_BlueprintEdited(object sender, EventArgs e)
+        {
+            ViewModel.UpdateWarnings();
+        }
     }
 }

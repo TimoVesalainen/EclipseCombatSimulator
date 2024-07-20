@@ -305,7 +305,10 @@ namespace EclipseCombatCalculator.WinUI
             {
                 blueprint[index] = dialog.SelectedPart;
                 SetBlueprintParts(blueprint);
+                BlueprintEdited?.Invoke(this, EventArgs.Empty);
             }
         }
+
+        public event EventHandler BlueprintEdited;
     }
 }
