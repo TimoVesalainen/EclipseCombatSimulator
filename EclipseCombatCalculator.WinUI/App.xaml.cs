@@ -14,6 +14,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
@@ -24,6 +25,11 @@ using Windows.Foundation.Collections;
 
 namespace EclipseCombatCalculator.WinUI
 {
+    sealed class Temp
+    {
+        public List<Blueprint> CustomBlueprints { get; set; }
+    }
+
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.
     /// </summary>
@@ -42,12 +48,26 @@ namespace EclipseCombatCalculator.WinUI
             this.InitializeComponent();
         }
 
+        Task temp;
+
         /// <summary>
         /// Invoked when the application is launched.
         /// </summary>
         /// <param name="args">Details about the launch request and process.</param>
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
+            var path = Package.Current.InstalledPath + "/" + SaveFileName;
+            if (File.Exists(path))
+            {
+                using var stream = File.OpenRead(path);
+                var tempValue = JsonSerializer.Deserialize<Temp>(stream, options);
+
+                foreach (var blueprint in tempValue.CustomBlueprints)
+                {
+                    CustomBlueprints.Add(blueprint);
+                }
+            }
+
             m_window = new MainWindow();
             m_window.Closed += Window_Closed;
             m_window.Activate();
