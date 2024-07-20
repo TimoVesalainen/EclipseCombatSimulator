@@ -39,20 +39,8 @@ namespace EclipseCombatCalculator.WinUI
 
         private void LayoutList_ItemClick(object sender, ItemClickEventArgs e)
         {
-            SelectedBlueprintView.Visibility = Visibility.Visible;
-            CloneBlueprint.Visibility = Visibility.Visible;
             Blueprint blueprint = (e.ClickedItem as LayoutListViewModel).Blueprint;
             ViewModel.SelectedBlueprint = blueprint;
-            if (blueprint.CanEdit)
-            {
-                BlueprintName.Visibility = Visibility.Collapsed;
-                BlueprintNameEdit.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                BlueprintName.Visibility = Visibility.Visible;
-                BlueprintNameEdit.Visibility = Visibility.Collapsed;
-            }
         }
 
         private void CloneBlueprint_Click(object sender, RoutedEventArgs e)
@@ -67,8 +55,6 @@ namespace EclipseCombatCalculator.WinUI
             ViewModel.Blueprints.Add(viewModel);
             LayoutList.SelectedItem = viewModel;
             LayoutList.ScrollIntoView(viewModel);
-            BlueprintName.Visibility = Visibility.Collapsed;
-            BlueprintNameEdit.Visibility = Visibility.Visible;
         }
 
         private void BlueprintName_TextChanged(object sender, TextChangedEventArgs e)

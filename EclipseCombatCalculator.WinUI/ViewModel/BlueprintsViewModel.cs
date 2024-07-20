@@ -1,4 +1,5 @@
 ﻿using EclipseCombatCalculator.Library.Blueprints;
+using Microsoft.UI.Xaml;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,7 +13,7 @@ namespace EclipseCombatCalculator.WinUI.ViewModel
 {
     public sealed class BlueprintsViewModel : INotifyPropertyChanged
     {
-        public Blueprint selectedBlueprint;
+        private Blueprint selectedBlueprint;
         public Blueprint SelectedBlueprint
         {
             get { return selectedBlueprint; }
@@ -20,11 +21,58 @@ namespace EclipseCombatCalculator.WinUI.ViewModel
             {
                 selectedBlueprint = value;
                 NotifyPropertyChanged();
+                UpdateDerivedProperties();
+            }
+        }
+
+        private Visibility showBlueprint = Visibility.Collapsed;
+        public Visibility ShowBlueprint
+        {
+            get => showBlueprint;
+            set
+            {
+                showBlueprint = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        private Visibility readOnlyNameVisibility = Visibility.Collapsed;
+        public Visibility ReadOnlyNameVisibility
+        {
+            get => readOnlyNameVisibility;
+            set
+            {
+                readOnlyNameVisibility = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        private Visibility writeableNameVisibility = Visibility.Collapsed;
+        public Visibility WriteableNameVisibility
+        {
+            get => writeableNameVisibility;
+            set
+            {
+                writeableNameVisibility = value;
+                NotifyPropertyChanged();
             }
         }
 
         public ObservableCollection<LayoutListViewModel> Blueprints { get; } =
             new ObservableCollection<LayoutListViewModel>(Blueprint.Blueprints.Select(LayoutListViewModel.Create));
+
+        private void UpdateDerivedProperties()
+        {
+            ShowBlueprint = selectedBlueprint != null ? Visibility.Visible : Visibility.Collapsed;
+
+            ReadOnlyNameVisibility = selectedBlueprint != null && !selectedBlueprint.CanEdit
+                ? Visibility.Visible
+                : Visibility.Collapsed;
+
+            WriteableNameVisibility = selectedBlueprint != null && selectedBlueprint.CanEdit
+                ? Visibility.Visible
+                : Visibility.Collapsed;
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
