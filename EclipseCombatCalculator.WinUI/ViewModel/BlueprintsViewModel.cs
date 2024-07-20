@@ -1,6 +1,7 @@
 ﻿using EclipseCombatCalculator.Library.Blueprints;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -21,6 +22,9 @@ namespace EclipseCombatCalculator.WinUI.ViewModel
                 NotifyPropertyChanged();
             }
         }
+
+        public ObservableCollection<LayoutListViewModel> Blueprints { get; } =
+            new ObservableCollection<LayoutListViewModel>(Blueprint.Blueprints.Select(LayoutListViewModel.Create));
 
         public event PropertyChangedEventHandler PropertyChanged;
 

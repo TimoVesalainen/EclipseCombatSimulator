@@ -15,7 +15,17 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
 
         <Grid.Resources>
             <DataTemplate x:Key="LayoutNameList" x:DataType="viewmodels:LayoutListViewModel">
@@ -35,36 +45,36 @@
 
         <ListView
             x:Name="LayoutList"
-            ItemTemplate="{StaticResource LayoutNameList}"
-            IsItemClickEnabled="True"
-            ItemClick="LayoutList_ItemClick"
             Grid.Column="0"
-            Grid.ColumnSpan="1"/>
+            Grid.Row="0"
+            Grid.RowSpan="5"
+            ItemTemplate="{StaticResource LayoutNameList}"
+            ItemsSource="{x:Bind ViewModel.Blueprints}"
+            IsItemClickEnabled="True"
+            ItemClick="LayoutList_ItemClick"/>
 
-        <Grid
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            Grid.Column="1">
+        <TextBlock
+            Grid.Column="2"
+            Grid.Row="1"
+            Text="{x:Bind ViewModel.SelectedBlueprint.Name, Mode=OneWay}"
+            FontSize="20"
+            FontFamily="{StaticResource EclipseFont}"/>
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
+        <controls:BlueprintControl
+            x:Name="SelectedBlueprintView"
+            Grid.Column="2"
+            Grid.Row="2"
+            Visibility="Collapsed"
+            Blueprint="{x:Bind ViewModel.SelectedBlueprint, Mode=OneWay}"/>
 
-            <TextBlock
-                Grid.Row="0"
-                Text="{x:Bind ViewModel.SelectedBlueprint.Name, Mode=OneWay}"
-                FontSize="20"
-                FontFamily="{StaticResource EclipseFont}"/>
-
-            <controls:BlueprintControl
-                x:Name="SelectedBlueprintView"
-                Grid.Row="1"
-                Visibility="Collapsed"
-                Blueprint="{x:Bind ViewModel.SelectedBlueprint, Mode=OneWay}"/>
-        </Grid>
+        <Button
+            Grid.Column="1"
+            Grid.ColumnSpan="3"
+            Grid.Row="4"
+            x:Name="CloneBlueprint"
+            Visibility="Collapsed"
+            Click="CloneBlueprint_Click"
+            Content="Create clone"
+            />
     </Grid>
 </Page>

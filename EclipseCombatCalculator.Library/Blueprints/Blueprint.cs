@@ -9,7 +9,6 @@ namespace EclipseCombatCalculator.Library.Blueprints
     {
         public ShipType ShipType { get; }
         public Species Species { get; }
-        public string Name { get; init; }
         public int BaseInitiative { get; init; } = 0;
         public int BaseComputer { get; init; } = 0;
         public int BaseShield { get; init; } = 0;
@@ -31,19 +30,33 @@ namespace EclipseCombatCalculator.Library.Blueprints
             }
         }
 
+        public string Name
+        {
+            get => name;
+            set
+            {
+                if (readOnlyBlueprint)
+                {
+                    throw new InvalidOperationException("Trying to edit read only Blueprint");
+                }
+                name = value;
+            }
+        }
+
         public int Size => slots.Length;
 
         public IEnumerable<Part> Parts => slots;
 
         public bool ReadOnly => readOnlyBlueprint;
 
+        private string name;
         readonly Part[] slots;
         readonly bool readOnlyBlueprint;
 
 
         private Blueprint(string name, ShipType type, Species species, params Part[] parts)
         {
-            Name = name;
+            this.name = name;
             this.ShipType = type;
             this.Species = species;
             this.slots = parts;
@@ -52,7 +65,7 @@ namespace EclipseCombatCalculator.Library.Blueprints
         }
         private Blueprint(Blueprint other, bool readOnlyBlueprint)
         {
-            Name = other.Name;
+            this.name = other.Name;
             this.Species = other.Species;
             this.ShipType = other.ShipType;
             this.BaseInitiative = other.BaseInitiative;
@@ -74,7 +87,7 @@ namespace EclipseCombatCalculator.Library.Blueprints
         {
             return new Blueprint(this, true)
             {
-                Name = name
+                name = name
             };
         }
 

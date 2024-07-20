@@ -30,13 +30,32 @@ namespace EclipseCombatCalculator.WinUI
         public BlueprintsPage()
         {
             this.InitializeComponent();
-            this.LayoutList.ItemsSource = Blueprint.Blueprints.Select(LayoutListViewModel.Create);
+            var app = Application.Current as App;
+            foreach (var blueprint in app.CustomBlueprints)
+            {
+                ViewModel.Blueprints.Add(LayoutListViewModel.Create(blueprint));
+            }
         }
 
         private void LayoutList_ItemClick(object sender, ItemClickEventArgs e)
         {
             SelectedBlueprintView.Visibility = Visibility.Visible;
+            CloneBlueprint.Visibility = Visibility.Visible;
             ViewModel.SelectedBlueprint = (e.ClickedItem as LayoutListViewModel).Blueprint;
+        }
+
+        private void CloneBlueprint_Click(object sender, RoutedEventArgs e)
+        {
+            var app = Application.Current as App;
+            var newBlueprint = ViewModel.SelectedBlueprint.CreateEditableClone();
+            newBlueprint.Name = ViewModel.SelectedBlueprint.Name + " (Clone)";
+
+            app.CustomBlueprints.Add(newBlueprint);
+            ViewModel.SelectedBlueprint = newBlueprint;
+            var viewModel = LayoutListViewModel.Create(newBlueprint);
+            ViewModel.Blueprints.Add(viewModel);
+            LayoutList.SelectedItem = viewModel;
+            LayoutList.ScrollIntoView(viewModel);
         }
     }
 }

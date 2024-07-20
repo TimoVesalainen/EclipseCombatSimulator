@@ -1,4 +1,5 @@
-﻿using Microsoft.UI.Xaml;
+﻿using EclipseCombatCalculator.Library.Blueprints;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Data;
@@ -26,6 +27,7 @@ namespace EclipseCombatCalculator.WinUI
     /// </summary>
     public partial class App : Application
     {
+        public List<Blueprint> CustomBlueprints { get; } = [];
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
