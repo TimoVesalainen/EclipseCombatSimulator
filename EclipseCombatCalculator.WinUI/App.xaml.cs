@@ -25,11 +25,6 @@ using Windows.Foundation.Collections;
 
 namespace EclipseCombatCalculator.WinUI
 {
-    sealed class Temp
-    {
-        public List<Blueprint> CustomBlueprints { get; set; }
-    }
-
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.
     /// </summary>
@@ -60,7 +55,7 @@ namespace EclipseCombatCalculator.WinUI
             if (File.Exists(path))
             {
                 using var stream = File.OpenRead(path);
-                var tempValue = JsonSerializer.Deserialize<Temp>(stream, options);
+                var tempValue = JsonSerializer.Deserialize<AppSettings>(stream, options);
 
                 foreach (var blueprint in tempValue.CustomBlueprints)
                 {
@@ -79,7 +74,7 @@ namespace EclipseCombatCalculator.WinUI
             using var stream = File.Open(path, FileMode.Create);
             using var textWriter = new StreamWriter(stream);
 
-            string jsonString = JsonSerializer.Serialize(new { CustomBlueprints }, options);
+            string jsonString = JsonSerializer.Serialize(new AppSettings { CustomBlueprints = CustomBlueprints }, options);
             await textWriter.WriteAsync(jsonString);
             await textWriter.FlushAsync();
         }
