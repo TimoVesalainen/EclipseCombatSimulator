@@ -36,24 +36,24 @@ namespace EclipseCombatCalculator.WinUI.ViewModel
             }
         }
 
-        private Visibility readOnlyNameVisibility = Visibility.Collapsed;
-        public Visibility ReadOnlyNameVisibility
+        private Visibility readOnlyVisibility = Visibility.Collapsed;
+        public Visibility ReadOnlyVisibility
         {
-            get => readOnlyNameVisibility;
+            get => readOnlyVisibility;
             set
             {
-                readOnlyNameVisibility = value;
+                readOnlyVisibility = value;
                 NotifyPropertyChanged();
             }
         }
 
-        private Visibility writeableNameVisibility = Visibility.Collapsed;
-        public Visibility WriteableNameVisibility
+        private Visibility writeableVisibility = Visibility.Collapsed;
+        public Visibility WriteableVisibility
         {
-            get => writeableNameVisibility;
+            get => writeableVisibility;
             set
             {
-                writeableNameVisibility = value;
+                writeableVisibility = value;
                 NotifyPropertyChanged();
             }
         }
@@ -76,11 +76,11 @@ namespace EclipseCombatCalculator.WinUI.ViewModel
         {
             ShowBlueprint = selectedBlueprint != null ? Visibility.Visible : Visibility.Collapsed;
 
-            ReadOnlyNameVisibility = selectedBlueprint != null && !selectedBlueprint.CanEdit
+            ReadOnlyVisibility = selectedBlueprint != null && !selectedBlueprint.CanEdit
                 ? Visibility.Visible
                 : Visibility.Collapsed;
 
-            WriteableNameVisibility = selectedBlueprint != null && selectedBlueprint.CanEdit
+            WriteableVisibility = selectedBlueprint != null && selectedBlueprint.CanEdit
                 ? Visibility.Visible
                 : Visibility.Collapsed;
 
@@ -89,6 +89,10 @@ namespace EclipseCombatCalculator.WinUI.ViewModel
 
         private IEnumerable<string> GetWarnings()
         {
+            if (selectedBlueprint == null)
+            {
+                yield break;
+            }
             static bool IsDrive(Part part)
             {
                 return part != null && part.Movement > 0 || part == Part.JumpDrive;

@@ -14,6 +14,7 @@ using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using EclipseCombatCalculator.Library.Blueprints;
 using EclipseCombatCalculator.WinUI.ViewModel;
+using Nintenlord.Collections.Lists;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -70,6 +71,17 @@ namespace EclipseCombatCalculator.WinUI
         private void SelectedBlueprintView_BlueprintEdited(object sender, EventArgs e)
         {
             ViewModel.UpdateWarnings();
+        }
+
+        private void DeleteBlueprint_Click(object sender, RoutedEventArgs e)
+        {
+            var blueprintToDelete = ViewModel.SelectedBlueprint;
+
+            var app = Application.Current as App;
+            app.CustomBlueprints.Remove(blueprintToDelete);
+            var index = ViewModel.Blueprints.IndexOf(viewModel => viewModel.Blueprint == blueprintToDelete);
+            ViewModel.Blueprints.RemoveAt(index);
+            ViewModel.SelectedBlueprint = null;
         }
     }
 }
