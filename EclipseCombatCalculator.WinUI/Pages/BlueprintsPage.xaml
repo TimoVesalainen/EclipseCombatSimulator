@@ -61,11 +61,10 @@
                 FontFamily="{StaticResource EclipseFont}"/>
 
             <controls:BlueprintControl
+                x:Name="SelectedBlueprintView"
                 Grid.Row="1"
+                Visibility="Collapsed"
                 Blueprint="{x:Bind ViewModel.SelectedBlueprint, Mode=OneWay}"/>
-
-
-
         </Grid>
     </Grid>
 </Page>

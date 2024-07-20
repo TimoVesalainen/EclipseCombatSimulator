@@ -35,6 +35,7 @@ namespace EclipseCombatCalculator.WinUI
 
         private void LayoutList_ItemClick(object sender, ItemClickEventArgs e)
         {
+            SelectedBlueprintView.Visibility = Visibility.Visible;
             ViewModel.SelectedBlueprint = (e.ClickedItem as LayoutListViewModel).Blueprint;
         }
     }
