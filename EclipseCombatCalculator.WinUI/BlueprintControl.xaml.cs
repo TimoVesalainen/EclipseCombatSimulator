@@ -41,8 +41,7 @@ namespace EclipseCombatCalculator.WinUI
             }
         }
 
-        public int Damage { get; set; }
-        public int Count { get; set; }
+        public bool CanEdit { get; set; } = false;
 
         public BlueprintControl()
         {
@@ -53,20 +52,20 @@ namespace EclipseCombatCalculator.WinUI
         {
             if (blueprint == null)
             {
-                foreach (var view in Buttons)
+                foreach (var button in Buttons)
                 {
-                    view.IsEnabled = false;
-                    (view.Content as Image).Source = null;
+                    button.IsEnabled = false;
+                    (button.Content as Image).Source = null;
                 }
                 return;
             }
 
-            foreach (var (pair, view) in GetPartSlots(blueprint).Zip(Buttons))
+            foreach (var (pair, button) in GetPartSlots(blueprint).Zip(Buttons))
             {
                 var (isUsed, part) = pair;
-                view.IsEnabled = isUsed && blueprint.CanEdit;
-                view.Visibility = isUsed ? Visibility.Visible : Visibility.Collapsed;
-                (view.Content as Image).Source = part?.GetImage() ?? PartImages.EmptyPart;
+                button.IsEnabled = isUsed && blueprint.CanEdit && CanEdit;
+                button.Visibility = isUsed ? Visibility.Visible : Visibility.Collapsed;
+                (button.Content as Image).Source = part?.GetImage() ?? PartImages.EmptyPart;
             }
         }
 

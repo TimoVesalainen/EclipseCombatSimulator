@@ -77,6 +77,7 @@
             x:Name="SelectedBlueprintView"
             Grid.Column="2"
             Grid.Row="2"
+            CanEdit="true"
             Visibility="{x:Bind ViewModel.ShowBlueprint, Mode=OneWay}"
             Blueprint="{x:Bind ViewModel.SelectedBlueprint, Mode=OneWay}"
             BlueprintEdited="SelectedBlueprintView_BlueprintEdited"/>
