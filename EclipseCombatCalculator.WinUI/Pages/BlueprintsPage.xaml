@@ -54,9 +54,22 @@
             ItemClick="LayoutList_ItemClick"/>
 
         <TextBlock
+            x:Name="BlueprintName"
             Grid.Column="2"
             Grid.Row="1"
+            Visibility="Collapsed"
             Text="{x:Bind ViewModel.SelectedBlueprint.Name, Mode=OneWay}"
+            FontSize="20"
+            FontFamily="{StaticResource EclipseFont}"/>
+
+        <TextBox
+            x:Name="BlueprintNameEdit"
+            Grid.Column="2"
+            Grid.Row="1"
+            Visibility="Collapsed"
+            Text="{x:Bind ViewModel.SelectedBlueprint.Name, Mode=OneWay}"
+            TextChanged="BlueprintName_TextChanged"
+            IsEnabled="{x:Bind ViewModel.SelectedBlueprint.CanEdit, Mode=OneWay}"
             FontSize="20"
             FontFamily="{StaticResource EclipseFont}"/>
 

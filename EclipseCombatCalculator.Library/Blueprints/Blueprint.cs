@@ -47,7 +47,7 @@ namespace EclipseCombatCalculator.Library.Blueprints
 
         public IEnumerable<Part> Parts => slots;
 
-        public bool ReadOnly => readOnlyBlueprint;
+        public bool CanEdit => !readOnlyBlueprint;
 
         private string name;
         readonly Part[] slots;
