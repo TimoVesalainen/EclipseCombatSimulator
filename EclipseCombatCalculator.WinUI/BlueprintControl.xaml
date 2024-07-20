@@ -22,56 +22,79 @@
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
 
-        <Image
+        <Button
             Grid.Row="0"
             Grid.Column="0"
             Width="200"
             Height="200"
-            />
-        <Image
+            Padding="0"
+            Click="Button_Click">
+            <Image />
+        </Button>
+        <Button
             Grid.Row="0"
             Grid.Column="1"
             Width="200"
             Height="200"
-            />
-        <Image
+            Padding="0"
+            Click="Button_Click">
+            <Image />
+        </Button>
+        <Button
             Grid.Row="0"
             Grid.Column="2"
             Width="200"
             Height="200"
-            />
-        <Image
+            Padding="0"
+            Click="Button_Click">
+            <Image />
+        </Button>
+        <Button
             Grid.Row="0"
             Grid.Column="3"
             Width="200"
             Height="200"
-            />
+            Padding="0"
+            Click="Button_Click">
+            <Image />
+        </Button>
 
-
-        <Image
+        <Button
             Grid.Row="1"
             Grid.Column="0"
             Width="200"
             Height="200"
-            />
-        <Image
+            Padding="0"
+            Click="Button_Click">
+            <Image />
+        </Button>
+        <Button
             Grid.Row="1"
             Grid.Column="1"
             Width="200"
             Height="200"
-            />
-        <Image
+            Padding="0"
+            Click="Button_Click">
+            <Image />
+        </Button>
+        <Button
             Grid.Row="1"
             Grid.Column="2"
             Width="200"
             Height="200"
-            />
-        <Image
+            Padding="0"
+            Click="Button_Click">
+            <Image />
+        </Button>
+        <Button
             Grid.Row="1"
             Grid.Column="3"
             Width="200"
             Height="200"
-            />
+            Padding="0"
+            Click="Button_Click">
+            <Image />
+        </Button>
 
         <StackPanel
             Grid.Row="0"

@@ -18,6 +18,7 @@ using Windows.Storage;
 using Windows.ApplicationModel;
 using Nintenlord.Collections;
 using EclipseCombatCalculator.Library;
+using EclipseCombatCalculator.WinUI.Dialogs;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -52,18 +53,20 @@ namespace EclipseCombatCalculator.WinUI
         {
             if (blueprint == null)
             {
-                foreach (var view in Images)
+                foreach (var view in Buttons)
                 {
-                    view.Source = null;
+                    view.IsEnabled = false;
+                    (view.Content as Image).Source = null;
                 }
                 return;
             }
 
-            foreach (var (pair, view) in GetPartSlots(blueprint).Zip(Images))
+            foreach (var (pair, view) in GetPartSlots(blueprint).Zip(Buttons))
             {
                 var (isUsed, part) = pair;
-                view.Source = part?.GetImage() ?? PartImages.EmptyPart;
+                view.IsEnabled = isUsed;
                 view.Visibility = isUsed ? Visibility.Visible : Visibility.Collapsed;
+                (view.Content as Image).Source = part?.GetImage() ?? PartImages.EmptyPart;
             }
         }
 
@@ -77,25 +80,16 @@ namespace EclipseCombatCalculator.WinUI
             var (c0, c1, c2, c3) = GetOffsets(value.ShipType, value.Species);
             var offset = 50;
 
-            foreach (var image in Images)
+            foreach (var button in Buttons)
             {
-                switch (Grid.GetColumn(image))
+                button.Margin = Grid.GetColumn(button) switch
                 {
-                    case 0:
-                        image.Margin = new Thickness(0, -offset * c0, 0, offset * c0);
-                        break;
-                    case 1:
-                        image.Margin = new Thickness(0, -offset * c1, 0, offset * c1);
-                        break;
-                    case 2:
-                        image.Margin = new Thickness(0, -offset * c2, 0, offset * c2);
-                        break;
-                    case 3:
-                        image.Margin = new Thickness(0, -offset * c3, 0, offset * c3);
-                        break;
-                    default:
-                        throw new IndexOutOfRangeException("Abnormal column in grid image view");
-                }
+                    0 => new Thickness(0, -offset * c0, 0, offset * c0),
+                    1 => new Thickness(0, -offset * c1, 0, offset * c1),
+                    2 => new Thickness(0, -offset * c2, 0, offset * c2),
+                    3 => new Thickness(0, -offset * c3, 0, offset * c3),
+                    _ => throw new IndexOutOfRangeException("Abnormal column in grid image view"),
+                };
             }
         }
 
@@ -277,6 +271,40 @@ namespace EclipseCombatCalculator.WinUI
             throw new NotImplementedException($"Not implemented blueprint control for {blueprint}");
         }
 
-        IEnumerable<Image> Images => BlueprintGrid.Children.OfType<Image>();
+        IEnumerable<Button> Buttons => BlueprintGrid.Children.OfType<Button>();
+
+        private async void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var viewIndex = 4 * Grid.GetRow(sender as FrameworkElement) + Grid.GetColumn(sender as FrameworkElement);
+            int index = -1;
+            foreach (var (isUsed, part, viewIndexPart) in GetPartSlots(this.blueprint).Select((pair, i) => (pair.isUsed, pair.part, i)))
+            {
+                if (isUsed)
+                {
+                    index++;
+                }
+                if (viewIndex == viewIndexPart)
+                {
+                    if (!isUsed)
+                    {
+                        throw new Exception("Clicked on unused part");
+                    }
+                    break;
+                }
+            }
+
+            var dialog = new PartSelectionDialog
+            {
+                XamlRoot = this.XamlRoot,
+                SelectedPart = blueprint[index]
+            };
+
+            var result = await dialog.ShowAsync();
+
+            if (result == ContentDialogResult.Primary)
+            {
+                blueprint[index] = dialog.SelectedPart;
+            }
+        }
     }
 }
