@@ -89,5 +89,14 @@
             Click="CloneBlueprint_Click"
             Content="Create clone"
             />
+
+        <TextBlock
+            Grid.Column="1"
+            Grid.ColumnSpan="3"
+            Grid.Row="3"
+            Visibility="{x:Bind ViewModel.ShowBlueprint, Mode=OneWay}"
+            Text="{x:Bind ViewModel.Warnings, Mode=OneWay}"
+            Foreground="Orange"
+            />
     </Grid>
 </Page>

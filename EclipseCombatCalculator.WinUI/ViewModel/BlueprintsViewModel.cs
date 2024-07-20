@@ -58,6 +58,17 @@ namespace EclipseCombatCalculator.WinUI.ViewModel
             }
         }
 
+        private string warnings = "";
+        public string Warnings
+        {
+            get => warnings;
+            set
+            {
+                warnings = value;
+                NotifyPropertyChanged();
+            }
+        }
+
         public ObservableCollection<LayoutListViewModel> Blueprints { get; } =
             new ObservableCollection<LayoutListViewModel>(Blueprint.Blueprints.Select(LayoutListViewModel.Create));
 
@@ -72,6 +83,36 @@ namespace EclipseCombatCalculator.WinUI.ViewModel
             WriteableNameVisibility = selectedBlueprint != null && selectedBlueprint.CanEdit
                 ? Visibility.Visible
                 : Visibility.Collapsed;
+
+            Warnings = string.Join("\n", GetWarnings());
+        }
+
+        private IEnumerable<string> GetWarnings()
+        {
+            static bool IsDrive(Part part)
+            {
+                return part != null && part.Movement > 0 || part == Part.JumpDrive;
+            }
+
+            if (selectedBlueprint.IsBase)
+            {
+                if (selectedBlueprint.Parts.Any(IsDrive))
+                {
+                    yield return "Base isn't supposed to have a drive";
+                }
+            }
+            else
+            {
+                if (!selectedBlueprint.Parts.Any(IsDrive))
+                {
+                    yield return "Ship is supposed to have a drive";
+                }
+            }
+
+            if (selectedBlueprint.TotalEnergy < 0)
+            {
+                yield return "Not enough energy production";
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
