@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 
 namespace EclipseCombatCalculator.Library.Blueprints
 {
@@ -43,10 +44,12 @@ namespace EclipseCombatCalculator.Library.Blueprints
             }
         }
 
+        [JsonIgnore]
         public int Size => slots.Length;
 
         public IEnumerable<Part> Parts => slots;
 
+        [JsonIgnore]
         public bool CanEdit => !readOnlyBlueprint;
 
         private string name;
@@ -91,6 +94,7 @@ namespace EclipseCombatCalculator.Library.Blueprints
             };
         }
 
+        [JsonIgnore]
         public int TotalEnergy => BaseEnergy + slots.Sum(part => part?.Energy) ?? 0;
 
         int IShipStats.Initiative => BaseInitiative + slots.Sum(part => part?.Initiative) ?? 0;

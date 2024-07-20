@@ -1,21 +1,32 @@
 ﻿using EclipseCombatCalculator.Library.Dices;
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace EclipseCombatCalculator.Library.Blueprints
 {
     public sealed class Part
     {
         public string Name { get; }
+        [JsonIgnore]
         public IEnumerable<Dice> Cannons { get; private init; } = Array.Empty<Dice>();
+        [JsonIgnore]
         public IEnumerable<Dice> Missiles { get; private init; } = Array.Empty<Dice>();
+        [JsonIgnore]
         public int Computers { get; private init; } = 0;
+        [JsonIgnore]
         public int Shields { get; private init; } = 0;
+        [JsonIgnore]
         public int Hulls { get; private init; } = 0;
+        [JsonIgnore]
         public int Initiative { get; private init; } = 0;
+        [JsonIgnore]
         public int Energy { get; private init; } = 0;
+        [JsonIgnore]
         public int Movement { get; private init; } = 0;
+        [JsonIgnore]
         public PartSource Source { get; private init; } = PartSource.Technology;
+        [JsonIgnore]
         public bool OutsideBlueprint { get; private init; } = false;
 
         private Part(string name)
