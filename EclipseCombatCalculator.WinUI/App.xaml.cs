@@ -82,7 +82,6 @@ namespace EclipseCombatCalculator.WinUI
             string jsonString = JsonSerializer.Serialize(new { CustomBlueprints }, options);
             await textWriter.WriteAsync(jsonString);
             await textWriter.FlushAsync();
-            //TODO: Save custom blueprints
         }
 
         private Window m_window;
