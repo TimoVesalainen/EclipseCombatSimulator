@@ -35,6 +35,8 @@ namespace EclipseCombatCalculator.Library.Blueprints
 
         public IEnumerable<Part> Parts => slots;
 
+        public bool ReadOnly => readOnlyBlueprint;
+
         readonly Part[] slots;
         readonly bool readOnlyBlueprint;
 

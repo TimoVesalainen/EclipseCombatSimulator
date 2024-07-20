@@ -64,7 +64,7 @@ namespace EclipseCombatCalculator.WinUI
             foreach (var (pair, view) in GetPartSlots(blueprint).Zip(Buttons))
             {
                 var (isUsed, part) = pair;
-                view.IsEnabled = isUsed;
+                view.IsEnabled = isUsed && !blueprint.ReadOnly;
                 view.Visibility = isUsed ? Visibility.Visible : Visibility.Collapsed;
                 (view.Content as Image).Source = part?.GetImage() ?? PartImages.EmptyPart;
             }
