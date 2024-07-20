@@ -304,6 +304,7 @@ namespace EclipseCombatCalculator.WinUI
             if (result == ContentDialogResult.Primary)
             {
                 blueprint[index] = dialog.SelectedPart;
+                SetBlueprintParts(blueprint);
             }
         }
     }
