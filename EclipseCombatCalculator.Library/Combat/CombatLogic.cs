@@ -206,6 +206,7 @@ namespace EclipseCombatCalculator.Library.Combat
                     }
                     yield return CommunicateCombatState(CombatStep.CannonActivationStart, activeShipType);
                     var (startRetreat, completeRetreat) = await retreatAsker(activeShipType);
+#if DEBUG
                     if (startRetreat < 0 || completeRetreat < 0)
                     {
                         throw new Exception("Negative value returned from callback");
@@ -218,6 +219,7 @@ namespace EclipseCombatCalculator.Library.Combat
                     {
                         throw new Exception("Cannot complete retreat more ships that are in retreat");
                     }
+#endif
                     activeShipType.HandleRetreat(startRetreat, completeRetreat);
 
                     var retreatState = CommunicateCombatState(CombatStep.Retreat, activeShipType);
