@@ -108,17 +108,22 @@ namespace EclipseCombatCalculator.Library.Combat
 
                 var assignments = await damageAssignment(attacker, targets, diceResults);
 
+#if DEBUG
                 HashSet<IDiceFace> usedDice = new();
+#endif
 
                 foreach (var (target, dices) in assignments)
                 {
                     var targetShip = target as CombatShip;
+#if DEBUG
                     if (!targets.Contains(targetShip))
                     {
                         throw new Exception("Targetting invalid ship");
                     }
+#endif
                     foreach (var dice in dices)
                     {
+#if DEBUG
                         if (!diceResults.Contains(dice))
                         {
                             throw new Exception("Attempting to cheat by creating new dice");
@@ -128,6 +133,7 @@ namespace EclipseCombatCalculator.Library.Combat
                             throw new Exception("Attempting to cheat by re-using dice");
                         }
                         usedDice.Add(dice);
+#endif
                         if (attacker.Blueprint.CanHit(targetShip.Blueprint, dice))
                         {
                             targetShip.AddDamage(dice.DamageToOpponent);
