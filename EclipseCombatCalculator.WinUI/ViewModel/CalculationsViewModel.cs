@@ -15,6 +15,17 @@ namespace EclipseCombatCalculator.WinUI.ViewModel
         public ObservableCollection<AIViewModel> AIs { get; } = [new AIViewModel("Basic", AI.BasicAI)];
         public bool CanStartCombat => Attackers.Count > 0 && Defenders.Count > 0;
 
+        private string result;
+        public string Result
+        {
+            get => result;
+            set
+            {
+                result = value;
+                NotifyPropertyChanged();
+            }
+        }
+
         public CalculationsViewModel()
         {
             Attackers.CollectionChanged += Attackers_CollectionChanged;

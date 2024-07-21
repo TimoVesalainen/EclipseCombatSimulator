@@ -1,3 +1,6 @@
+using EclipseCombatCalculator.Library;
+using EclipseCombatCalculator.Library.Combat;
+using EclipseCombatCalculator.Library.Dices;
 using EclipseCombatCalculator.WinUI.Dialogs;
 using EclipseCombatCalculator.WinUI.ViewModel;
 using Microsoft.UI.Xaml;
@@ -12,6 +15,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 
@@ -76,6 +80,44 @@ namespace EclipseCombatCalculator.WinUI.Pages
             {
                 ViewModel.Defenders.Add(CombatShipType.Create(dialog.SelectedItem));
             }
+        }
+
+        private async void Calculate_Click(object sender, RoutedEventArgs e)
+        {
+            var attackerAi = (AttackerAISelection.SelectedItem as AIViewModel).Implementation;
+            var defenderAi = (DefenderAISelection.SelectedItem as AIViewModel).Implementation;
+
+            async Task<IEnumerable<(ICombatShip, IEnumerable<IDiceFace>)>> AssignDamage(
+            ICombatShip attacker, IEnumerable<ICombatShip> targets, IEnumerable<IDiceFace> diceResult)
+            {
+                if (attacker.IsAttacker)
+                {
+                    return await attackerAi(attacker, targets, diceResult);
+                }
+                else
+                {
+                    return await defenderAi(attacker, targets, diceResult);
+                }
+            }
+
+            async Task<(int startRetreat, int completeRetreat)> RetreatAsker(ICombatShip activeShips)
+            {
+                return (0, 0);
+            }
+
+            CombatState result = new();
+            await foreach (var state in CombatLogic.DoCombat(
+                ViewModel.Attackers.Select(viewModel => (viewModel.Blueprint as IShipStats, viewModel.Count)),
+                ViewModel.Defenders.Select(viewModel => (viewModel.Blueprint as IShipStats, viewModel.Count)),
+                AssignDamage, RetreatAsker))
+            {
+                if (state.Ended)
+                {
+                    result = state;
+                }
+            }
+
+            // TODO: Set result
         }
     }
 }
