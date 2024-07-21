@@ -94,19 +94,26 @@ namespace EclipseCombatCalculator.Library.Combat
                 .Concat(defenders.Select(shipType => new CombatShip(shipType.blueprint, shipType.count, attacker: false))).ToList();
 
             shipTypes.Sort(initiativeComparer);
+            List<IDiceFace> dicesCache = new();
 
             // Attack with either missiles or cannons
             async Task ActivateShips(IEnumerable<Dice> attackerDice, CombatShip attacker)
             {
+                for (int i = 0; i < attacker.InCombat; i++)
+                {
+                    dicesCache.AddRange(attackerDice.Select(x => x.FaceDistribution.Sample()));
+                }
+                /*
+                TODO: Use this once this is performant
                 var distr = attackerDice
-                    .Select(weaponDice => weaponDice.FaceDistribution.ArrayDistribution(attacker.InCombat))
+                    .Select(weaponDice => weaponDice.FaceDistribution.RepeatedDistribution(attacker.InCombat))
                     .Distributions()
                     .Select(x => x.Flatten());
 
-                var diceResults = distr.Sample();
+                var diceResults = distr.Sample();*/
                 var targets = shipTypes.Where(target => target.IsAttacker != attacker.IsAttacker && target.InCombat + target.InRetreat > 0);
 
-                var assignments = await damageAssignment(attacker, targets, diceResults);
+                var assignments = await damageAssignment(attacker, targets, dicesCache);
 
 #if DEBUG
                 HashSet<IDiceFace> usedDice = new();
@@ -124,7 +131,7 @@ namespace EclipseCombatCalculator.Library.Combat
                     foreach (var dice in dices)
                     {
 #if DEBUG
-                        if (!diceResults.Contains(dice))
+                        if (!dicesCache.Contains(dice))
                         {
                             throw new Exception("Attempting to cheat by creating new dice");
                         }
@@ -141,10 +148,11 @@ namespace EclipseCombatCalculator.Library.Combat
                     }
                 }
 
-                foreach (var diceResult in diceResults)
+                foreach (var diceResult in dicesCache)
                 {
                     attacker.AddDamage(diceResult.DamageToSelf);
                 }
+                dicesCache.Clear();
             }
 
             CombatState CommunicateCombatState(CombatStep step, CombatShip active)
