@@ -78,5 +78,14 @@ namespace EclipseCombatCalculator.Library.Test
                 new[] { (blueprint: Blueprint.PlantaInterceptor as IShipStats, count: 1) },
                 AI.BasicAI, NoRetreat);
         }
+
+        [Test]
+        public async Task LargeDefaultAIPlantaVSOrion()
+        {
+            var result = await CombatLogic.AttackerWin(
+                new[] { (blueprint: new TestShip { Initiative = 1, Weapons = new Dice[] { CommonDices.YellowDice, CommonDices.YellowDice, CommonDices.YellowDice, CommonDices.YellowDice, CommonDices.YellowDice }, Computers = 0, Shields = 0, Hulls = 0 } as IShipStats, count: 5) },
+                new[] { (blueprint: new TestShip { Initiative = 1, Weapons = Array.Empty<Dice>(), Computers = 0, Shields = 0, Hulls = 10 } as IShipStats, count: 10) },
+                AI.BasicAI, NoRetreat);
+        }
     }
 }
