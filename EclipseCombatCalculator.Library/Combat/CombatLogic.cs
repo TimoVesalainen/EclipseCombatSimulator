@@ -114,11 +114,9 @@ namespace EclipseCombatCalculator.Library.Combat
                 var targets = shipTypes.Where(target => target.IsAttacker != attacker.IsAttacker && target.InCombat + target.InRetreat > 0);
 
                 var assignments = await damageAssignment(attacker, targets, dicesCache);
-
 #if DEBUG
-                HashSet<IDiceFace> usedDice = new();
+                int usedDiceCount = 0;
 #endif
-
                 foreach (var (target, dices) in assignments)
                 {
                     var targetShip = target as CombatShip;
@@ -135,18 +133,20 @@ namespace EclipseCombatCalculator.Library.Combat
                         {
                             throw new Exception("Attempting to cheat by creating new dice");
                         }
-                        if (usedDice.Contains(dice))
-                        {
-                            throw new Exception("Attempting to cheat by re-using dice");
-                        }
-                        usedDice.Add(dice);
 #endif
                         if (attacker.Blueprint.CanHit(targetShip.Blueprint, dice))
                         {
                             targetShip.AddDamage(dice.DamageToOpponent);
                         }
+                        usedDiceCount++;
                     }
                 }
+#if DEBUG
+                if (usedDiceCount > dicesCache.Count)
+                {
+                    throw new Exception("Attempting to cheat by re-using dice");
+                }
+#endif
 
                 foreach (var diceResult in dicesCache)
                 {
