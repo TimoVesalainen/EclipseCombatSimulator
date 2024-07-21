@@ -1,3 +1,4 @@
+using EclipseCombatCalculator.WinUI.Pages;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 
@@ -24,6 +25,10 @@ namespace EclipseCombatCalculator.WinUI
             if (args.SelectedItemContainer == Combat)
             {
                 rootFrame.Navigate(typeof(CombatPage), args, null);
+            }
+            if (args.SelectedItemContainer == Calculations)
+            {
+                rootFrame.Navigate(typeof(CalculationsPage), args, null);
             }
         }
     }
