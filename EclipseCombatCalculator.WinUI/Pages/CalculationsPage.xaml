@@ -94,22 +94,12 @@
             <TextBlock Text="Add attacker" />
         </Button>
 
-        <ToggleSwitch
-            x:Name="AttackerAI"
-            Grid.Column="1"
-            Grid.ColumnSpan="1"
-            Grid.Row="0"
-            Grid.RowSpan="1"
-            OffContent="Attacker Manual"
-            OnContent="Attacker AI"/>
-
         <ComboBox
             Grid.Column="2"
             Grid.ColumnSpan="1"
             Grid.Row="0"
             Grid.RowSpan="1"
             x:Name="AttackerAISelection"
-            IsEnabled="{x:Bind AttackerAI.IsOn, Mode=OneWay}"
             SelectedIndex="0"
             ItemsSource="{x:Bind ViewModel.AIs}"
             ItemTemplate="{StaticResource AIName}"/>
@@ -133,22 +123,12 @@
             <TextBlock Text="Add defender" />
         </Button>
 
-        <ToggleSwitch
-            x:Name="DefenderAI"
-            Grid.Column="1"
-            Grid.ColumnSpan="1"
-            Grid.Row="2"
-            Grid.RowSpan="1"
-            OffContent="Defender Manual"
-            OnContent="Defender AI"/>
-
         <ComboBox
             Grid.Column="2"
             Grid.ColumnSpan="1"
             Grid.Row="2"
             Grid.RowSpan="1"
             x:Name="DefenderAISelection"
-            IsEnabled="{x:Bind DefenderAI.IsOn, Mode=OneWay}"
             SelectedIndex="0"
             ItemsSource="{x:Bind ViewModel.AIs}"
             ItemTemplate="{StaticResource AIName}"/>
