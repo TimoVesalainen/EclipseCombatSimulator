@@ -115,6 +115,15 @@ namespace EclipseCombatCalculator.WinUI.ViewModel
             {
                 yield return "Not enough energy production";
             }
+
+            if (selectedBlueprint.Parts.GroupBy(part => part)
+                .Any(partGroup =>
+                    partGroup.Key != null &&
+                    partGroup.Key.Source == PartSource.Discovery
+                    && partGroup.Count() > 1))
+            {
+                yield return "Several copies of same discovery part";
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
