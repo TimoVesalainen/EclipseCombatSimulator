@@ -101,12 +101,26 @@ namespace EclipseCombatCalculator.WinUI.ViewModel
         public void Update()
         {
             var attackerWinPercentage = (double)attackerWin * 100 / combats;
+
+            if (combats == 0)
+            {
+                Result = "";
+                return;
+            }
+
             var defenderWinPercentage = (double)defenderWin * 100 / combats;
 
             Result = $"Of {combats} samples:\n" +
                 $"Attacker {attackerWin}, Defender {defenderWin}\n" +
                 $"Attacker win portion: {attackerWinPercentage}%\n" +
                 $"Defender win portion: {defenderWinPercentage}%\n";
+        }
+
+        public void ClearResult()
+        {
+            attackerWin = 0;
+            defenderWin = 0;
+            combats = 0;
         }
 
         private void Ships_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)

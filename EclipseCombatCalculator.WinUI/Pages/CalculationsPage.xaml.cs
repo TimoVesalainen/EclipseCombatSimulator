@@ -32,6 +32,7 @@ namespace EclipseCombatCalculator.WinUI.Pages
         {
             var viewModel = (e.OriginalSource as Button).DataContext as CombatShipType;
             viewModel.Count += 1;
+            ViewModel.ClearResult();
         }
 
         private void MinusButton_Click(object sender, RoutedEventArgs e)
@@ -42,6 +43,7 @@ namespace EclipseCombatCalculator.WinUI.Pages
             {
                 ViewModel.Remove(combatShipModel);
             }
+            ViewModel.ClearResult();
         }
 
         private async void AddAttacker_Click(object sender, RoutedEventArgs e)
@@ -56,6 +58,7 @@ namespace EclipseCombatCalculator.WinUI.Pages
             if (result == ContentDialogResult.Primary)
             {
                 ViewModel.Attackers.Add(CombatShipType.Create(dialog.SelectedItem));
+                ViewModel.ClearResult();
             }
         }
 
@@ -71,6 +74,7 @@ namespace EclipseCombatCalculator.WinUI.Pages
             if (result == ContentDialogResult.Primary)
             {
                 ViewModel.Defenders.Add(CombatShipType.Create(dialog.SelectedItem));
+                ViewModel.ClearResult();
             }
         }
 
