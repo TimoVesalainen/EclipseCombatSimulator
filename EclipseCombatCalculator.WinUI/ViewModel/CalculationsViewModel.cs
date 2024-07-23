@@ -12,6 +12,10 @@ namespace EclipseCombatCalculator.WinUI.ViewModel
 {
     public sealed class CalculationsViewModel : INotifyPropertyChanged
     {
+        public ObservableCollection<CombatShipType> Attackers { get; } = [CombatShipType.Create(Blueprint.TerranInterceptor)];
+        public ObservableCollection<CombatShipType> Defenders { get; } = [CombatShipType.Create(Blueprint.OrionCruiser)];
+        public ObservableCollection<AIViewModel> AIs { get; } = [new AIViewModel("Basic", AI.BasicAI)];
+
         private int attackerWin;
         public int AttackerWin
         {
@@ -89,20 +93,19 @@ namespace EclipseCombatCalculator.WinUI.ViewModel
 
         public void Update()
         {
-            var attackerWinPercentage = (double)attackerWin * 100 / combats;
-
             if (combats == 0)
             {
                 Result = "";
                 return;
             }
 
+            var attackerWinPercentage = (double)attackerWin * 100 / combats;
             var defenderWinPercentage = (double)defenderWin * 100 / combats;
 
             Result = $"Of {combats} samples:\n" +
                 $"Attacker {attackerWin}, Defender {defenderWin}\n" +
-                $"Attacker win portion: {attackerWinPercentage}%\n" +
-                $"Defender win portion: {defenderWinPercentage}%\n";
+                $"Attacker win portion: {attackerWinPercentage:F2}%\n" +
+                $"Defender win portion: {defenderWinPercentage:F2}%\n";
         }
 
         public void ClearResult()

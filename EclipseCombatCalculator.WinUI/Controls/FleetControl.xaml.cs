@@ -25,8 +25,16 @@ namespace EclipseCombatCalculator.WinUI.Controls
 {
     public sealed partial class FleetControl : UserControl
     {
-        public ObservableCollection<CombatShipType> Ships { get; } = [];
-        public ObservableCollection<AIViewModel> AIs { get; } = [new AIViewModel("Basic", AI.BasicAI)];
+        public ObservableCollection<CombatShipType> Ships
+        {
+            get => (ObservableCollection<CombatShipType>)GetValue(ShipsProperty);
+            set => SetValue(ShipsProperty, value);
+        }
+        public ObservableCollection<AIViewModel> AIs
+        {
+            get => (ObservableCollection<AIViewModel>)GetValue(AIsProperty);
+            set => SetValue(AIsProperty, value);
+        }
 
         public bool CanChooseManual { get; set; } = false;
         public Visibility ShowSwitch => CanChooseManual ? Visibility.Visible : Visibility.Collapsed;
@@ -69,5 +77,17 @@ namespace EclipseCombatCalculator.WinUI.Controls
                 Ships.Add(CombatShipType.Create(dialog.SelectedItem));
             }
         }
+
+        private readonly DependencyProperty ShipsProperty = DependencyProperty.Register(
+             nameof(Ships),
+             typeof(ObservableCollection<CombatShipType>),
+             typeof(FleetControl),
+              new PropertyMetadata(new ObservableCollection<CombatShipType>()));
+
+        private readonly DependencyProperty AIsProperty = DependencyProperty.Register(
+             nameof(AIs),
+             typeof(ObservableCollection<AIViewModel>),
+             typeof(FleetControl),
+              new PropertyMetadata(new ObservableCollection<AIViewModel>()));
     }
 }

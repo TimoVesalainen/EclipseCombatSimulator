@@ -53,8 +53,8 @@ namespace EclipseCombatCalculator.WinUI.Pages
             ViewModel.ProgressMax = partitionCount;
             ViewModel.ProgressVisible = Visibility.Visible;
 
-            var attackers = AttackerFleet.Ships.Select(viewModel => (viewModel.Blueprint as IShipStats, viewModel.Count)).ToList();
-            var defenders = DefenderFleet.Ships.Select(viewModel => (viewModel.Blueprint as IShipStats, viewModel.Count)).ToList();
+            var attackers = ViewModel.Attackers.Select(viewModel => (viewModel.Blueprint as IShipStats, viewModel.Count)).ToList();
+            var defenders = ViewModel.Defenders.Select(viewModel => (viewModel.Blueprint as IShipStats, viewModel.Count)).ToList();
 
             int progress = 0;
             int completed = 0;

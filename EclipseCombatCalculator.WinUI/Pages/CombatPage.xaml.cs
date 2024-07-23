@@ -15,11 +15,11 @@ namespace EclipseCombatCalculator.WinUI
 {
     public sealed partial class CombatPage : Page
     {
+        public readonly CombatPageViewModel ViewModel = new();
+
         public CombatPage()
         {
             this.InitializeComponent();
-            AttackerFleet.Ships.Add(CombatShipType.Create(Blueprint.TerranInterceptor));
-            DefenderFleet.Ships.Add(CombatShipType.Create(Blueprint.OrionCruiser));
         }
 
         private async void StartButton_Click(object sender, RoutedEventArgs e)
@@ -86,8 +86,8 @@ namespace EclipseCombatCalculator.WinUI
 
             bool result = false;
             await foreach (var state in CombatLogic.DoCombat(
-                AttackerFleet.Ships.Select(viewModel => (viewModel.Blueprint as IShipStats, viewModel.Count)),
-                DefenderFleet.Ships.Select(viewModel => (viewModel.Blueprint as IShipStats, viewModel.Count)),
+                ViewModel.Attackers.Select(viewModel => (viewModel.Blueprint as IShipStats, viewModel.Count)),
+                ViewModel.Defenders.Select(viewModel => (viewModel.Blueprint as IShipStats, viewModel.Count)),
                 AssignDamage, RetreatAsker))
             {
                 string PriorityLine(ICombatShip ship)

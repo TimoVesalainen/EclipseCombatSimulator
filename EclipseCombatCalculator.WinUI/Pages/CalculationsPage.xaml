@@ -31,7 +31,9 @@
         <controls:FleetControl
             x:Name="AttackerFleet"
             Grid.Row="1"
-            Grid.Column="0"/>
+            Grid.Column="0"
+            Ships="{x:Bind ViewModel.Attackers}"
+            AIs="{x:Bind ViewModel.AIs}"/>
 
         <TextBlock
             Grid.Row="2"
@@ -41,7 +43,9 @@
         <controls:FleetControl
             x:Name="DefenderFleet"
             Grid.Row="3"
-            Grid.Column="0"/>
+            Grid.Column="0"
+            Ships="{x:Bind ViewModel.Defenders}"
+            AIs="{x:Bind ViewModel.AIs}"/>
 
         <Grid
             Grid.Column="2"
