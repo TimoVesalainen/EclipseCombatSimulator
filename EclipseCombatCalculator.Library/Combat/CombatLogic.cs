@@ -144,7 +144,7 @@ namespace EclipseCombatCalculator.Library.Combat
 #if DEBUG
                 if (usedDiceCount > dicesCache.Count)
                 {
-                    throw new Exception("Attempting to cheat by re-using dice");
+                    throw new Exception("Attempting to cheat by creating or re-using dice");
                 }
 #endif
 
