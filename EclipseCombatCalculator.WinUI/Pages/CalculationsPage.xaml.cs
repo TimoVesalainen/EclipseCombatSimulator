@@ -1,7 +1,7 @@
 using EclipseCombatCalculator.Library;
+using EclipseCombatCalculator.Library.Blueprints;
 using EclipseCombatCalculator.Library.Combat;
 using EclipseCombatCalculator.Library.Dices;
-using EclipseCombatCalculator.WinUI.Dialogs;
 using EclipseCombatCalculator.WinUI.ViewModel;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -26,58 +26,11 @@ namespace EclipseCombatCalculator.WinUI.Pages
         public CalculationsPage()
         {
             this.InitializeComponent();
+            AttackerFleet.Ships.Add(CombatShipType.Create(Blueprint.TerranInterceptor));
+            DefenderFleet.Ships.Add(CombatShipType.Create(Blueprint.OrionCruiser));
         }
 
-        private void PlusButton_Click(object sender, RoutedEventArgs e)
-        {
-            var viewModel = (e.OriginalSource as Button).DataContext as CombatShipType;
-            viewModel.Count += 1;
-            ViewModel.ClearResult();
-        }
-
-        private void MinusButton_Click(object sender, RoutedEventArgs e)
-        {
-            var combatShipModel = (e.OriginalSource as Button).DataContext as CombatShipType;
-            combatShipModel.Count -= 1;
-            if (combatShipModel.Count == 0)
-            {
-                ViewModel.Remove(combatShipModel);
-            }
-            ViewModel.ClearResult();
-        }
-
-        private async void AddAttacker_Click(object sender, RoutedEventArgs e)
-        {
-            BlueprintSelectionDialog dialog = new()
-            {
-                XamlRoot = this.XamlRoot
-            };
-
-            var result = await dialog.ShowAsync();
-
-            if (result == ContentDialogResult.Primary)
-            {
-                ViewModel.Attackers.Add(CombatShipType.Create(dialog.SelectedItem));
-                ViewModel.ClearResult();
-            }
-        }
-
-        private async void AddDefender_Click(object sender, RoutedEventArgs e)
-        {
-            BlueprintSelectionDialog dialog = new()
-            {
-                XamlRoot = this.XamlRoot
-            };
-
-            var result = await dialog.ShowAsync();
-
-            if (result == ContentDialogResult.Primary)
-            {
-                ViewModel.Defenders.Add(CombatShipType.Create(dialog.SelectedItem));
-                ViewModel.ClearResult();
-            }
-        }
-
+        //TODO: Fix folder
         static readonly IFolder<CombatState, (int, int, int), (int, int, int)> folder = Folders.CountI<CombatState>().Combine(
                 Folders.CountI<CombatState>(x => x.AttackerWinner == true),
                 Folders.CountI<CombatState>(x => x.AttackerWinner == false),
@@ -90,8 +43,8 @@ namespace EclipseCombatCalculator.WinUI.Pages
                 return;
             }
 
-            var attackerAi = (AttackerAISelection.SelectedItem as AIViewModel).Implementation;
-            var defenderAi = (DefenderAISelection.SelectedItem as AIViewModel).Implementation;
+            var attackerAi = AttackerFleet.SelectedAI.Implementation;
+            var defenderAi = DefenderFleet.SelectedAI.Implementation;
             var amountToSample = (int)SampleCountBox.Value;
             int partitionCount = Math.Min(100, amountToSample);
             bool isPartitioned = amountToSample > 100;
@@ -100,8 +53,8 @@ namespace EclipseCombatCalculator.WinUI.Pages
             ViewModel.ProgressMax = partitionCount;
             ViewModel.ProgressVisible = Visibility.Visible;
 
-            var attackers = ViewModel.Attackers.Select(viewModel => (viewModel.Blueprint as IShipStats, viewModel.Count)).ToList();
-            var defenders = ViewModel.Defenders.Select(viewModel => (viewModel.Blueprint as IShipStats, viewModel.Count)).ToList();
+            var attackers = AttackerFleet.Ships.Select(viewModel => (viewModel.Blueprint as IShipStats, viewModel.Count)).ToList();
+            var defenders = DefenderFleet.Ships.Select(viewModel => (viewModel.Blueprint as IShipStats, viewModel.Count)).ToList();
 
             int progress = 0;
             int completed = 0;

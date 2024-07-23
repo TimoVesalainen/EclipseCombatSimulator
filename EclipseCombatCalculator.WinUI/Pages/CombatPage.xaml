@@ -31,7 +31,8 @@
         <controls:FleetControl
             x:Name="AttackerFleet"
             Grid.Row="1"
-            Grid.Column="0"/>
+            Grid.Column="0"
+            CanChooseManual="True"/>
 
         <TextBlock
             Grid.Row="2"
@@ -41,7 +42,8 @@
         <controls:FleetControl
             x:Name="DefenderFleet"
             Grid.Row="3"
-            Grid.Column="0"/>
+            Grid.Column="0"
+            CanChooseManual="True"/>
 
         <Grid
             Grid.Column="1"

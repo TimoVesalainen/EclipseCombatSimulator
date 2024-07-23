@@ -28,6 +28,8 @@ namespace EclipseCombatCalculator.WinUI.Controls
         public ObservableCollection<CombatShipType> Ships { get; } = [];
         public ObservableCollection<AIViewModel> AIs { get; } = [new AIViewModel("Basic", AI.BasicAI)];
 
+        public bool CanChooseManual { get; set; } = false;
+        public Visibility ShowSwitch => CanChooseManual ? Visibility.Visible : Visibility.Collapsed;
         public bool HasShips => Ships.Count > 0;
         public bool ManualFleet => !AISwitch.IsOn;
         public AIViewModel SelectedAI => AISelection.SelectedItem as AIViewModel;
