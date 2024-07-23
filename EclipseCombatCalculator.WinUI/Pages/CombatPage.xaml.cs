@@ -165,7 +165,7 @@ namespace EclipseCombatCalculator.WinUI
                 return (0, 0);
             }
 
-            var dialog = new Dialogs.RetreatAsker
+            var dialog = new Dialogs.RetreatAskerDialog
             {
                 XamlRoot = this.XamlRoot
             };

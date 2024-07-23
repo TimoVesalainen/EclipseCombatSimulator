@@ -15,15 +15,15 @@
   </PropertyGroup>
   <ItemGroup>
 	  <None Remove="Assets\EmptyPart.png" />
-	  <None Remove="BlueprintControl.xaml" />
+	  <None Remove="Controls\BlueprintControl.xaml" />
+	  <None Remove="Controls\FleetControl.xaml" />
+	  <None Remove="Pages\BlueprintsPage.xaml" />
+	  <None Remove="Pages\CombatPage.xaml" />
+	  <None Remove="Pages\CalculationsPage.xaml" />
 	  <None Remove="Dialogs\PartSelectionDialog.xaml" />
-	  <None Remove="FleetControl.xaml" />
-	  <None Remove="Pages/BlueprintsPage.xaml" />
-	  <None Remove="Pages/CombatPage.xaml" />
+	  <None Remove="Dialogs\RetreatAskerDialog.xaml" />
 	  <None Remove="Dialogs\BlueprintSelectionDialog.xaml" />
 	  <None Remove="Dialogs\DiceAssignmentDialog.xaml" />
-	  <None Remove="Dialogs\RetreatAsker.xaml" />
-	  <None Remove="Pages\CalculationsPage.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -201,12 +201,12 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="BlueprintControl.xaml">
+    <Page Update="Controls\BlueprintControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Dialogs\RetreatAsker.xaml">
+    <Page Update="Dialogs\RetreatAskerDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
@@ -214,6 +214,11 @@
     <Page Update="Dialogs\DiceAssignmentDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+	<Page Update="Controls\leetControl.xaml">
+	  <Generator>MSBuild:Compile</Generator>
+	</Page>
   </ItemGroup>
 
   <!--
@@ -229,11 +234,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Remove="Dialogs\PartSelectionDialog.xaml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Page Update="FleetControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controls\" />

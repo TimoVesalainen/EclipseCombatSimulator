@@ -4,10 +4,10 @@
     xmlns:local="using:EclipseCombatCalculator.WinUI"
     xmlns:controls="using:EclipseCombatCalculator.WinUI.Controls">
 
-    <Style TargetType="local:BlueprintControl" >
+    <Style TargetType="controls:BlueprintControl" >
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="local:BlueprintControl">
+                <ControlTemplate TargetType="controls:BlueprintControl">
                     <Border
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"

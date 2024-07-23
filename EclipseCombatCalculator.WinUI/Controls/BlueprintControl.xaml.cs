@@ -8,7 +8,7 @@ using Nintenlord.Collections;
 using EclipseCombatCalculator.Library;
 using EclipseCombatCalculator.WinUI.Dialogs;
 
-namespace EclipseCombatCalculator.WinUI
+namespace EclipseCombatCalculator.WinUI.Controls
 {
     public sealed partial class BlueprintControl : UserControl
     {

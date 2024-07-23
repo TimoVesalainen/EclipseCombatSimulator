@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <UserControl
-    x:Class="EclipseCombatCalculator.WinUI.BlueprintControl"
+    x:Class="EclipseCombatCalculator.WinUI.Controls.BlueprintControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:EclipseCombatCalculator.WinUI"
