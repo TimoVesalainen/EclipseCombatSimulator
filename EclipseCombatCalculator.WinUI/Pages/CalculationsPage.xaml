@@ -151,23 +151,50 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <Button
-                Grid.Row="1"
-                Grid.Column="1"
-                Content="Calculate"
-                Click="Calculate_Click"/>
-
             <TextBlock
                 Grid.Row="1"
-                Grid.Column="2"
+                Grid.Column="1"
+                Text="Sample count"
+                />
+            
+            <NumberBox
+                x:Name="SampleCountBox"
+                IsEnabled="{x:Bind ViewModel.CanStartCombat, Mode=OneWay}"
+                Grid.Row="1"
+                Grid.Column="2"/>
+
+            <Button
+                Grid.Row="1"
+                Grid.Column="3"
+                Content="Calculate"
+                IsEnabled="{x:Bind ViewModel.CanStartCombat, Mode=OneWay}"
+                Click="Calculate_Click"/>
+
+            <ProgressBar
+                Grid.Row="2"
+                Grid.Column="1"
+                Grid.ColumnSpan="3"
+                Height="100"
+                Visibility="{x:Bind ViewModel.ProgressVisible, Mode=OneWay}"
+                Maximum="{x:Bind ViewModel.ProgressMax, Mode=OneWay}"
+                Value="{x:Bind ViewModel.Progress, Mode=OneWay}"
+                />
+
+            <TextBlock
+                Grid.Row="3"
+                Grid.Column="1"
+                Grid.ColumnSpan="3"
                 Text="{x:Bind ViewModel.Result, Mode=OneWay}"
                 />
         </Grid>
