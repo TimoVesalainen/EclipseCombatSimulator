@@ -17,6 +17,7 @@
 	  <None Remove="Assets\EmptyPart.png" />
 	  <None Remove="BlueprintControl.xaml" />
 	  <None Remove="Dialogs\PartSelectionDialog.xaml" />
+	  <None Remove="FleetControl.xaml" />
 	  <None Remove="Pages/BlueprintsPage.xaml" />
 	  <None Remove="Pages/CombatPage.xaml" />
 	  <None Remove="Dialogs\BlueprintSelectionDialog.xaml" />
@@ -228,5 +229,13 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Remove="Dialogs\PartSelectionDialog.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="FleetControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Controls\" />
   </ItemGroup>
 </Project>

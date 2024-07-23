@@ -15,70 +15,26 @@ namespace EclipseCombatCalculator.WinUI
 {
     public sealed partial class CombatPage : Page
     {
-        public CombatPageViewModel ViewModel { get; } = new();
-
         public CombatPage()
         {
             this.InitializeComponent();
-        }
-
-        private void PlusButton_Click(object sender, RoutedEventArgs e)
-        {
-            var viewModel = (e.OriginalSource as Button).DataContext as CombatShipType;
-            viewModel.Count += 1;
-        }
-
-        private void MinusButton_Click(object sender, RoutedEventArgs e)
-        {
-            var combatShipModel = (e.OriginalSource as Button).DataContext as CombatShipType;
-            combatShipModel.Count -= 1;
-            if (combatShipModel.Count == 0)
-            {
-                ViewModel.Remove(combatShipModel);
-            }
-        }
-
-        private async void AddAttacker_Click(object sender, RoutedEventArgs e)
-        {
-            BlueprintSelectionDialog dialog = new()
-            {
-                XamlRoot = this.XamlRoot
-            };
-
-            var result = await dialog.ShowAsync();
-
-            if (result == ContentDialogResult.Primary)
-            {
-                ViewModel.Attackers.Add(CombatShipType.Create(dialog.SelectedItem));
-            }
-        }
-
-        private async void AddDefender_Click(object sender, RoutedEventArgs e)
-        {
-            BlueprintSelectionDialog dialog = new()
-            {
-                XamlRoot = this.XamlRoot
-            };
-
-            var result = await dialog.ShowAsync();
-
-            if (result == ContentDialogResult.Primary)
-            {
-                ViewModel.Defenders.Add(CombatShipType.Create(dialog.SelectedItem));
-            }
+            AttackerFleet.Ships.Add(CombatShipType.Create(Blueprint.TerranInterceptor));
+            DefenderFleet.Ships.Add(CombatShipType.Create(Blueprint.OrionCruiser));
         }
 
         private async void StartButton_Click(object sender, RoutedEventArgs e)
         {
-            var attackerAi = (AttackerAISelection.SelectedItem as AIViewModel).Implementation;
-            var defenderAi = (DefenderAISelection.SelectedItem as AIViewModel).Implementation;
+            var attackerIsAI = !AttackerFleet.ManualFleet;
+            var attackerAi = AttackerFleet.SelectedAI.Implementation;
+            var defenderIsAI = !DefenderFleet.ManualFleet;
+            var defenderAi = DefenderFleet.SelectedAI.Implementation;
 
             async Task<IEnumerable<(ICombatShip, IEnumerable<IDiceFace>)>> AssignDamage(
             ICombatShip attacker, IEnumerable<ICombatShip> targets, IEnumerable<IDiceFace> diceResult)
             {
                 if (attacker.IsAttacker)
                 {
-                    if (AttackerAI.IsOn)
+                    if (attackerIsAI)
                     {
                         return await attackerAi(attacker, targets, diceResult);
                     }
@@ -89,7 +45,7 @@ namespace EclipseCombatCalculator.WinUI
                 }
                 else
                 {
-                    if (DefenderAI.IsOn)
+                    if (defenderIsAI)
                     {
                         return await defenderAi(attacker, targets, diceResult);
                     }
@@ -104,7 +60,7 @@ namespace EclipseCombatCalculator.WinUI
             {
                 if (activeShips.IsAttacker)
                 {
-                    if (AttackerAI.IsOn)
+                    if (attackerIsAI)
                     {
                         return (0, 0);
                     }
@@ -115,7 +71,7 @@ namespace EclipseCombatCalculator.WinUI
                 }
                 else
                 {
-                    if (DefenderAI.IsOn)
+                    if (defenderIsAI)
                     {
                         return (0, 0);
                     }
@@ -130,8 +86,8 @@ namespace EclipseCombatCalculator.WinUI
 
             bool result = false;
             await foreach (var state in CombatLogic.DoCombat(
-                ViewModel.Attackers.Select(viewModel => (viewModel.Blueprint as IShipStats, viewModel.Count)),
-                ViewModel.Defenders.Select(viewModel => (viewModel.Blueprint as IShipStats, viewModel.Count)),
+                AttackerFleet.Ships.Select(viewModel => (viewModel.Blueprint as IShipStats, viewModel.Count)),
+                DefenderFleet.Ships.Select(viewModel => (viewModel.Blueprint as IShipStats, viewModel.Count)),
                 AssignDamage, RetreatAsker))
             {
                 string PriorityLine(ICombatShip ship)
