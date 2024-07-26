@@ -7,6 +7,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewmodels="using:EclipseCombatCalculator.WinUI.ViewModel"
+    xmlns:controls="using:EclipseCombatCalculator.WinUI.Controls"
     mc:Ignorable="d"
     PrimaryButtonText="Done">
 
@@ -45,21 +46,45 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
 
                         <TextBlock 
                             Grid.Row="0"
                             Grid.Column="0"
-                            Grid.ColumnSpan="2"
+                            Grid.ColumnSpan="4"
                             Text="{x:Bind Blueprint.Name}" FontSize="20" FontFamily="{StaticResource EclipseFont}" />
-                        <TextBlock
+                        
+                        <controls:BlueprintControl
+                            x:Name="SelectedBlueprintView"
                             Grid.Row="1"
                             Grid.Column="0"
-                            Text="{x:Bind Count}" FontSize="20"/>
+                            Grid.ColumnSpan="4"
+                            Size="50"
+                            Blueprint="{x:Bind Blueprint, Mode=OneWay}"/>
+
                         <TextBlock
-                            Grid.Row="1"
+                            Grid.Row="2"
+                            Grid.Column="0"
+                            Text="Count: "
+                            FontSize="20"/>
+                        <TextBlock
+                            Grid.Row="2"
                             Grid.Column="1"
-                            Text="{x:Bind Damage}" FontSize="20"/>
+                            Text="{x:Bind Count}"
+                            FontSize="20"/>
+
+                        <TextBlock
+                            Grid.Row="2"
+                            Grid.Column="2"
+                            Text="Damage: "
+                            FontSize="20"/>
+                        <TextBlock
+                            Grid.Row="2"
+                            Grid.Column="3"
+                            Text="{x:Bind Damage}"
+                            FontSize="20"/>
 
                         <!-- TODO: Indicate if dice do not hit when -->
                         <ListView
