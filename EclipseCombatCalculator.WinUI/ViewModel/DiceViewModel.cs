@@ -1,4 +1,5 @@
 ﻿using EclipseCombatCalculator.Library.Dices;
+using Microsoft.UI.Xaml.Media.Imaging;
 using System;
 using System.ComponentModel;
 using System.Linq;
@@ -10,20 +11,9 @@ namespace EclipseCombatCalculator.WinUI.ViewModel
     {
         public Guid ID { get; } = Guid.NewGuid();
 
-        public IDiceFace Dice { get; set; }
+        public DiceFace Dice { get; set; }
 
-        public string Text => TextCreator(Dice);
-
-        private static string TextCreator(IDiceFace diceFace)
-        {
-            return diceFace switch
-            {
-                Damage damage => string.Join("", Enumerable.Range(0, damage.DamageToOpponent).Select(_ => "*")),
-                Number number => $"{number.Value}({string.Join("", Enumerable.Range(0, number.DamageToOpponent).Select(_ => "*"))})",
-                Miss number => "_",
-                _ => throw new NotImplementedException(),
-            };
-        }
+        public BitmapImage Image => Dice.GetBitmap();
 
         public event PropertyChangedEventHandler PropertyChanged;
 

@@ -30,7 +30,8 @@
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock Text="{x:Bind Text}" FontSize="20" FontFamily="{StaticResource EclipseFont}" />
+                        <Image
+                            Source="{x:Bind Image}"/>
                     </Grid>
                 </DataTemplate>
                 <DataTemplate x:Key="Ship" x:DataType="viewmodels:TargetShipViewModel">
