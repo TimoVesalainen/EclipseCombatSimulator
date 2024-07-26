@@ -64,7 +64,7 @@ namespace EclipseCombatCalculator.WinUI.Controls
             }
 
             var (c0, c1, c2, c3) = GetOffsets(value.ShipType, value.Species);
-            var offset = 50;
+            var offset = Size / 4;
 
             foreach (var button in Buttons)
             {
