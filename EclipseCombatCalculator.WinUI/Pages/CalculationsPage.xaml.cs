@@ -30,7 +30,6 @@ namespace EclipseCombatCalculator.WinUI.Pages
             DefenderFleet.Ships.Add(CombatShipType.Create(Blueprint.OrionCruiser));
         }
 
-        //TODO: Fix folder
         static readonly IFolder<CombatState, (int, int, int), (int, int, int)> folder = Folders.CountI<CombatState>().Combine(
                 Folders.CountI<CombatState>(x => x.AttackerWinner == true),
                 Folders.CountI<CombatState>(x => x.AttackerWinner == false),
@@ -75,22 +74,7 @@ namespace EclipseCombatCalculator.WinUI.Pages
 
             var states = await Task.Run(() => DoSampling(attackers, defenders, attackerAi, defenderAi, (int)amountToSample, UpdateUI));
 
-            int count = 0;
-            int attacker = 0;
-            int defender = 0;
-
-            foreach (var state in states)
-            {
-                count++;
-                if (state.AttackerWinner == true)
-                {
-                    attacker++;
-                }
-                if (state.AttackerWinner == false)
-                {
-                    defender++;
-                }
-            }
+            var (count, attacker, defender) = states.FoldWith(folder);
 
             ViewModel.AttackerWin += attacker;
             ViewModel.DefenderWin += defender;
