@@ -29,8 +29,8 @@ namespace EclipseCombatCalculator.WinUI
             var defenderIsAI = !DefenderFleet.ManualFleet;
             var defenderAi = DefenderFleet.SelectedAI.Implementation;
 
-            async Task<IEnumerable<(ICombatShip, IEnumerable<IDiceFace>)>> AssignDamage(
-            ICombatShip attacker, IEnumerable<ICombatShip> targets, IEnumerable<IDiceFace> diceResult)
+            async Task<IEnumerable<(ICombatShip, IEnumerable<DiceFace>)>> AssignDamage(
+            ICombatShip attacker, IEnumerable<ICombatShip> targets, IEnumerable<DiceFace> diceResult)
             {
                 if (attacker.IsAttacker)
                 {
@@ -126,8 +126,8 @@ namespace EclipseCombatCalculator.WinUI
             //TODO: Enable/show UI.
         }
 
-        async Task<IEnumerable<(ICombatShip, IEnumerable<IDiceFace>)>> ManualAssignment(
-            ICombatShip attacker, IEnumerable<ICombatShip> targets, IEnumerable<IDiceFace> diceResult)
+        async Task<IEnumerable<(ICombatShip, IEnumerable<DiceFace>)>> ManualAssignment(
+            ICombatShip attacker, IEnumerable<ICombatShip> targets, IEnumerable<DiceFace> diceResult)
         {
             if (!diceResult.Any())
             {

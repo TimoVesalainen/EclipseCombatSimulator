@@ -14,7 +14,7 @@ namespace EclipseCombatCalculator.WinUI.Dialogs
     {
         public DiceAssignmentViewModel ViewModel { get; } = new();
 
-        public IEnumerable<(ICombatShip, IEnumerable<IDiceFace>)> Result =>
+        public IEnumerable<(ICombatShip, IEnumerable<DiceFace>)> Result =>
             ViewModel.Ships.Select(shipVM => (shipVM.Ship, shipVM.AssignedDiceFaces.Select(diceVm => diceVm.Dice)));
 
         public DiceAssingmentDialog()

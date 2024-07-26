@@ -90,8 +90,8 @@ namespace EclipseCombatCalculator.WinUI.Pages
             int amountToSample,
             Action<CombatState> callback)
         {
-            async Task<IEnumerable<(ICombatShip, IEnumerable<IDiceFace>)>> AssignDamage(
-            ICombatShip attacker, IEnumerable<ICombatShip> targets, IEnumerable<IDiceFace> diceResult)
+            async Task<IEnumerable<(ICombatShip, IEnumerable<DiceFace>)>> AssignDamage(
+            ICombatShip attacker, IEnumerable<ICombatShip> targets, IEnumerable<DiceFace> diceResult)
             {
                 if (attacker.IsAttacker)
                 {
