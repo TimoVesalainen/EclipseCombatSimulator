@@ -84,12 +84,12 @@ namespace EclipseCombatCalculator.WinUI.Controls
             if (species == Species.Exiles && shipType == ShipType.Starbase)
             {
                 //Exiles orbital
-                // Row 2: Down
+                // Row 2: Up
                 return (0, 2, 0, 0);
             }
             if (species == Species.Planta && shipType == ShipType.Starbase)
             {
-                // Row 2: Down
+                // Row 2: Up
                 return (0, 2, 0, 0);
             }
 
@@ -104,7 +104,7 @@ namespace EclipseCombatCalculator.WinUI.Controls
                 // Row 1: Down
                 // Row 4: Down
                 ShipType.Dreadnaught => (-1, 0, 0, -1),
-                // Row 2: Up
+                // Row 2: Down
                 ShipType.Starbase => (0, -2, 0, 0),
                 _ => throw new ArgumentOutOfRangeException(nameof(shipType)),
             };
