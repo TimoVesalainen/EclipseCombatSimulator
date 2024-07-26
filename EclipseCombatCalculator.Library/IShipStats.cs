@@ -19,7 +19,7 @@ namespace EclipseCombatCalculator.Library
 
     public static class ShipStatHelpers
     {
-        public static bool CanHit(this IShipStats attacker, IShipStats target, IDiceFace result)
+        public static bool CanHit(this IShipStats attacker, IShipStats target, DiceFace result)
         {
             if (attacker is null)
             {
@@ -36,22 +36,15 @@ namespace EclipseCombatCalculator.Library
                 throw new ArgumentNullException(nameof(result));
             }
 
-            if (result is Damage)
+            if (result.Number == null)
             {
-                return true;
+                return result.DamageToOpponent > 0;
             }
-            if (result is Miss)
-            {
-                return false;
-            }
-            if (result is Number number)
-            {
-                return number.Value + attacker.Computers - target.Shields >= 6;
-            }
-            throw new NotImplementedException("Not implemented");
+
+            return result.Number + attacker.Computers - target.Shields >= 6;
         }
 
-        public static int DealtDamage(this IShipStats attacker, IShipStats target, IDiceFace result)
+        public static int DealtDamage(this IShipStats attacker, IShipStats target, DiceFace result)
         {
             if (attacker is null)
             {
@@ -68,18 +61,13 @@ namespace EclipseCombatCalculator.Library
                 throw new ArgumentNullException(nameof(result));
             }
 
-            if (result is Damage damage)
+            if (result.Number == null)
             {
-                return damage.DamageToOpponent;
+                return result.DamageToOpponent;
             }
-            if (result is Miss)
-            {
-                return 0;
-            }
-            if (result is Number number)
-            {
-                return number.Value + attacker.Computers - target.Shields >= 6 ? number.DamageToOpponent : 0;
-            }
+
+            return result.Number + attacker.Computers - target.Shields >= 6 ? result.DamageToOpponent : 0;
+
             throw new NotImplementedException("Not implemented");
         }
 

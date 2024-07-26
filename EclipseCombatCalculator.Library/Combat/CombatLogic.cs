@@ -10,8 +10,8 @@ using Nintenlord.Distributions;
 namespace EclipseCombatCalculator.Library.Combat
 {
     // TODO: Make support assigning damage per ship, not ship type
-    public delegate Task<IEnumerable<(ICombatShip, IEnumerable<IDiceFace>)>> DamageAssigner(
-        ICombatShip activeShips, IEnumerable<ICombatShip> targets, IEnumerable<IDiceFace> diceResult);
+    public delegate Task<IEnumerable<(ICombatShip, IEnumerable<DiceFace>)>> DamageAssigner(
+        ICombatShip activeShips, IEnumerable<ICombatShip> targets, IEnumerable<DiceFace> diceResult);
 
     public delegate Task<(int startRetreat, int completeRetreat)> RetreatAsker(ICombatShip activeShips);
 
@@ -94,7 +94,7 @@ namespace EclipseCombatCalculator.Library.Combat
                 .Concat(defenders.Select(shipType => new CombatShip(shipType.blueprint, shipType.count, attacker: false))).ToList();
 
             shipTypes.Sort(initiativeComparer);
-            List<IDiceFace> dicesCache = new();
+            List<DiceFace> dicesCache = new();
 
             // Attack with either missiles or cannons
             async Task ActivateShips(IEnumerable<Dice> attackerDice, CombatShip attacker)

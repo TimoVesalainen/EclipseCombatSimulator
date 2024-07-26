@@ -7,15 +7,19 @@ namespace EclipseCombatCalculator.CommandLine
 {
     internal static class RunCombat
     {
-        private static string PrintDiceFace(IDiceFace dice)
+        private static string PrintDiceFace(DiceFace dice)
         {
-            return dice switch
+            var damage = string.Join("", Enumerable.Range(0, dice.DamageToOpponent).Select(_ => "★")) +
+                string.Join("", Enumerable.Range(0, dice.DamageToSelf).Select(_ => "☆"));
+            if (dice.Number == null)
             {
-                Damage damage => string.Join("", Enumerable.Range(0, damage.DamageToOpponent).Select(_ => "*")),
-                Number number => $"{number.Value}({string.Join("", Enumerable.Range(0, number.DamageToOpponent).Select(_ => "*"))})",
-                Miss number => "_",
-                _ => throw new NotImplementedException(),
-            };
+                if (damage.Length == 0)
+                {
+                    return "_";
+                }
+                return damage;
+            }
+            return $"{dice.Number}({damage})";
         }
 
         private static string PrintShip(ICombatShip ship)
@@ -23,12 +27,12 @@ namespace EclipseCombatCalculator.CommandLine
             return $"{ship.Blueprint.Name} amount {ship.InCombat} with {ship.Damage} damage";
         }
 
-        private static IEnumerable<(ICombatShip, IEnumerable<IDiceFace>)> PlayerDistribution(
-            ICombatShip attacker, IEnumerable<ICombatShip> targets, IEnumerable<IDiceFace> diceResult)
+        private static IEnumerable<(ICombatShip, IEnumerable<DiceFace>)> PlayerDistribution(
+            ICombatShip attacker, IEnumerable<ICombatShip> targets, IEnumerable<DiceFace> diceResult)
         {
             Console.WriteLine("Your dice are: {0}", string.Join(", ", diceResult.Select(PrintDiceFace)));
 
-            var mayHitDice = diceResult.Where(dice => dice is not Miss && targets.Any(target => attacker.Blueprint.CanHit(target.Blueprint, dice)));
+            var mayHitDice = diceResult.Where(dice => targets.Any(target => attacker.Blueprint.CanHit(target.Blueprint, dice)));
             if (!mayHitDice.Any())
             {
                 Console.WriteLine("No possible hits");
@@ -38,7 +42,7 @@ namespace EclipseCombatCalculator.CommandLine
             Console.WriteLine("Please choose how to assign them. Possible targets are:");
             Console.WriteLine(string.Join("\n", targets.Zip(Options).Select((pair) => $"{pair.Second}) {PrintShip(pair.First)}")));
 
-            List<(IDiceFace, ICombatShip)> results = [];
+            List<(DiceFace, ICombatShip)> results = [];
             var targetArray = targets.ToArray();
             var length = targetArray.Length;
             foreach (var dice in mayHitDice)
@@ -73,8 +77,8 @@ namespace EclipseCombatCalculator.CommandLine
 
         public static async Task Run(Options options)
         {
-            async Task<IEnumerable<(ICombatShip, IEnumerable<IDiceFace>)>> DamageAssigner(
-                ICombatShip attacker, IEnumerable<ICombatShip> targets, IEnumerable<IDiceFace> diceResult)
+            async Task<IEnumerable<(ICombatShip, IEnumerable<DiceFace>)>> DamageAssigner(
+                ICombatShip attacker, IEnumerable<ICombatShip> targets, IEnumerable<DiceFace> diceResult)
             {
                 if (options.Attack != attacker.IsAttacker)
                 {

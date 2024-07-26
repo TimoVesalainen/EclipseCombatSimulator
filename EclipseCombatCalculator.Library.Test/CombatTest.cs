@@ -38,9 +38,9 @@ namespace EclipseCombatCalculator.Library.Test
         [Test]
         public async Task BasicCombatTest()
         {
-            async Task<IEnumerable<(ICombatShip, IEnumerable<IDiceFace>)>> CombatAssingment(ICombatShip attacker, IEnumerable<ICombatShip> defenders, IEnumerable<IDiceFace> diceResult)
+            async Task<IEnumerable<(ICombatShip, IEnumerable<DiceFace>)>> CombatAssingment(ICombatShip attacker, IEnumerable<ICombatShip> defenders, IEnumerable<DiceFace> diceResult)
             {
-                IEnumerable<(ICombatShip, IEnumerable<IDiceFace>)> Result()
+                IEnumerable<(ICombatShip, IEnumerable<DiceFace>)> Result()
                 {
                     yield return (defenders.First(), diceResult);
                 }
@@ -59,9 +59,9 @@ namespace EclipseCombatCalculator.Library.Test
         [Test]
         public async Task DefaultPlantaVSOrion()
         {
-            async Task<IEnumerable<(ICombatShip, IEnumerable<IDiceFace>)>> CombatAssignment(ICombatShip attacker, IEnumerable<ICombatShip> defenders, IEnumerable<IDiceFace> diceResult)
+            async Task<IEnumerable<(ICombatShip, IEnumerable<DiceFace>)>> CombatAssignment(ICombatShip attacker, IEnumerable<ICombatShip> defenders, IEnumerable<DiceFace> diceResult)
             {
-                return defenders.Zip(diceResult, (x, y) => (x, new[] { y } as IEnumerable<IDiceFace>));
+                return defenders.Zip(diceResult, (x, y) => (x, new[] { y } as IEnumerable<DiceFace>));
             }
 
             var result = await CombatLogic.AttackerWin(

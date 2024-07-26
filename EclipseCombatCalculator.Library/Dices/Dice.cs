@@ -1,35 +1,57 @@
 ﻿using Nintenlord.Distributions.Discrete;
+using System;
+using System.Linq;
 
 namespace EclipseCombatCalculator.Library.Dices
 {
     public sealed class Dice
     {
-        readonly IDiceFace[] faces;
+        public IDiscreteDistribution<DiceFace> FaceDistribution { get; }
 
-        public IDiceFace this[int index] => faces[index];
-
-        public IDiscreteDistribution<IDiceFace> FaceDistribution { get; }
-
-        private Dice(IDiceFace[] faces)
+        private Dice(DiceFace[] faces)
         {
-            this.faces = faces;
-            FaceDistribution = faces.ToDistribution();
+            int index = 0;
+            foreach (var face in faces)
+            {
+                face.FaceIndex = index;
+                index++;
+                if (face.Dice != null)
+                {
+                    throw new ArgumentException("Dice faces cannot be shared among dice", nameof(faces));
+                }
+                face.Dice = this;
+            }
+            FaceDistribution = faces.Cast<DiceFace>().ToDistribution();
         }
 
-        public static Dice Create(params IDiceFace[] faces)
+        public static Dice Create(params DiceFace[] faces)
         {
             return new Dice(faces);
         }
 
         public static Dice CreateStandard(int damage)
         {
-            var faces = new IDiceFace[] {
-                Damage.Create(damage),
-                Number.Create(5, damage),
-                Number.Create(4, damage),
-                Number.Create(3, damage),
-                Number.Create(2, damage),
-                Miss.Instance
+            var faces = new DiceFace[] {
+                new() {
+                    DamageToOpponent = damage,
+                },
+                new() {
+                    DamageToOpponent = damage,
+                    Number = 5,
+                },
+                new() {
+                    DamageToOpponent = damage,
+                    Number = 4,
+                },
+                new() {
+                    DamageToOpponent = damage,
+                    Number = 3,
+                },
+                new() {
+                    DamageToOpponent = damage,
+                    Number = 2,
+                },
+                new()
             };
 
             return new Dice(faces);

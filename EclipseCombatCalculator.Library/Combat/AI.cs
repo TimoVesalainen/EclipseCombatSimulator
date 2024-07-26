@@ -14,7 +14,8 @@ namespace EclipseCombatCalculator.Library.Combat
         static readonly IComparer<ICombatShip> BySizeComparer = Comparer<int>.Default.Reverse()
             .Select<int, ICombatShip>(shipType => shipType.Blueprint.Size);
 
-        static readonly IComparer<IDiceFace> DiceResultSorter = Comparer<int>.Default.Select<int, IDiceFace>(face => face is Damage ? 0 : (face as Number)?.Value ?? 10);
+        static readonly IComparer<DiceFace> DiceResultSorter = Comparer<int>.Default.Select<int, DiceFace>(face => 
+            face.DamageToOpponent > 0 ? -face.DamageToOpponent : face.Number ?? 10);
 
         public static readonly DamageAssigner BasicAI = async (attacker, targets, diceResult) =>
         {
@@ -26,7 +27,7 @@ namespace EclipseCombatCalculator.Library.Combat
             var targetsList = targets.ToList();
             targetsList.Sort(BySizeComparer);
 
-            List<(ICombatShip, IEnumerable<IDiceFace>)> assigned = new(targetsList.Count);
+            List<(ICombatShip, IEnumerable<DiceFace>)> assigned = new(targetsList.Count);
 
             foreach (var target in targetsList)
             {
@@ -34,7 +35,7 @@ namespace EclipseCombatCalculator.Library.Combat
                 {
                     break;
                 }
-                List<IDiceFace> assignedDice = new();
+                List<DiceFace> assignedDice = new();
                 int remainingHealth = target.InCombat * (target.Blueprint.Hulls + 1) - target.Damage;
                 foreach (var dice in dices)
                 {
