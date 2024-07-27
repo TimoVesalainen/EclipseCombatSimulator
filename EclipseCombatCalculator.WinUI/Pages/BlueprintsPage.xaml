@@ -27,31 +27,30 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <Grid.Resources>
-            <DataTemplate x:Key="LayoutNameList" x:DataType="viewmodels:LayoutListViewModel">
-                <Grid Margin="0,11,0,13">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-
-                    <TextBlock Text="{x:Bind Name}" FontSize="20" FontFamily="{StaticResource EclipseFont}" />
-                </Grid>
-            </DataTemplate>
-        </Grid.Resources>
-
         <ListView
             x:Name="LayoutList"
             Grid.Column="0"
             Grid.Row="0"
             Grid.RowSpan="5"
-            ItemTemplate="{StaticResource LayoutNameList}"
             ItemsSource="{x:Bind ViewModel.Blueprints, Mode=OneWay}"
             IsItemClickEnabled="True"
-            ItemClick="LayoutList_ItemClick"/>
+            ItemClick="LayoutList_ItemClick">
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="viewmodels:LayoutListViewModel">
+                    <Grid Margin="0,11,0,13">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Text="{x:Bind Name}" FontSize="20" FontFamily="{StaticResource EclipseFont}" />
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
 
         <TextBlock
             x:Name="BlueprintName"

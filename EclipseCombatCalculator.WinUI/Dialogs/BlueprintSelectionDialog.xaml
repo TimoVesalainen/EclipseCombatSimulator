@@ -21,30 +21,27 @@
 
     <ContentDialog.Content>
         <Grid>
-            <Grid.Resources>
-                <DataTemplate x:Key="LayoutNameList" x:DataType="viewmodels:LayoutListViewModel">
-                    <Grid Margin="0,11,0,13">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-
-                        <TextBlock Text="{x:Bind Name}" FontSize="20" FontFamily="{StaticResource EclipseFont}" />
-                    </Grid>
-                </DataTemplate>
-            </Grid.Resources>
-
             <ListView
                 x:Name="BlueprintList"
-                ItemTemplate="{StaticResource LayoutNameList}"
                 IsItemClickEnabled="True"
                 ItemClick="BlueprintList_ItemClick"
-                ItemsSource="{x:Bind ViewModel.Blueprints}"
-            />
-        </Grid>
+                ItemsSource="{x:Bind ViewModel.Blueprints}">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="viewmodels:LayoutListViewModel">
+                        <Grid Margin="0,11,0,13">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
 
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Text="{x:Bind Name}" FontSize="20" FontFamily="{StaticResource EclipseFont}" />
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
     </ContentDialog.Content>
 </ContentDialog>
