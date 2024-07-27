@@ -74,7 +74,15 @@ namespace EclipseCombatCalculator.WinUI.Controls
 
             if (result == ContentDialogResult.Primary)
             {
-                Ships.Add(CombatShipType.Create(dialog.SelectedItem));
+                if (Ships.Any(ship => ship.Blueprint == dialog.SelectedItem))
+                {
+                    var ship = Ships.First(ship => ship.Blueprint == dialog.SelectedItem);
+                    ship.Count += 1;
+                }
+                else
+                {
+                    Ships.Add(CombatShipType.Create(dialog.SelectedItem));
+                }
             }
         }
 
