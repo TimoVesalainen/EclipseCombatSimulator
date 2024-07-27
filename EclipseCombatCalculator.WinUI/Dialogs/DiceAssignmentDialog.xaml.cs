@@ -7,6 +7,7 @@ using EclipseCombatCalculator.Library.Dices;
 using EclipseCombatCalculator.WinUI.ViewModel;
 using Windows.ApplicationModel.DataTransfer;
 using EclipseCombatCalculator.Library.Combat;
+using EclipseCombatCalculator.Library;
 
 namespace EclipseCombatCalculator.WinUI.Dialogs
 {
@@ -48,6 +49,7 @@ namespace EclipseCombatCalculator.WinUI.Dialogs
                     ship.AssignedDiceFaces.Remove(diceViewModel);
                 }
 
+                diceViewModel.CanHit = ViewModel.AttackerShip.Blueprint.CanHit(target.Blueprint, diceViewModel.Dice);
                 target.AssignedDiceFaces.Add(diceViewModel);
             }
         }
