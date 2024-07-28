@@ -27,6 +27,10 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
+        <Grid.Background>
+            <ImageBrush ImageSource="/Assets/OrionNebula.png" Stretch="UniformToFill"/>
+        </Grid.Background>
+
         <ListView
             x:Name="LayoutList"
             Grid.Column="0"
@@ -34,7 +38,8 @@
             Grid.RowSpan="5"
             ItemsSource="{x:Bind ViewModel.Blueprints, Mode=OneWay}"
             IsItemClickEnabled="True"
-            ItemClick="LayoutList_ItemClick">
+            ItemClick="LayoutList_ItemClick"
+            Background="#326590">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="viewmodels:LayoutListViewModel">
                     <Grid Margin="0,11,0,13">
@@ -46,7 +51,7 @@
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock Text="{x:Bind Name}" FontSize="20" FontFamily="{StaticResource EclipseFont}" />
+                        <TextBlock Text="{x:Bind Name}" FontSize="20" FontFamily="{StaticResource EclipseFont}" Foreground="White" />
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
@@ -59,7 +64,8 @@
             Visibility="{x:Bind ViewModel.ReadOnlyVisibility, Mode=OneWay}"
             Text="{x:Bind ViewModel.SelectedBlueprint.Name, Mode=OneWay}"
             FontSize="20"
-            FontFamily="{StaticResource EclipseFont}"/>
+            FontFamily="{StaticResource EclipseFont}"
+            Foreground="White"/>
 
         <TextBox
             x:Name="BlueprintNameEdit"

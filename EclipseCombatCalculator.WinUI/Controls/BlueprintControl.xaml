@@ -96,18 +96,108 @@
             <Image />
         </Button>
 
-        <StackPanel
+        <Grid
             Grid.Row="0"
             Grid.RowSpan="2"
             Grid.Column="4"
-            Margin="16,0,0,0"
-            Orientation="Vertical">
-            <TextBlock Foreground="{x:Bind Foreground}" Text="Additionally:"/>
-            <TextBlock Foreground="{x:Bind Foreground}" x:Name="Initiative"/>
-            <TextBlock Foreground="{x:Bind Foreground}" x:Name="Computer"/>
-            <TextBlock Foreground="{x:Bind Foreground}" x:Name="Shield"/>
-            <TextBlock Foreground="{x:Bind Foreground}" x:Name="Energy"/>
-            <TextBlock Foreground="{x:Bind Foreground}" x:Name="Hull"/>
-        </StackPanel>
+            Margin="8,0,0,0"
+            ColumnSpacing="4"
+            RowSpacing="6">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <TextBlock
+                Grid.Row="0"
+                Grid.Column="0"
+                x:Name="Energy"
+                FontSize="36"
+                Foreground="White"/>
+            <Image
+                Grid.Row="0"
+                Grid.Column="1"
+                x:Name="EnergyIcon"
+                Width="36"
+                Height="36"
+                Source="/Assets/Energy.png"/>
+
+            <TextBlock
+                Grid.Row="1"
+                Grid.Column="0"
+                x:Name="Hull"
+                FontSize="36"
+                Foreground="White"/>
+            <Image
+                Grid.Row="1"
+                Grid.Column="1"
+                x:Name="HullIcon"
+                Width="36"
+                Height="36"
+                Source="/Assets/Hull.png"/>
+
+            <TextBlock
+                Grid.Row="2"
+                Grid.Column="0"
+                x:Name="Initiative"
+                FontSize="36"
+                Foreground="White"/>
+            <Image
+                Grid.Row="2"
+                Grid.Column="1"
+                x:Name="InitiativeIcon"
+                Width="36"
+                Height="36"
+                Source="/Assets/Initiative.png"/>
+
+            <Grid
+                Grid.Row="3"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                x:Name="ShieldBlock"
+                Width="48"
+                Height="48">
+                <Border
+                    BorderThickness="2"
+                    BorderBrush="White"
+                    CornerRadius="6"
+                    Background="Black"/>
+                <TextBlock
+                    x:Name="Shield"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                    FontSize="32"
+                    Foreground="White"
+                    Margin="0,0,0,4"/>
+            </Grid>
+
+            <Grid
+                Grid.Row="4"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                x:Name="ComputerBlock"
+                Width="48"
+                Height="48">
+                <Border
+                    BorderThickness="2"
+                    BorderBrush="Black"
+                    CornerRadius="6"
+                    Background="White"/>
+                <TextBlock
+                    x:Name="Computer"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                    FontSize="32"
+                    Foreground="Black"
+                    Margin="0,0,0,4"/>
+            </Grid>
+        </Grid>
     </Grid>
 </UserControl>

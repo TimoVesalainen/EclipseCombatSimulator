@@ -14,36 +14,6 @@
     <SupportedOSPlatformVersion>10.0.19041.0</SupportedOSPlatformVersion>
   </PropertyGroup>
   <ItemGroup>
-	  <None Remove="Assets\Dice\AntimatterCannon2.png" />
-	  <None Remove="Assets\Dice\AntimatterCannon3.png" />
-	  <None Remove="Assets\Dice\AntimatterCannon4.png" />
-	  <None Remove="Assets\Dice\AntimatterCannon5.png" />
-	  <None Remove="Assets\Dice\AntimatterCannonHit.png" />
-	  <None Remove="Assets\Dice\AntimatterCannonMiss.png" />
-	  <None Remove="Assets\Dice\IonCannon2.png" />
-	  <None Remove="Assets\Dice\IonCannon3.png" />
-	  <None Remove="Assets\Dice\IonCannon4.png" />
-	  <None Remove="Assets\Dice\IonCannon5.png" />
-	  <None Remove="Assets\Dice\IonCannonHit.png" />
-	  <None Remove="Assets\Dice\IonCannonMiss.png" />
-	  <None Remove="Assets\Dice\PlasmaCannon2.png" />
-	  <None Remove="Assets\Dice\PlasmaCannon3.png" />
-	  <None Remove="Assets\Dice\PlasmaCannon4.png" />
-	  <None Remove="Assets\Dice\PlasmaCannon5.png" />
-	  <None Remove="Assets\Dice\PlasmaCannonHit.png" />
-	  <None Remove="Assets\Dice\PlasmaCannonMiss.png" />
-	  <None Remove="Assets\Dice\RiftCannon0_1.png" />
-	  <None Remove="Assets\Dice\RiftCannon1_0.png" />
-	  <None Remove="Assets\Dice\RiftCannon2_0.png" />
-	  <None Remove="Assets\Dice\RiftCannon3_1.png" />
-	  <None Remove="Assets\Dice\RiftCannonMiss.png" />
-	  <None Remove="Assets\Dice\SolitonCannon2.png" />
-	  <None Remove="Assets\Dice\SolitonCannon3.png" />
-	  <None Remove="Assets\Dice\SolitonCannon4.png" />
-	  <None Remove="Assets\Dice\SolitonCannon5.png" />
-	  <None Remove="Assets\Dice\SolitonCannonHit.png" />
-	  <None Remove="Assets\Dice\SolitonCannonMiss.png" />
-	  <None Remove="Assets\EmptyPart.png" />
 	  <None Remove="Controls\BlueprintControl.xaml" />
 	  <None Remove="Controls\FleetControl.xaml" />
 	  <None Remove="Pages\BlueprintsPage.xaml" />
@@ -64,6 +34,11 @@
     <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
     <Content Include="Assets\StoreLogo.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
+	<Content Include="Assets\EmptyPart.png"/>
+	<Content Include="Assets\Energy.png"/>
+	<Content Include="Assets\Hull.png"/>
+	<Content Include="Assets\Initiative.png"/>
+	<Content Include="Assets\OrionNebula.png"/>
   </ItemGroup>
 
   <ItemGroup>
@@ -171,9 +146,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Update="Assets\Dice\SolitonCannonMiss.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Update="Assets\EmptyPart.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Update="Assets\Parts\AbsorptionShield.png">

@@ -8,6 +8,7 @@ using Nintenlord.Collections;
 using EclipseCombatCalculator.Library;
 using EclipseCombatCalculator.WinUI.Dialogs;
 using Microsoft.UI.Xaml.Media;
+using Windows.UI;
 
 namespace EclipseCombatCalculator.WinUI.Controls
 {
@@ -25,13 +26,13 @@ namespace EclipseCombatCalculator.WinUI.Controls
                 blueprint = value;
                 SetBlueprintParts(value);
                 AdjustOffset(value);
-                SetTexts(value);
+                SetBaseValues(value);
             }
         }
 
         public bool CanEdit { get; set; } = false;
 
-        public Brush Foreground { get; set; }
+        new public Brush Foreground { get; set; } = new SolidColorBrush(Color.FromArgb(1, 0, 0, 0));
 
         public BlueprintControl()
         {
@@ -113,17 +114,30 @@ namespace EclipseCombatCalculator.WinUI.Controls
             };
         }
 
-        private void SetTexts(Blueprint value)
+        private void SetBaseValues(Blueprint value)
         {
             if (value == null)
             {
                 return;
             }
-            this.Initiative.Text = $"Initiative: {value.BaseInitiative}";
-            this.Computer.Text = $"Computer: {value.BaseComputer}";
-            this.Shield.Text = $"Shield: {value.BaseShield}";
-            this.Energy.Text = $"Energy: {value.BaseEnergy}";
-            this.Hull.Text = $"Hull: {value.BaseHull}";
+
+            static void SetStatState(TextBlock text, Image icon, int number)
+            {
+                text.Visibility = number == 0 ? Visibility.Collapsed : Visibility.Visible;
+                text.Text = number.ToString();
+                icon.Visibility = number == 0 ? Visibility.Collapsed : Visibility.Visible;
+            }
+
+            SetStatState(Energy, EnergyIcon, value.BaseEnergy);
+            SetStatState(Hull, HullIcon, value.BaseHull);
+            SetStatState(Initiative, InitiativeIcon, value.BaseInitiative);
+
+            this.Shield.Text = $"-{value.BaseShield}";
+            ShieldBlock.Visibility = value.BaseShield == 0 ? Visibility.Collapsed : Visibility.Visible;
+
+            this.Computer.Text = $"+{value.BaseComputer}";
+            ComputerBlock.Visibility = value.BaseComputer == 0 ? Visibility.Collapsed : Visibility.Visible;
+
         }
 
         static private IEnumerable<(bool isUsed, Part part)> GetPartSlots(Blueprint blueprint)
