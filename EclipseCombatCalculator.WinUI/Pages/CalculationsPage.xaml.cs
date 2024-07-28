@@ -28,6 +28,23 @@ namespace EclipseCombatCalculator.WinUI.Pages
             this.InitializeComponent();
             AttackerFleet.Ships.Add(CombatShipType.Create(Blueprint.TerranInterceptor));
             DefenderFleet.Ships.Add(CombatShipType.Create(Blueprint.OrionCruiser));
+            ViewModel.Attackers.CollectionChanged += Fleet_CollectionChanged;
+            ViewModel.Defenders.CollectionChanged += Fleet_CollectionChanged;
+            AttackerFleet.FleetChanged += Fleet_CollectionChanged2;
+            DefenderFleet.FleetChanged += Fleet_CollectionChanged2;
+        }
+
+        private void Fleet_CollectionChanged2(object sender, EventArgs e)
+        {
+            ViewModel.ClearResult();
+            ViewModel.Update();
+        }
+
+        private void Fleet_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            ViewModel.ClearResult();
+            ViewModel.Update();
+            CalculateButton.IsEnabled = ViewModel.Attackers.Count > 0 && ViewModel.Defenders.Count > 0;
         }
 
         static readonly IFolder<CombatState, (int, int, int), (int, int, int)> folder = Folders.CountI<CombatState>().Combine(

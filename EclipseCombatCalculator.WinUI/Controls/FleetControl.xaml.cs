@@ -1,22 +1,10 @@
-using EclipseCombatCalculator.Library.Blueprints;
-using EclipseCombatCalculator.Library.Combat;
 using EclipseCombatCalculator.WinUI.Dialogs;
 using EclipseCombatCalculator.WinUI.ViewModel;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -69,6 +57,7 @@ namespace EclipseCombatCalculator.WinUI.Controls
         {
             var viewModel = (e.OriginalSource as Button).DataContext as CombatShipType;
             viewModel.Count += 1;
+            OnFleetChanged();
         }
 
         private void MinusButton_Click(object sender, RoutedEventArgs e)
@@ -78,6 +67,10 @@ namespace EclipseCombatCalculator.WinUI.Controls
             if (combatShipModel.Count == 0)
             {
                 Ships.Remove(combatShipModel);
+            }
+            else
+            {
+                OnFleetChanged();
             }
         }
 
@@ -121,5 +114,12 @@ namespace EclipseCombatCalculator.WinUI.Controls
              typeof(bool),
              typeof(FleetControl),
              new PropertyMetadata(true));
+
+        private void OnFleetChanged()
+        {
+            FleetChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+        public event EventHandler FleetChanged;
     }
 }
