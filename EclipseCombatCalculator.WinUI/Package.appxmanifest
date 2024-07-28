@@ -9,7 +9,7 @@
 
   <Identity
     Name="3985ae64-e0b4-4d28-a389-98a17a1183c1"
-    Publisher="CN=timov"
+    Publisher="CN=Timo Vesalainen"
     Version="1.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="3985ae64-e0b4-4d28-a389-98a17a1183c1" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
