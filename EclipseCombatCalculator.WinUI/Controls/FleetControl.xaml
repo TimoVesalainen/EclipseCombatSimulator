@@ -89,7 +89,8 @@
                             Grid.ColumnSpan="1"
                             Text="{x:Bind Name}"
                             FontSize="20"
-                            FontFamily="{StaticResource EclipseFont}" />
+                            FontFamily="{StaticResource EclipseFont}"
+                            Foreground="White"/>
 
                         <Button
                             x:Name="PlusButton"
@@ -106,7 +107,8 @@
                             Text="{x:Bind Count}"
                             FontSize="20"
                             FontFamily="{StaticResource EclipseFont}"
-                            x:DefaultBindMode="OneWay" />
+                            x:DefaultBindMode="OneWay"
+                            Foreground="White" />
 
                         <Button
                             x:Name="MinusButton"

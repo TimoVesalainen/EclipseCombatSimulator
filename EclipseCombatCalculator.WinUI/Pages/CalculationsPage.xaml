@@ -11,7 +11,8 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid RowSpacing="16">
+    <Grid RowSpacing="16"
+          Background="#326590">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
@@ -26,7 +27,10 @@
         <TextBlock
             Grid.Row="0"
             Grid.Column="0"
-            Text="Attackers"/>
+            Text="Attackers"
+            FontSize="32"
+            FontFamily="{StaticResource EclipseFont}"
+            Foreground="White"/>
 
         <controls:FleetControl
             x:Name="AttackerFleet"
@@ -38,7 +42,10 @@
         <TextBlock
             Grid.Row="2"
             Grid.Column="0"
-            Text="Defenders"/>
+            Text="Defenders"
+            FontSize="32"
+            FontFamily="{StaticResource EclipseFont}"
+            Foreground="White"/>
 
         <controls:FleetControl
             x:Name="DefenderFleet"
@@ -52,6 +59,10 @@
             Grid.Row="0"
             Grid.RowSpan="4">
 
+            <Grid.Background>
+                <ImageBrush ImageSource="/Assets/OrionNebula.png" Stretch="UniformToFill"/>
+            </Grid.Background>
+           
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
