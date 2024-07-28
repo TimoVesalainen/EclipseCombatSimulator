@@ -80,7 +80,9 @@
                 Padding="16"
                 ColumnSpacing="8"
                 RowSpacing="16"
-                Background="Black">
+                Background="Black"
+                BorderThickness="2"
+                BorderBrush="Green">
 
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
