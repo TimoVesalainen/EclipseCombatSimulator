@@ -28,6 +28,7 @@
             Grid.Row="0"
             Grid.Column="0"
             Text="Attackers"
+            Margin="8,8,0,0"
             FontSize="32"
             FontFamily="{StaticResource EclipseFont}"
             Foreground="White"/>
@@ -36,6 +37,7 @@
             x:Name="AttackerFleet"
             Grid.Row="1"
             Grid.Column="0"
+            CanChooseManual="False"
             Ships="{x:Bind ViewModel.Attackers}"
             AIs="{x:Bind ViewModel.AIs}"/>
 
@@ -43,6 +45,7 @@
             Grid.Row="2"
             Grid.Column="0"
             Text="Defenders"
+            Margin="8,8,0,0"
             FontSize="32"
             FontFamily="{StaticResource EclipseFont}"
             Foreground="White"/>
@@ -51,6 +54,7 @@
             x:Name="DefenderFleet"
             Grid.Row="3"
             Grid.Column="0"
+            CanChooseManual="False"
             Ships="{x:Bind ViewModel.Defenders}"
             AIs="{x:Bind ViewModel.AIs}"/>
 
@@ -62,55 +66,65 @@
             <Grid.Background>
                 <ImageBrush ImageSource="/Assets/OrionNebula.png" Stretch="UniformToFill"/>
             </Grid.Background>
-           
+
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <TextBlock
-                Grid.Row="1"
-                Grid.Column="1"
-                Text="Sample count"
-                />
-            
-            <NumberBox
-                x:Name="SampleCountBox"
-                Grid.Row="1"
-                Grid.Column="2"/>
+            <Grid
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Padding="16"
+                ColumnSpacing="8"
+                Background="White">
 
-            <Button
-                Grid.Row="1"
-                Grid.Column="3"
-                Content="Calculate"
-                Click="Calculate_Click"/>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                
+                <TextBlock
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Text="Sample count"
+                    VerticalAlignment="Center"/>
 
-            <ProgressBar
-                Grid.Row="2"
-                Grid.Column="1"
-                Grid.ColumnSpan="3"
-                Height="100"
-                Visibility="{x:Bind ViewModel.ProgressVisible, Mode=OneWay}"
-                Maximum="{x:Bind ViewModel.ProgressMax, Mode=OneWay}"
-                Value="{x:Bind ViewModel.Progress, Mode=OneWay}"
-                />
+                <NumberBox
+                    x:Name="SampleCountBox"
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Value="9999"/>
 
-            <TextBlock
-                Grid.Row="3"
-                Grid.Column="1"
-                Grid.ColumnSpan="3"
-                Text="{x:Bind ViewModel.Result, Mode=OneWay}"
-                />
+                <Button
+                    Grid.Row="0"
+                    Grid.Column="2"
+                    Content="Calculate"
+                    Click="Calculate_Click"/>
+
+                <ProgressBar
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="3"
+                    Height="100"
+                    Visibility="{x:Bind ViewModel.ProgressVisible, Mode=OneWay}"
+                    Maximum="{x:Bind ViewModel.ProgressMax, Mode=OneWay}"
+                    Value="{x:Bind ViewModel.Progress, Mode=OneWay}"/>
+
+                <TextBlock
+                    Grid.Row="3"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="3"
+                    Text="{x:Bind ViewModel.Result, Mode=OneWay}"/>
+            </Grid>
         </Grid>
     </Grid>
 </Page>
