@@ -138,7 +138,9 @@ namespace EclipseCombatCalculator.Library.Combat
                         {
                             targetShip.AddDamage(dice.DamageToOpponent);
                         }
+#if DEBUG
                         usedDiceCount++;
+#endif
                     }
                 }
 #if DEBUG
