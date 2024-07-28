@@ -4,6 +4,7 @@ using Microsoft.UI.Xaml.Controls;
 using EclipseCombatCalculator.Library.Blueprints;
 using EclipseCombatCalculator.WinUI.ViewModel;
 using Nintenlord.Collections.Lists;
+using System.Linq;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -54,7 +55,12 @@ namespace EclipseCombatCalculator.WinUI
                 // Happens when changing from editable blueprint to read-only
                 return;
             }
-            ViewModel.SelectedBlueprint.Name = (sender as TextBox).Text;
+            var newName = (sender as TextBox).Text;
+            ViewModel.SelectedBlueprint.Name = newName;
+            var index = ViewModel.Blueprints.IndexOf(x => x.Blueprint == ViewModel.SelectedBlueprint);
+            var vmToChange = ViewModel.Blueprints[index];
+            vmToChange.Name = newName;
+            ViewModel.Blueprints[index] = vmToChange;
         }
 
         private void SelectedBlueprintView_BlueprintEdited(object sender, EventArgs e)

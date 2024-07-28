@@ -38,6 +38,7 @@
             Grid.RowSpan="5"
             ItemsSource="{x:Bind ViewModel.Blueprints, Mode=OneWay}"
             IsItemClickEnabled="True"
+            SelectionMode="Single"
             ItemClick="LayoutList_ItemClick"
             Background="#326590">
             <ListView.ItemTemplate>
