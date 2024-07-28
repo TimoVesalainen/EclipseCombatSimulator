@@ -1,11 +1,8 @@
-﻿using EclipseCombatCalculator.Library.Blueprints;
-using EclipseCombatCalculator.Library.Dices;
+﻿using EclipseCombatCalculator.Library.Dices;
 using Microsoft.UI.Xaml.Media.Imaging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.ApplicationModel;
 
 namespace EclipseCombatCalculator.WinUI
