@@ -2,6 +2,7 @@ using EclipseCombatCalculator.WinUI.Dialogs;
 using EclipseCombatCalculator.WinUI.ViewModel;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Controls.Primitives;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -56,14 +57,14 @@ namespace EclipseCombatCalculator.WinUI.Controls
 
         private void PlusButton_Click(object sender, RoutedEventArgs e)
         {
-            var viewModel = (e.OriginalSource as Button).DataContext as CombatShipType;
+            var viewModel = (e.OriginalSource as RepeatButton).DataContext as CombatShipType;
             viewModel.Count += 1;
             OnFleetChanged();
         }
 
         private void MinusButton_Click(object sender, RoutedEventArgs e)
         {
-            var combatShipModel = (e.OriginalSource as Button).DataContext as CombatShipType;
+            var combatShipModel = (e.OriginalSource as RepeatButton).DataContext as CombatShipType;
             combatShipModel.Count -= 1;
             if (combatShipModel.Count == 0)
             {
