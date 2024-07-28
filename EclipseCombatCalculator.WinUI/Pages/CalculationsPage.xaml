@@ -79,7 +79,8 @@
                 VerticalAlignment="Center"
                 Padding="16"
                 ColumnSpacing="8"
-                Background="White">
+                RowSpacing="16"
+                Background="Black">
 
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
@@ -96,7 +97,9 @@
                     Grid.Row="0"
                     Grid.Column="0"
                     Text="Sample count"
-                    VerticalAlignment="Center"/>
+                    VerticalAlignment="Center"
+                    Foreground="Green"
+                    FontFamily="Cascadia Code"/>
 
                 <NumberBox
                     x:Name="SampleCountBox"
@@ -115,7 +118,7 @@
                     Grid.Row="1"
                     Grid.Column="0"
                     Grid.ColumnSpan="3"
-                    Height="100"
+                    Foreground="Red"
                     Visibility="{x:Bind ViewModel.ProgressVisible, Mode=OneWay}"
                     Maximum="{x:Bind ViewModel.ProgressMax, Mode=OneWay}"
                     Value="{x:Bind ViewModel.Progress, Mode=OneWay}"/>
@@ -124,6 +127,8 @@
                     Grid.Row="3"
                     Grid.Column="0"
                     Grid.ColumnSpan="3"
+                    Foreground="Green"
+                    FontFamily="Cascadia Code"
                     Text="{x:Bind ViewModel.Result, Mode=OneWay}"/>
             </Grid>
         </Grid>
