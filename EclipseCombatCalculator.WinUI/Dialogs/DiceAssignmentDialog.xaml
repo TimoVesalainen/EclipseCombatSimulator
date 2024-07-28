@@ -51,12 +51,16 @@
                 ItemsSource="{x:Bind ViewModel.Ships}">
                 <ListView.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <ItemsStackPanel Orientation="Horizontal"/>
+                        <StackPanel Orientation="Horizontal"/>
                     </ItemsPanelTemplate>
                 </ListView.ItemsPanel>
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="viewmodels:TargetShipViewModel">
-                        <Grid Margin="0,11,0,13" AllowDrop="True" DragOver="Grid_DragOver" Drop="Grid_Drop">
+                        <Grid Margin="0,11,0,13"
+                              AllowDrop="True"
+                              DragOver="Grid_DragOver"
+                              Drop="Grid_Drop"
+                              Background="DeepSkyBlue">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
@@ -86,28 +90,33 @@
                                 Grid.Column="0"
                                 Grid.ColumnSpan="4"
                                 Size="50"
+                                Foreground="White"
                                 Blueprint="{x:Bind Blueprint, Mode=OneWay}"/>
 
                             <TextBlock
                                 Grid.Row="2"
                                 Grid.Column="0"
                                 Text="Count: "
+                                Foreground="White"
                                 FontSize="20"/>
                             <TextBlock
                                 Grid.Row="2"
                                 Grid.Column="1"
                                 Text="{x:Bind Count}"
+                                Foreground="White"
                                 FontSize="20"/>
 
                             <TextBlock
                                 Grid.Row="2"
                                 Grid.Column="2"
                                 Text="Damage: "
+                                Foreground="White"
                                 FontSize="20"/>
                             <TextBlock
                                 Grid.Row="2"
                                 Grid.Column="3"
                                 Text="{x:Bind Damage}"
+                                Foreground="White"
                                 FontSize="20"/>
 
                             <ListView
@@ -119,7 +128,7 @@
                                 ItemsSource="{x:Bind AssignedDiceFaces}">
                                 <ListView.ItemsPanel>
                                     <ItemsPanelTemplate>
-                                        <ItemsStackPanel Orientation="Horizontal"/>
+                                        <ItemsWrapGrid Orientation="Horizontal"/>
                                     </ItemsPanelTemplate>
                                 </ListView.ItemsPanel>
                             </ListView>
@@ -136,7 +145,7 @@
                 ItemsSource="{x:Bind ViewModel.UnAssignedFaces}">
                 <ListView.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <ItemsStackPanel Orientation="Horizontal"/>
+                        <ItemsWrapGrid Orientation="Horizontal"/>
                     </ItemsPanelTemplate>
                 </ListView.ItemsPanel>
             </ListView>
