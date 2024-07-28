@@ -30,6 +30,7 @@ namespace EclipseCombatCalculator.WinUI.Controls
         }
         public bool IsAiEnabled => !CanChooseManual || AISwitch.IsOn;
         public Visibility ShowSwitch => CanChooseManual ? Visibility.Visible : Visibility.Collapsed;
+        public Visibility ShowText => CanChooseManual ? Visibility.Collapsed : Visibility.Visible;
         public bool HasShips => Ships.Count > 0;
         public bool ManualFleet => !AISwitch.IsOn;
         public AIViewModel SelectedAI => AISelection.SelectedItem as AIViewModel;
