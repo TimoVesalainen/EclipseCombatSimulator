@@ -35,8 +35,12 @@ namespace EclipseCombatCalculator.WinUI.Controls
             get => (ObservableCollection<AIViewModel>)GetValue(AIsProperty);
             set => SetValue(AIsProperty, value);
         }
-
-        public bool CanChooseManual { get; set; } = false;
+        public bool CanChooseManual
+        {
+            get => (bool)GetValue(CanChooseManualProperty);
+            set => SetValue(CanChooseManualProperty, value);
+        }
+        public bool IsAiEnabled => !CanChooseManual || AISwitch.IsOn;
         public Visibility ShowSwitch => CanChooseManual ? Visibility.Visible : Visibility.Collapsed;
         public bool HasShips => Ships.Count > 0;
         public bool ManualFleet => !AISwitch.IsOn;
@@ -45,6 +49,20 @@ namespace EclipseCombatCalculator.WinUI.Controls
         public FleetControl()
         {
             this.InitializeComponent();
+            AISelection.IsEnabled = false;
+            this.RegisterPropertyChangedCallback(CanChooseManualProperty, (sender, dp) =>
+            {
+                var value = CanChooseManual;
+                if (!value)
+                {
+                    AISelection.IsEnabled = true;
+                }
+            });
+        }
+
+        private void AISwitch_Toggled(object sender, RoutedEventArgs e)
+        {
+            AISelection.IsEnabled = AISwitch.IsOn;
         }
 
         private void PlusButton_Click(object sender, RoutedEventArgs e)
@@ -90,12 +108,18 @@ namespace EclipseCombatCalculator.WinUI.Controls
              nameof(Ships),
              typeof(ObservableCollection<CombatShipType>),
              typeof(FleetControl),
-              new PropertyMetadata(new ObservableCollection<CombatShipType>()));
+             new PropertyMetadata(new ObservableCollection<CombatShipType>()));
 
         private readonly DependencyProperty AIsProperty = DependencyProperty.Register(
              nameof(AIs),
              typeof(ObservableCollection<AIViewModel>),
              typeof(FleetControl),
-              new PropertyMetadata(new ObservableCollection<AIViewModel>()));
+             new PropertyMetadata(new ObservableCollection<AIViewModel>()));
+
+        private readonly DependencyProperty CanChooseManualProperty = DependencyProperty.Register(
+             nameof(CanChooseManualProperty),
+             typeof(bool),
+             typeof(FleetControl),
+             new PropertyMetadata(true));
     }
 }
