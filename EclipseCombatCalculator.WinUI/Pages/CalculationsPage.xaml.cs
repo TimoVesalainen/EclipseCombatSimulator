@@ -41,46 +41,54 @@ namespace EclipseCombatCalculator.WinUI.Pages
             {
                 return;
             }
+            CalculateButton.IsEnabled = false;
 
-            var attackerAi = AttackerFleet.SelectedAI.Implementation;
-            var defenderAi = DefenderFleet.SelectedAI.Implementation;
-            var amountToSample = (int)SampleCountBox.Value;
-            int partitionCount = Math.Min(100, amountToSample);
-            bool isPartitioned = amountToSample > 100;
-
-            ViewModel.Progress = 0;
-            ViewModel.ProgressMax = partitionCount;
-            ViewModel.ProgressVisible = Visibility.Visible;
-
-            var attackers = ViewModel.Attackers.Select(viewModel => (viewModel.Blueprint as IShipStats, viewModel.Count)).ToList();
-            var defenders = ViewModel.Defenders.Select(viewModel => (viewModel.Blueprint as IShipStats, viewModel.Count)).ToList();
-
-            int progress = 0;
-            int completed = 0;
-            void UpdateUI(CombatState state)
+            try
             {
-                completed++;
-                var newProgress = (int)((double)completed / amountToSample * 100);
-                if (progress != newProgress)
+                var attackerAi = AttackerFleet.SelectedAI.Implementation;
+                var defenderAi = DefenderFleet.SelectedAI.Implementation;
+                var amountToSample = (int)SampleCountBox.Value;
+                int partitionCount = Math.Min(100, amountToSample);
+                bool isPartitioned = amountToSample > 100;
+
+                ViewModel.Progress = 0;
+                ViewModel.ProgressMax = partitionCount;
+                ViewModel.ProgressVisible = Visibility.Visible;
+
+                var attackers = ViewModel.Attackers.Select(viewModel => (viewModel.Blueprint as IShipStats, viewModel.Count)).ToList();
+                var defenders = ViewModel.Defenders.Select(viewModel => (viewModel.Blueprint as IShipStats, viewModel.Count)).ToList();
+
+                int progress = 0;
+                int completed = 0;
+                void UpdateUI(CombatState state)
                 {
-                    progress = newProgress;
-
-                    this.DispatcherQueue.TryEnqueue(() =>
+                    completed++;
+                    var newProgress = (int)((double)completed / amountToSample * 100);
+                    if (progress != newProgress)
                     {
-                        ViewModel.Progress = newProgress;
-                    });
+                        progress = newProgress;
+
+                        this.DispatcherQueue.TryEnqueue(() =>
+                        {
+                            ViewModel.Progress = newProgress;
+                        });
+                    }
                 }
+
+                var states = await Task.Run(() => DoSampling(attackers, defenders, attackerAi, defenderAi, (int)amountToSample, UpdateUI));
+
+                var (count, attacker, defender) = states.FoldWith(folder);
+
+                ViewModel.AttackerWin += attacker;
+                ViewModel.DefenderWin += defender;
+                ViewModel.Combats += count;
+                ViewModel.ProgressVisible = Visibility.Collapsed;
+                ViewModel.Update();
             }
-
-            var states = await Task.Run(() => DoSampling(attackers, defenders, attackerAi, defenderAi, (int)amountToSample, UpdateUI));
-
-            var (count, attacker, defender) = states.FoldWith(folder);
-
-            ViewModel.AttackerWin += attacker;
-            ViewModel.DefenderWin += defender;
-            ViewModel.Combats += count;
-            ViewModel.ProgressVisible = Visibility.Collapsed;
-            ViewModel.Update();
+            finally
+            {
+                CalculateButton.IsEnabled = true;
+            }
         }
 
         private static async Task<List<CombatState>> DoSampling(

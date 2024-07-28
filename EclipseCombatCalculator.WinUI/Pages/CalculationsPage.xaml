@@ -105,6 +105,7 @@
                     Value="9999"/>
 
                 <Button
+                    x:Name="CalculateButton"
                     Grid.Row="0"
                     Grid.Column="2"
                     Content="Calculate"
