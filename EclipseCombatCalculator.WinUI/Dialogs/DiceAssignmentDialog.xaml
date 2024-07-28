@@ -75,7 +75,10 @@
                                 Grid.Row="0"
                                 Grid.Column="0"
                                 Grid.ColumnSpan="4"
-                                Text="{x:Bind Blueprint.Name}" FontSize="20" FontFamily="{StaticResource EclipseFont}" />
+                                Text="{x:Bind Blueprint.Name}"
+                                FontSize="20"
+                                Foreground="White"
+                                FontFamily="{StaticResource EclipseFont}" />
 
                             <controls:BlueprintControl
                                 x:Name="SelectedBlueprintView"

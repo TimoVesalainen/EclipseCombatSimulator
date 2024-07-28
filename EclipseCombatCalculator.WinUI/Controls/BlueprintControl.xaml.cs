@@ -7,6 +7,7 @@ using EclipseCombatCalculator.Library.Blueprints;
 using Nintenlord.Collections;
 using EclipseCombatCalculator.Library;
 using EclipseCombatCalculator.WinUI.Dialogs;
+using Microsoft.UI.Xaml.Media;
 
 namespace EclipseCombatCalculator.WinUI.Controls
 {
@@ -29,6 +30,8 @@ namespace EclipseCombatCalculator.WinUI.Controls
         }
 
         public bool CanEdit { get; set; } = false;
+
+        public Brush Foreground { get; set; }
 
         public BlueprintControl()
         {

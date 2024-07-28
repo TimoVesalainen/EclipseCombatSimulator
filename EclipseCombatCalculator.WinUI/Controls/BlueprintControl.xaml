@@ -102,12 +102,12 @@
             Grid.Column="4"
             Margin="16,0,0,0"
             Orientation="Vertical">
-            <TextBlock Text="Additionally:"/>
-            <TextBlock x:Name="Initiative"/>
-            <TextBlock x:Name="Computer"/>
-            <TextBlock x:Name="Shield"/>
-            <TextBlock x:Name="Energy"/>
-            <TextBlock x:Name="Hull"/>
+            <TextBlock Foreground="{x:Bind Foreground}" Text="Additionally:"/>
+            <TextBlock Foreground="{x:Bind Foreground}" x:Name="Initiative"/>
+            <TextBlock Foreground="{x:Bind Foreground}" x:Name="Computer"/>
+            <TextBlock Foreground="{x:Bind Foreground}" x:Name="Shield"/>
+            <TextBlock Foreground="{x:Bind Foreground}" x:Name="Energy"/>
+            <TextBlock Foreground="{x:Bind Foreground}" x:Name="Hull"/>
         </StackPanel>
     </Grid>
 </UserControl>
