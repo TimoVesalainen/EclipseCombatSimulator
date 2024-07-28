@@ -30,8 +30,6 @@ namespace EclipseCombatCalculator.WinUI
             this.InitializeComponent();
         }
 
-        Task temp;
-
         /// <summary>
         /// Invoked when the application is launched.
         /// </summary>
