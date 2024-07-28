@@ -68,6 +68,7 @@
             Grid.ColumnSpan="3"
             Grid.Row="1"
             Grid.RowSpan="1"
+            SelectionMode="None"
             ItemsSource="{x:Bind Ships}">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="viewmodels:CombatShipType">

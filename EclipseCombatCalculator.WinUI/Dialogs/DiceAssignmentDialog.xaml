@@ -47,6 +47,7 @@
             <ListView
                 x:Name="Ship"
                 Grid.Row="0"
+                SelectionMode="None"
                 ItemsSource="{x:Bind ViewModel.Ships}">
                 <ListView.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -127,6 +128,7 @@
             <ListView
                 x:Name="DiceList"
                 Grid.Row="1"
+                SelectionMode="None"
                 ItemTemplate="{StaticResource Dice}"
                 ItemsSource="{x:Bind ViewModel.UnAssignedFaces}">
                 <ListView.ItemsPanel>
