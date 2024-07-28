@@ -3,7 +3,7 @@ using Microsoft.UI.Xaml;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
-using Windows.ApplicationModel;
+using Windows.Storage;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -32,7 +32,7 @@ namespace EclipseCombatCalculator.WinUI
         /// <param name="args">Details about the launch request and process.</param>
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
-            var path = Package.Current.InstalledPath + "/" + SaveFileName;
+            var path = ApplicationData.Current.LocalFolder.Path + "/" + SaveFileName;
             if (File.Exists(path))
             {
                 using var stream = File.OpenRead(path);
@@ -51,7 +51,7 @@ namespace EclipseCombatCalculator.WinUI
 
         private async void Window_Closed(object sender, WindowEventArgs args)
         {
-            var path = Package.Current.InstalledPath + "/" + SaveFileName;
+            var path = ApplicationData.Current.LocalFolder.Path + "/" + SaveFileName;
             using var stream = File.Open(path, FileMode.Create);
             using var textWriter = new StreamWriter(stream);
 
