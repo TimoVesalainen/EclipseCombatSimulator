@@ -11,14 +11,14 @@ using EclipseCombatCalculator.Library;
 
 namespace EclipseCombatCalculator.WinUI.Dialogs
 {
-    public sealed partial class DiceAssingmentDialog : ContentDialog
+    public sealed partial class DiceAssignmentDialog : ContentDialog
     {
         public DiceAssignmentViewModel ViewModel { get; } = new();
 
         public IEnumerable<(ICombatShip, IEnumerable<DiceFace>)> Result =>
             ViewModel.Ships.Select(shipVM => (shipVM.Ship, shipVM.AssignedDiceFaces.Select(diceVm => diceVm.Dice)));
 
-        public DiceAssingmentDialog()
+        public DiceAssignmentDialog()
         {
             this.InitializeComponent();
         }

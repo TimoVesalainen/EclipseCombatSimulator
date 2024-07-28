@@ -134,7 +134,7 @@ namespace EclipseCombatCalculator.WinUI
                 return [];
             }
 
-            var dialog = new DiceAssingmentDialog
+            var dialog = new DiceAssignmentDialog
             {
                 XamlRoot = this.XamlRoot
             };
