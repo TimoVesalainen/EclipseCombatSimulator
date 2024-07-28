@@ -103,10 +103,8 @@ namespace EclipseCombatCalculator.WinUI.ViewModel
             var defenderWinPercentage = (double)defenderWin * 100 / combats;
 
             Result = $"Of {combats} samples:\n" +
-                $"Attacker won {attackerWin}\n" +
-                $"Defender won {defenderWin}\n" +
-                $"Attacker win portion: {attackerWinPercentage:F2}%\n" +
-                $"Defender win portion: {defenderWinPercentage:F2}%\n";
+                $"Attacker won {attackerWin}, {attackerWinPercentage:F2}%\n" +
+                $"Defender won {defenderWin}, {defenderWinPercentage:F2}%";
         }
 
         public void ClearResult()
