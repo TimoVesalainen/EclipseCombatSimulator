@@ -3,7 +3,6 @@ using Microsoft.UI.Xaml;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Windows.ApplicationModel;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -18,14 +17,12 @@ namespace EclipseCombatCalculator.WinUI
     {
         private const string SaveFileName = "customLayouts.json";
         public List<Blueprint> CustomBlueprints { get; } = [];
-        readonly JsonSerializerOptions options = new();
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
         /// </summary>
         public App()
         {
-            options.Converters.Add(new JsonStringEnumConverter());
             this.InitializeComponent();
         }
 
@@ -39,7 +36,7 @@ namespace EclipseCombatCalculator.WinUI
             if (File.Exists(path))
             {
                 using var stream = File.OpenRead(path);
-                var tempValue = JsonSerializer.Deserialize<AppSettings>(stream, options);
+                var tempValue = JsonSerializer.Deserialize(stream, AppSettingsContext.Default.AppSettings);
 
                 foreach (var blueprint in tempValue.CustomBlueprints)
                 {
@@ -58,7 +55,7 @@ namespace EclipseCombatCalculator.WinUI
             using var stream = File.Open(path, FileMode.Create);
             using var textWriter = new StreamWriter(stream);
 
-            string jsonString = JsonSerializer.Serialize(new AppSettings { CustomBlueprints = CustomBlueprints }, options);
+            string jsonString = JsonSerializer.Serialize(new AppSettings { CustomBlueprints = CustomBlueprints }, AppSettingsContext.Default.AppSettings);
             await textWriter.WriteAsync(jsonString);
             await textWriter.FlushAsync();
         }

@@ -30,7 +30,7 @@ namespace EclipseCombatCalculator.Library.Blueprints
         public bool OutsideBlueprint { get; } = false;
 
         [JsonConstructor]
-        private Part(string name)
+        public Part(string name)
         {
             this.Name = name;
         }
