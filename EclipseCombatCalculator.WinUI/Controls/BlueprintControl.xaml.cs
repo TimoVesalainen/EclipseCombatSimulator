@@ -304,7 +304,7 @@ namespace EclipseCombatCalculator.WinUI.Controls
 
             var result = await dialog.ShowAsync();
 
-            if (result == ContentDialogResult.Primary)
+            if (result == ContentDialogResult.Primary && blueprint != null)
             {
                 blueprint[index] = dialog.SelectedPart;
                 SetBlueprintParts(blueprint);
