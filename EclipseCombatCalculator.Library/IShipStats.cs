@@ -23,17 +23,17 @@ namespace EclipseCombatCalculator.Library
         {
             if (attacker is null)
             {
-                throw new ArgumentNullException(nameof(attacker));
+                ArgumentNullException.ThrowIfNull(attacker);
             }
 
             if (target is null)
             {
-                throw new ArgumentNullException(nameof(target));
+                ArgumentNullException.ThrowIfNull(target);
             }
 
             if (result is null)
             {
-                throw new ArgumentNullException(nameof(result));
+                ArgumentNullException.ThrowIfNull(result);
             }
 
             if (result.Number == null)
