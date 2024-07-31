@@ -4,7 +4,7 @@ using System;
 
 namespace EclipseCombatCalculator.WinUI.ViewModel
 {
-    public sealed class PartViewModel
+    public sealed class PartViewModel : ViewModel
     {
         public Part Part { get; }
         public BitmapImage Image { get; }

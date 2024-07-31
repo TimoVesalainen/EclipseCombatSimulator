@@ -1,15 +1,14 @@
-﻿using EclipseCombatCalculator.Library.Blueprints;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using EclipseCombatCalculator.Library.Blueprints;
 using Microsoft.UI.Xaml;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
 
 namespace EclipseCombatCalculator.WinUI.ViewModel
 {
-    public sealed class BlueprintsViewModel : INotifyPropertyChanged
+    public sealed partial class BlueprintsViewModel : ViewModel
     {
         private Blueprint selectedBlueprint;
         public Blueprint SelectedBlueprint
@@ -124,13 +123,6 @@ namespace EclipseCombatCalculator.WinUI.ViewModel
             {
                 yield return "Several copies of same discovery part";
             }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         public void UpdateWarnings()

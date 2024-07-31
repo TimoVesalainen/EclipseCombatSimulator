@@ -1,12 +1,9 @@
 ﻿using EclipseCombatCalculator.Library.Blueprints;
-using System;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 
 namespace EclipseCombatCalculator.WinUI.ViewModel
 {
-    public sealed class BlueprintsSelectionViewModel : INotifyPropertyChanged
+    public sealed class BlueprintsSelectionViewModel : ViewModel
     {
         public ObservableCollection<LayoutListViewModel> Blueprints { get; } = [];
 
@@ -26,12 +23,5 @@ namespace EclipseCombatCalculator.WinUI.ViewModel
         }
 
         public bool CanSelect => SelectedItem != null;
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
     }
 }

@@ -1,11 +1,8 @@
 ﻿using EclipseCombatCalculator.Library.Blueprints;
-using System;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 
 namespace EclipseCombatCalculator.WinUI.ViewModel
 {
-    public sealed class CombatShipType : INotifyPropertyChanged
+    public sealed class CombatShipType : ViewModel
     {
         private int count = 1;
         public int Count {
@@ -22,8 +19,6 @@ namespace EclipseCombatCalculator.WinUI.ViewModel
         public Blueprint Blueprint { get; private set; }
         public string Name => Blueprint.Name;
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
         public static CombatShipType Create(Blueprint blueprint)
         {
             return new CombatShipType
@@ -31,11 +26,6 @@ namespace EclipseCombatCalculator.WinUI.ViewModel
                 Count = 1,
                 Blueprint = blueprint,
             };
-        }
-
-        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

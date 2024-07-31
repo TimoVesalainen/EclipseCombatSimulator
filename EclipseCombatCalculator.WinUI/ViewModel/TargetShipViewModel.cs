@@ -1,13 +1,10 @@
 ﻿using EclipseCombatCalculator.Library.Blueprints;
 using EclipseCombatCalculator.Library.Combat;
-using System;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 
 namespace EclipseCombatCalculator.WinUI.ViewModel
 {
-    public sealed class TargetShipViewModel : INotifyPropertyChanged
+    public sealed class TargetShipViewModel : ViewModel
     {
         public ICombatShip Ship { get; set; }
         public Blueprint Blueprint { get; set; }
@@ -25,13 +22,5 @@ namespace EclipseCombatCalculator.WinUI.ViewModel
                 Damage = target.Damage
             };
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
     }
 }

@@ -1,11 +1,9 @@
 ﻿using EclipseCombatCalculator.Library.Blueprints;
 using System;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 
 namespace EclipseCombatCalculator.WinUI.ViewModel
 {
-    public sealed class LayoutListViewModel(string name, Blueprint blueprint) : INotifyPropertyChanged
+    public sealed class LayoutListViewModel(string name, Blueprint blueprint) : ViewModel
     {
         private string name = name ?? throw new ArgumentNullException(nameof(name));
         public string Name
@@ -18,13 +16,6 @@ namespace EclipseCombatCalculator.WinUI.ViewModel
             }
         }
         public Blueprint Blueprint { get; } = blueprint ?? throw new ArgumentNullException(nameof(blueprint));
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
 
         public static LayoutListViewModel Create(Blueprint blueprint)
         {

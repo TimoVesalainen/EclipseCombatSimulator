@@ -1,14 +1,11 @@
 ﻿using EclipseCombatCalculator.Library.Blueprints;
 using EclipseCombatCalculator.Library.Combat;
 using Microsoft.UI.Xaml;
-using System;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 
 namespace EclipseCombatCalculator.WinUI.ViewModel
 {
-    public sealed class CalculationsViewModel : INotifyPropertyChanged
+    public sealed class CalculationsViewModel : ViewModel
     {
         public ObservableCollection<CombatShipType> Attackers { get; } = [CombatShipType.Create(Blueprint.TerranInterceptor)];
         public ObservableCollection<CombatShipType> Defenders { get; } = [CombatShipType.Create(Blueprint.OrionCruiser)];
@@ -114,13 +111,6 @@ namespace EclipseCombatCalculator.WinUI.ViewModel
             attackerWin = 0;
             defenderWin = 0;
             combats = 0;
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
