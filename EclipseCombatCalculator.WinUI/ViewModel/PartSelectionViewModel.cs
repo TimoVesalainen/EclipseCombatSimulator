@@ -6,6 +6,6 @@ namespace EclipseCombatCalculator.WinUI.ViewModel
 {
     public sealed class PartSelectionViewModel : ViewModel
     {
-        public ObservableCollection<PartViewModel> Parts = new(Part.AllPArts.Select(PartViewModel.Create));
+        public ObservableCollection<PartViewModel> Parts { get; } = new(Part.AllPArts.Select(PartViewModel.Create));
     }
 }

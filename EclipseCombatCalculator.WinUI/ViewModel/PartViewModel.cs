@@ -4,16 +4,10 @@ using System;
 
 namespace EclipseCombatCalculator.WinUI.ViewModel
 {
-    public sealed class PartViewModel : ViewModel
+    public sealed class PartViewModel(Part part, BitmapImage image) : ViewModel
     {
-        public Part Part { get; }
-        public BitmapImage Image { get; }
-
-        private PartViewModel(Part part, BitmapImage image)
-        {
-            Part = part ?? throw new ArgumentNullException(nameof(part));
-            Image = image ?? throw new ArgumentNullException(nameof(image));
-        }
+        public Part Part { get; } = part ?? throw new ArgumentNullException(nameof(part));
+        public BitmapImage Image { get; } = image ?? throw new ArgumentNullException(nameof(image));
 
         public static PartViewModel Create(Part part)
         {
