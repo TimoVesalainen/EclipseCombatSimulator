@@ -9,64 +9,75 @@ using Nintenlord.Distributions;
 
 namespace EclipseCombatCalculator.Library.Combat
 {
-    // TODO: Make support assigning damage per ship, not ship type
     public delegate Task<IEnumerable<(ICombatShip, IEnumerable<DiceFace>)>> DamageAssigner(
-        ICombatShip activeShips, IEnumerable<ICombatShip> targets, IEnumerable<DiceFace> diceResult);
+        IShipStats activeShipBlueprint, bool isAttacker, IEnumerable<ICombatShip> targets, IEnumerable<DiceFace> diceResult);
 
-    public delegate Task<(int startRetreat, int completeRetreat)> RetreatAsker(ICombatShip activeShips);
+    public delegate Task<IEnumerable<(ICombatShip ship, ShipCombatState newState)>> RetreatAsker(bool attacker, IEnumerable<ICombatShip> ships);
 
     public static class CombatLogic
     {
-        static readonly IComparer<CombatShip> initiativeComparer =
-             Comparer<int>.Default.Select<int, CombatShip>(ship => ship.Blueprint.Initiative).Reverse().Then(
-                 Comparer<bool>.Default.Select<bool, CombatShip>(ship => ship.IsAttacker).Reverse());
+        static readonly IComparer<ShipTypeCollection> initiativeComparer =
+             Comparer<int>.Default.Select<int, ShipTypeCollection>(pair => pair.Blueprint.Initiative).Reverse().Then(
+                 Comparer<bool>.Default.Select<bool, ShipTypeCollection>(ship => ship.Attacker).Reverse());
+
+        private readonly struct ShipTypeCollection
+        {
+            public readonly IShipStats Blueprint;
+            public readonly bool Attacker;
+            public readonly CombatShip[] Ships;
+
+            public ShipTypeCollection(IShipStats blueprint, bool attacker, int count)
+            {
+                Blueprint = blueprint;
+                Attacker = attacker;
+                Ships = Enumerable.Range(0, count).Select(_ => new CombatShip(blueprint)).ToArray();
+            }
+
+            public readonly bool AnyShipsInCombat()
+            {
+                return Ships.Where(ship => ship.State == ShipCombatState.Combat).Any();
+            }
+
+            public readonly bool AnyParticipating()
+            {
+                return Ships.Where(ship => ship.State == ShipCombatState.Combat && ship.State == ShipCombatState.Retreating).Any();
+            }
+
+            public readonly int InRetreat()
+            {
+                return Ships.Where(ship => ship.State == ShipCombatState.Retreating).Count();
+            }
+
+            public readonly int InCombat()
+            {
+                return Ships.Where(ship => ship.State == ShipCombatState.Combat).Count();
+            }
+
+            public readonly (IShipStats, bool isAttacker, IEnumerable<ICombatShip>) ToTuple()
+            {
+                return (Blueprint, Attacker, Ships);
+            }
+        }
 
         private sealed class CombatShip : ICombatShip
         {
             public IShipStats Blueprint { get; }
-            public bool IsAttacker { get; }
-
-            public int InCombat { get; private set; }
-            public int InRetreat { get; private set; }
-            public int Retreated { get; private set; }
-            public int Defeated { get; private set; }
-
             public int Damage { get; private set; }
+            public ShipCombatState State { get; set; } = ShipCombatState.Combat;
 
-            public CombatShip(IShipStats blueprint, int total, bool attacker)
+            public CombatShip(IShipStats blueprint, int startDamage = 0)
             {
                 Blueprint = blueprint ?? throw new ArgumentNullException(nameof(blueprint));
-                InCombat = total;
-                Damage = 0;
-                IsAttacker = attacker;
+                Damage = startDamage;
             }
 
             public void AddDamage(int damage)
             {
-                var newDamage = Damage + damage;
-                while (newDamage > Blueprint.Hulls && InCombat + InRetreat > 0)
+                Damage += damage;
+                if (Damage > Blueprint.Hulls)
                 {
-                    newDamage -= Blueprint.Hulls + 1;
-                    if (InCombat > 0)
-                    {
-                        // Prioritize destroying not retreating
-                        InCombat--;
-                    }
-                    else
-                    {
-                        InRetreat--;
-                    }
-                    Defeated++;
+                    State = ShipCombatState.Destroyed;
                 }
-                Damage = newDamage;
-            }
-
-            public void HandleRetreat(int startRetreat, int completeRetreat)
-            {
-                InCombat -= startRetreat;
-                InCombat += InRetreat - completeRetreat;
-                InRetreat = startRetreat;
-                Retreated += completeRetreat;
             }
         }
 
@@ -90,16 +101,19 @@ namespace EclipseCombatCalculator.Library.Combat
             IEnumerable<(IShipStats blueprint, int count)> defenders,
             DamageAssigner damageAssignment, RetreatAsker retreatAsker)
         {
-            var shipTypes = attackers.Select(shipType => new CombatShip(shipType.blueprint, shipType.count, attacker: true))
-                .Concat(defenders.Select(shipType => new CombatShip(shipType.blueprint, shipType.count, attacker: false))).ToList();
+            var shipTypes = attackers.Select(pair => new ShipTypeCollection(pair.blueprint, true, pair.count))
+                .Concat(defenders.Select(pair => new ShipTypeCollection(pair.blueprint, true, pair.count))).ToList();
 
             shipTypes.Sort(initiativeComparer);
             List<DiceFace> dicesCache = new();
 
+            List<CombatShip> attackerShips = shipTypes.Where(type => type.Attacker).SelectMany(type => type.Ships).ToList();
+            List<CombatShip> defenderShips = shipTypes.Where(type => !type.Attacker).SelectMany(type => type.Ships).ToList();
+
             // Attack with either missiles or cannons
-            async Task ActivateShips(IEnumerable<Dice> attackerDice, CombatShip attacker)
+            async Task ActivateShips(IEnumerable<Dice> attackerDice, ShipTypeCollection attackers)
             {
-                for (int i = 0; i < attacker.InCombat; i++)
+                foreach (var attacker in attackers.Ships)
                 {
                     dicesCache.AddRange(attackerDice.Select(x => x.FaceDistribution.Sample()));
                 }
@@ -111,9 +125,10 @@ namespace EclipseCombatCalculator.Library.Combat
                     .Select(x => x.Flatten());
 
                 var diceResults = distr.Sample();*/
-                var targets = shipTypes.Where(target => target.IsAttacker != attacker.IsAttacker && target.InCombat + target.InRetreat > 0);
 
-                var assignments = await damageAssignment(attacker, targets, dicesCache);
+                var targets = shipTypes.Where(type => type.Attacker != attackers.Attacker).SelectMany(type => type.Ships);
+
+                var assignments = await damageAssignment(attackers.Blueprint, attackers.Attacker, targets, dicesCache);
 #if DEBUG
                 int usedDiceCount = 0;
 #endif
@@ -134,7 +149,7 @@ namespace EclipseCombatCalculator.Library.Combat
                             throw new Exception("Attempting to cheat by creating new dice");
                         }
 #endif
-                        if (attacker.Blueprint.CanHit(targetShip.Blueprint, dice))
+                        if (attackers.Blueprint.CanHit(targetShip.Blueprint, dice))
                         {
                             targetShip.AddDamage(dice.DamageToOpponent);
                         }
@@ -152,26 +167,27 @@ namespace EclipseCombatCalculator.Library.Combat
 
                 foreach (var diceResult in dicesCache)
                 {
-                    attacker.AddDamage(diceResult.DamageToSelf);
+                    // TODO: Assign damage according to AI
+                    // attackers.AddDamage(diceResult.DamageToSelf);
                 }
                 dicesCache.Clear();
             }
 
-            CombatState CommunicateCombatState(CombatStep step, CombatShip active)
+            CombatState CommunicateCombatState(CombatStep step, ShipTypeCollection? active)
             {
-                var attackers = shipTypes.Where(type => type.IsAttacker);
-                var defenders = shipTypes.Where(type => !type.IsAttacker);
-                var attackersRemaining = attackers.Any(type => type.InCombat > 0 || type.InRetreat > 0);
-                var defendersRemaining = defenders.Any(type => type.InCombat > 0 || type.InRetreat > 0);
+                var attackersRemaining = attackerShips.Any(type => type.State == ShipCombatState.Combat || type.State == ShipCombatState.Retreating);
+                var defendersRemaining = defenderShips.Any(type => type.State == ShipCombatState.Combat || type.State == ShipCombatState.Retreating);
                 var isEnded = !attackersRemaining || !defendersRemaining;
                 bool? attackerWin = isEnded ? attackersRemaining && !defendersRemaining : null;
 
                 return new CombatState(
                     step,
-                    shipTypes,
-                    active,
-                    attackers,
-                    defenders,
+                    shipTypes.Select(type => type.ToTuple()),
+                    active?.Attacker,
+                    active?.Blueprint,
+                    active?.Ships,
+                    attackerShips,
+                    defenderShips,
                     attackerWin,
                     isEnded);
             }
@@ -181,7 +197,7 @@ namespace EclipseCombatCalculator.Library.Combat
             // Fire missiles
             foreach (var activeShipType in shipTypes)
             {
-                if (activeShipType.InCombat == 0)
+                if (activeShipType.AnyParticipating())
                 {
                     continue;
                 }
@@ -202,30 +218,35 @@ namespace EclipseCombatCalculator.Library.Combat
             {
                 foreach (var activeShipType in shipTypes)
                 {
-                    if (activeShipType.InCombat == 0 && activeShipType.InRetreat == 0)
+                    if (activeShipType.AnyParticipating())
                     {
                         continue;
                     }
                     yield return CommunicateCombatState(CombatStep.CannonActivationStart, activeShipType);
-                    var (startRetreat, completeRetreat) = await retreatAsker(activeShipType);
+                    var retreatResult = await retreatAsker(activeShipType.Attacker,
+                        activeShipType.Ships.Where(ship => ship.State == ShipCombatState.Combat || ship.State == ShipCombatState.Retreating));
+
+                    foreach (var (ship, newState) in retreatResult)
+                    {
 #if DEBUG
-                    if (startRetreat < 0 || completeRetreat < 0)
-                    {
-                        throw new Exception("Negative value returned from callback");
-                    }
-                    if (startRetreat > activeShipType.InCombat)
-                    {
-                        throw new Exception("Cannot retreat more ships that are in combat");
-                    }
-                    if (completeRetreat > activeShipType.InRetreat)
-                    {
-                        throw new Exception("Cannot complete retreat more ships that are in retreat");
-                    }
+                        if (newState == ShipCombatState.Destroyed)
+                        {
+                            throw new Exception("Cannot destroy ships when retreating");
+                        }
+                        else if (newState == ShipCombatState.Retreated && ship.State == ShipCombatState.Combat)
+                        {
+                            throw new Exception("Cannot skip straight to retreated");
+                        }
 #endif
-                    activeShipType.HandleRetreat(startRetreat, completeRetreat);
+                        (ship as CombatShip).State = newState;
+                    }
 
                     var retreatState = CommunicateCombatState(CombatStep.Retreat, activeShipType);
                     yield return retreatState;
+                    if (activeShipType.AnyParticipating())
+                    {
+                        continue;
+                    }
                     if (retreatState.Ended)
                     {
                         yield break;

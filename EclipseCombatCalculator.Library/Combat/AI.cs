@@ -1,11 +1,8 @@
-﻿using EclipseCombatCalculator.Library.Blueprints;
-using EclipseCombatCalculator.Library.Dices;
+﻿using EclipseCombatCalculator.Library.Dices;
 using Nintenlord.Collections.Comparers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EclipseCombatCalculator.Library.Combat
 {
@@ -17,9 +14,9 @@ namespace EclipseCombatCalculator.Library.Combat
         static readonly IComparer<DiceFace> DiceResultSorter = Comparer<int>.Default.Select<int, DiceFace>(face => 
             face.DamageToOpponent > 0 ? -face.DamageToOpponent : face.Number ?? 10);
 
-        public static readonly DamageAssigner BasicAI = async (attacker, targets, diceResult) =>
+        public static readonly DamageAssigner BasicAI = async (attacker, isAttacker, targets, diceResult) =>
         {
-            var attackerComputer = attacker.Blueprint.Computers;
+            var attackerComputer = attacker.Computers;
 
             var dices = diceResult.ToList();
             dices.Sort(DiceResultSorter);
@@ -36,10 +33,10 @@ namespace EclipseCombatCalculator.Library.Combat
                     break;
                 }
                 List<DiceFace> assignedDice = new();
-                int remainingHealth = target.InCombat * (target.Blueprint.Hulls + 1) - target.Damage;
+                int remainingHealth = target.Damage;
                 foreach (var dice in dices)
                 {
-                    if (attacker.Blueprint.CanHit(target.Blueprint, dice))
+                    if (attacker.CanHit(target.Blueprint, dice))
                     {
                         assignedDice.Add(dice);
                         remainingHealth -= dice.DamageToOpponent;
