@@ -2,6 +2,7 @@
 using EclipseCombatCalculator.Library.Blueprints;
 using EclipseCombatCalculator.Library.Combat;
 using EclipseCombatCalculator.Library.Dices;
+using System;
 
 namespace EclipseCombatCalculator.CommandLine
 {
@@ -11,6 +12,7 @@ namespace EclipseCombatCalculator.CommandLine
         {
             var damage = string.Join("", Enumerable.Range(0, dice.DamageToOpponent).Select(_ => "★")) +
                 string.Join("", Enumerable.Range(0, dice.DamageToSelf).Select(_ => "☆"));
+
             if (dice.Number == null)
             {
                 if (damage.Length == 0)
@@ -24,15 +26,15 @@ namespace EclipseCombatCalculator.CommandLine
 
         private static string PrintShip(ICombatShip ship)
         {
-            return $"{ship.Blueprint.Name} amount {ship.InCombat} with {ship.Damage} damage";
+            return $"{ship.Blueprint.Name} with {ship.Damage} damage";
         }
 
         private static IEnumerable<(ICombatShip, IEnumerable<DiceFace>)> PlayerDistribution(
-            ICombatShip attacker, IEnumerable<ICombatShip> targets, IEnumerable<DiceFace> diceResult)
+            IShipStats activeShipBlueprint, bool isAttacker, IEnumerable<ICombatShip> targets, IEnumerable<DiceFace> diceResult)
         {
             Console.WriteLine("Your dice are: {0}", string.Join(", ", diceResult.Select(PrintDiceFace)));
 
-            var mayHitDice = diceResult.Where(dice => targets.Any(target => attacker.Blueprint.CanHit(target.Blueprint, dice)));
+            var mayHitDice = diceResult.Where(dice => targets.Any(target => activeShipBlueprint.CanHit(target.Blueprint, dice)));
             if (!mayHitDice.Any())
             {
                 Console.WriteLine("No possible hits");
@@ -40,7 +42,7 @@ namespace EclipseCombatCalculator.CommandLine
             }
 
             Console.WriteLine("Please choose how to assign them. Possible targets are:");
-            Console.WriteLine(string.Join("\n", targets.Zip(Options).Select((pair) => $"{pair.Second}) {PrintShip(pair.First)}")));
+            Console.WriteLine(string.Join("\n", targets.Select((target, i) => $"{i}) {PrintShip(target)}")));
 
             List<(DiceFace, ICombatShip)> results = [];
             var targetArray = targets.ToArray();
@@ -48,7 +50,7 @@ namespace EclipseCombatCalculator.CommandLine
             foreach (var dice in mayHitDice)
             {
                 Console.Write("{0} => ", PrintDiceFace(dice));
-                char? input = null;
+                int? input = null;
                 while (input == null)
                 {
                     var read = Console.ReadLine();
@@ -57,34 +59,36 @@ namespace EclipseCombatCalculator.CommandLine
                         Console.WriteLine("Received empty input. Let's try that again, shall we?");
                         continue;
                     }
-                    var index = Options.IndexOf(read[0]);
+                    if (!int.TryParse(read, out var index))
+                    {
+                        Console.WriteLine("Not valid number. Let's try that again, shall we?");
+                        continue;
+                    }
                     if (index < 0 || index >= length)
                     {
                         Console.WriteLine("Invalid input. Let's try that again, shall we?");
                         continue;
                     }
-                    input = read[0];
+                    input = index;
                 }
-                var ship = targetArray[Options.IndexOf(input ?? ' ')];
+                var ship = targetArray[input.Value];
                 results.Add((dice, ship));
             }
 
             return results.GroupBy(resultPair => resultPair.Item2, resultPair => resultPair.Item1)
-                .Select(group => (group.Key, group.Where(dice => attacker.Blueprint.CanHit(group.Key.Blueprint, dice))));
+                .Select(group => (group.Key, group.Where(dice => activeShipBlueprint.CanHit(group.Key.Blueprint, dice))));
         }
-
-        const string Options = "abcd";
 
         public static async Task Run(Options options)
         {
             async Task<IEnumerable<(ICombatShip, IEnumerable<DiceFace>)>> DamageAssigner(
-                ICombatShip attacker, IEnumerable<ICombatShip> targets, IEnumerable<DiceFace> diceResult)
+                IShipStats activeShipBlueprint, bool isAttacker, IEnumerable<ICombatShip> targets, IEnumerable<DiceFace> diceResult)
             {
-                if (options.Attack != attacker.IsAttacker)
+                if (options.Attack != isAttacker)
                 {
                     await Task.Delay(TimeSpan.FromSeconds(1));
                     Console.WriteLine("Enemy dice are: {0}", string.Join(", ", diceResult.Select(PrintDiceFace)));
-                    var aiAssignment = await AI.BasicAI(attacker, targets, diceResult);
+                    var aiAssignment = await AI.BasicAI(activeShipBlueprint, isAttacker, targets, diceResult);
                     if (aiAssignment.Any())
                     {
                         Console.WriteLine("Assigns {0}", string.Join(", ", aiAssignment.Select(x => $"{string.Join(", ", x.Item2.Select(PrintDiceFace))} -> to ship {PrintShip(x.Item1)}")));
@@ -97,14 +101,15 @@ namespace EclipseCombatCalculator.CommandLine
                 }
                 else
                 {
-                    return PlayerDistribution(attacker, targets, diceResult);
+                    return PlayerDistribution(activeShipBlueprint, isAttacker, targets, diceResult);
                 }
             }
 
             var attacker = Blueprint.GetBlueprints(options.Attacker).Cast<IShipStats>().Zip(options.AttackerShipCounts);
             var defender = Blueprint.GetBlueprints(options.Defender).Cast<IShipStats>().Zip(options.DefenderShipCounts);
 
-            var run = await CombatLogic.AttackerWin(attacker, defender, DamageAssigner, (type) => Task.FromResult((0,0)));
+            var run = await CombatLogic.AttackerWin(attacker, defender, DamageAssigner,
+                (attacker, ships) => Task.FromResult(Enumerable.Empty<(ICombatShip ship, ShipCombatState newState)>()));
 
             if (run)
             {
