@@ -8,12 +8,12 @@ namespace EclipseCombatCalculator.WinUI.ViewModel
         public ObservableCollection<LayoutListViewModel> Blueprints { get; } = [];
 
         Blueprint selectedItem;
-        public Blueprint SelectedItem 
-        { 
+        public Blueprint SelectedItem
+        {
             get
             {
                 return selectedItem;
-            } 
+            }
             set
             {
                 selectedItem = value;

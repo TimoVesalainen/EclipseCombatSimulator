@@ -5,7 +5,8 @@ namespace EclipseCombatCalculator.WinUI.ViewModel
     public sealed class CombatShipType : ViewModel
     {
         private int count = 1;
-        public int Count {
+        public int Count
+        {
             get
             {
                 return count;
