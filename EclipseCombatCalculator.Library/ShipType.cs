@@ -7,5 +7,10 @@
         Dreadnaught,
         Starbase,
         // TODO: Do the exiles need Orbital type?
+
+        // NPC
+        Ancient,
+        Guardian,
+        GalacticCenterDefenseSystem //GCDS
     }
 }
