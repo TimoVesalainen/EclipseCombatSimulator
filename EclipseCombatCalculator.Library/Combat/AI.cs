@@ -11,7 +11,7 @@ namespace EclipseCombatCalculator.Library.Combat
         static readonly IComparer<ICombatShip> BySizeComparer = Comparer<int>.Default.Reverse()
             .Select<int, ICombatShip>(shipType => shipType.Blueprint.Size);
 
-        static readonly IComparer<DiceFace> DiceResultSorter = Comparer<int>.Default.Select<int, DiceFace>(face => 
+        static readonly IComparer<DiceFace> DiceResultSorter = Comparer<int>.Default.Select<int, DiceFace>(face =>
             face.DamageToOpponent > 0 ? -face.DamageToOpponent : face.Number ?? 10);
 
         public static readonly DamageAssigner BasicAI = async (attacker, isAttacker, targets, diceResult) =>

@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using EclipseCombatCalculator.Library.Dices;
+﻿using EclipseCombatCalculator.Library.Dices;
 using Nintenlord.Collections;
 using Nintenlord.Collections.Comparers;
 using Nintenlord.Distributions;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace EclipseCombatCalculator.Library.Combat
 {

@@ -81,8 +81,8 @@ namespace EclipseCombatCalculator.Library.Blueprints
         }
 
         // Weapons
-        public static readonly Part IonCannon = new("Ion Cannon", cannons: new[] { CommonDices.YellowDice }, energy: -1, source: PartSource.Initial );
-        public static readonly Part PlasmaCannon = new("Plasma Cannon", cannons: new[] { CommonDices.OrangeDice }, energy: -2 );
+        public static readonly Part IonCannon = new("Ion Cannon", cannons: new[] { CommonDices.YellowDice }, energy: -1, source: PartSource.Initial);
+        public static readonly Part PlasmaCannon = new("Plasma Cannon", cannons: new[] { CommonDices.OrangeDice }, energy: -2);
         public static readonly Part SolitonCannon = new("Soliton Cannon", cannons: new[] { CommonDices.BlueDice }, energy: -3);
         public static readonly Part AntimatterCannon = new("Antimatter Cannon", cannons: new[] { CommonDices.RedDice }, energy: -4);
         public static readonly Part RiftCannon = new("Rift Cannon", cannons: new[] { CommonDices.PurpleDice }, energy: -2);
@@ -122,16 +122,16 @@ namespace EclipseCombatCalculator.Library.Blueprints
         public static readonly Part PlasmaTurret = new("Plasma Turret", cannons: new[] { CommonDices.OrangeDice, CommonDices.OrangeDice }, energy: -3, source: PartSource.Discovery);
         public static readonly Part SolitonCharger = new("Soliton Charger", cannons: new[] { CommonDices.BlueDice }, energy: -1, source: PartSource.Discovery);
         public static readonly Part RiftConductor = new("Rift Conductor", cannons: new[] { CommonDices.PurpleDice }, hulls: 1, energy: -1, source: PartSource.Discovery);
-        public static readonly Part IonMissile = new("Ion Missile", missiles: new[] { CommonDices.YellowDice, CommonDices.YellowDice, CommonDices.YellowDice }, source: PartSource.Discovery );
-        public static readonly Part SolitonMissile = new("Soliton Missile", missiles: new[] { CommonDices.BlueDice }, initiative: 1, source: PartSource.Discovery );
-        public static readonly Part AntimatterMissile = new("Antimatter Missile", missiles: new[] { CommonDices.RedDice }, source: PartSource.Discovery );
-        public static readonly Part AxionComputer = new("Axion Computer", computers: 2, initiative: 1, source: PartSource.Discovery );
-        public static readonly Part FluxShield = new("Flux Shield", shields: 3, initiative: 1, energy: -2, source: PartSource.Discovery );
-        public static readonly Part InversionShield = new("Inversion Shield", shields: 2, energy: 2, source: PartSource.Discovery );
-        public static readonly Part ShardHull = new("Shard Hull", hulls: 3, source: PartSource.Discovery );
-        public static readonly Part ConformalDrive = new("Conformal Drive", movement: 4, initiative: 2, energy: -2, source: PartSource.Discovery );
-        public static readonly Part NonLinearDrive = new("Nonlinear Drive", movement: 2, energy: 2, source: PartSource.Discovery );
-        public static readonly Part HypergridSource = new("Hypergrid Source", energy: 11, source: PartSource.Discovery );
+        public static readonly Part IonMissile = new("Ion Missile", missiles: new[] { CommonDices.YellowDice, CommonDices.YellowDice, CommonDices.YellowDice }, source: PartSource.Discovery);
+        public static readonly Part SolitonMissile = new("Soliton Missile", missiles: new[] { CommonDices.BlueDice }, initiative: 1, source: PartSource.Discovery);
+        public static readonly Part AntimatterMissile = new("Antimatter Missile", missiles: new[] { CommonDices.RedDice }, source: PartSource.Discovery);
+        public static readonly Part AxionComputer = new("Axion Computer", computers: 2, initiative: 1, source: PartSource.Discovery);
+        public static readonly Part FluxShield = new("Flux Shield", shields: 3, initiative: 1, energy: -2, source: PartSource.Discovery);
+        public static readonly Part InversionShield = new("Inversion Shield", shields: 2, energy: 2, source: PartSource.Discovery);
+        public static readonly Part ShardHull = new("Shard Hull", hulls: 3, source: PartSource.Discovery);
+        public static readonly Part ConformalDrive = new("Conformal Drive", movement: 4, initiative: 2, energy: -2, source: PartSource.Discovery);
+        public static readonly Part NonLinearDrive = new("Nonlinear Drive", movement: 2, energy: 2, source: PartSource.Discovery);
+        public static readonly Part HypergridSource = new("Hypergrid Source", energy: 11, source: PartSource.Discovery);
 
         // Esoteric parts
         public static readonly Part JumpDrive = new("Jump Drive", energy: -2, source: PartSource.Discovery);

@@ -214,15 +214,15 @@ namespace EclipseCombatCalculator.Library.Blueprints
         { BaseInitiative = 4, BaseEnergy = 3, IsBase = true };
 
         //Lyra
-        public static readonly Blueprint LyraInterceptor = new ("Lyra Interceptor", ShipType.Interceptor, Species.Lyra,
+        public static readonly Blueprint LyraInterceptor = new("Lyra Interceptor", ShipType.Interceptor, Species.Lyra,
             Part.IonCannon,
             Part.NuclearSource, Part.NuclearDrive, null)
         { BaseInitiative = 2 };
-        public static readonly Blueprint LyraCruiser = new ("Lyra Cruiser", ShipType.Cruiser, Species.Lyra,
+        public static readonly Blueprint LyraCruiser = new("Lyra Cruiser", ShipType.Cruiser, Species.Lyra,
             Part.ElectronComputer, Part.IonCannon, null,
             Part.NuclearSource, Part.Hull, Part.NuclearDrive)
         { BaseInitiative = 1 };
-        public static readonly Blueprint LyraDreadnaught = new ("Lyra Dreadnaught", ShipType.Dreadnaught, Species.Lyra,
+        public static readonly Blueprint LyraDreadnaught = new("Lyra Dreadnaught", ShipType.Dreadnaught, Species.Lyra,
             Part.ElectronComputer, Part.IonCannon, Part.IonCannon, null,
             Part.NuclearSource, Part.Hull, Part.Hull, Part.NuclearDrive);
         public static readonly Blueprint LyraStarbase = new("Lyra Starbase", ShipType.Starbase, Species.Lyra,

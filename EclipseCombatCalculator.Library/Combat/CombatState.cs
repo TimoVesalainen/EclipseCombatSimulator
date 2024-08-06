@@ -16,9 +16,9 @@ namespace EclipseCombatCalculator.Library.Combat
         public bool? AttackerWinner { get; }
         public bool Ended { get; }
 
-        public CombatState(CombatStep currentStep, IEnumerable<(IShipStats, bool isAttacker, IEnumerable<ICombatShip>)> engagementRoundOrder, 
-            bool? isActiveAttacker, IShipStats activeShipBlueprint, IEnumerable<ICombatShip> activeShips, 
-            IEnumerable<ICombatShip> attackers, IEnumerable<ICombatShip> defenders, 
+        public CombatState(CombatStep currentStep, IEnumerable<(IShipStats, bool isAttacker, IEnumerable<ICombatShip>)> engagementRoundOrder,
+            bool? isActiveAttacker, IShipStats activeShipBlueprint, IEnumerable<ICombatShip> activeShips,
+            IEnumerable<ICombatShip> attackers, IEnumerable<ICombatShip> defenders,
             bool? attackerWinner, bool ended)
         {
             CurrentStep = currentStep;

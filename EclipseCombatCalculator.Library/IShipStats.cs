@@ -1,6 +1,6 @@
-﻿using System;
+﻿using EclipseCombatCalculator.Library.Dices;
+using System;
 using System.Collections.Generic;
-using EclipseCombatCalculator.Library.Dices;
 
 namespace EclipseCombatCalculator.Library
 {
