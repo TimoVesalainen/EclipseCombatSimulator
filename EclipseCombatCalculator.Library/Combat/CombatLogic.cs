@@ -102,7 +102,7 @@ namespace EclipseCombatCalculator.Library.Combat
             DamageAssigner damageAssignment, RetreatAsker retreatAsker)
         {
             var shipTypes = attackers.Select(pair => new ShipTypeCollection(pair.blueprint, true, pair.count))
-                .Concat(defenders.Select(pair => new ShipTypeCollection(pair.blueprint, true, pair.count))).ToList();
+                .Concat(defenders.Select(pair => new ShipTypeCollection(pair.blueprint, false, pair.count))).ToList();
 
             shipTypes.Sort(initiativeComparer);
             List<DiceFace> dicesCache = new();
@@ -126,7 +126,8 @@ namespace EclipseCombatCalculator.Library.Combat
 
                 var diceResults = distr.Sample();*/
 
-                var targets = shipTypes.Where(type => type.Attacker != attackers.Attacker).SelectMany(type => type.Ships);
+                var targets = shipTypes.Where(type => type.Attacker != attackers.Attacker)
+                    .SelectMany(type => type.Ships.Where(ship => ship.State == ShipCombatState.Combat || ship.State == ShipCombatState.Retreating));
 
                 var assignments = await damageAssignment(attackers.Blueprint, attackers.Attacker, targets, dicesCache);
 #if DEBUG
