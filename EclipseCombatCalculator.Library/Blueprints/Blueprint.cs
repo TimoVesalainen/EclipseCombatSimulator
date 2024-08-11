@@ -6,7 +6,7 @@ using System.Text.Json.Serialization;
 
 namespace EclipseCombatCalculator.Library.Blueprints
 {
-    public sealed class Blueprint : IShipStats
+    public sealed class Blueprint : IShipTypeStats
     {
         public ShipType ShipType { get; }
         public Species Species { get; }
@@ -113,17 +113,17 @@ namespace EclipseCombatCalculator.Library.Blueprints
         [JsonIgnore]
         public int TotalEnergy => BaseEnergy + slots.Sum(part => part?.Energy) ?? 0;
 
-        int IShipStats.Initiative => BaseInitiative + slots.Sum(part => part?.Initiative) ?? 0;
+        int IShipTypeStats.Initiative => BaseInitiative + slots.Sum(part => part?.Initiative) ?? 0;
 
-        int IShipStats.Computers => BaseComputer + slots.Sum(part => part?.Computers) ?? 0;
+        int IShipTypeStats.Computers => BaseComputer + slots.Sum(part => part?.Computers) ?? 0;
 
-        int IShipStats.Shields => BaseShield + slots.Sum(part => part?.Shields) ?? 0;
+        int IShipTypeStats.Shields => BaseShield + slots.Sum(part => part?.Shields) ?? 0;
 
-        int IShipStats.Hulls => BaseHull + slots.Sum(part => part?.Hulls) ?? 0;
+        int IShipTypeStats.Hulls => BaseHull + slots.Sum(part => part?.Hulls) ?? 0;
 
-        IEnumerable<Dice> IShipStats.Cannons => slots.SelectMany(part => part?.Cannons ?? Array.Empty<Dice>());
+        IEnumerable<Dice> IShipTypeStats.Cannons => slots.SelectMany(part => part?.Cannons ?? Array.Empty<Dice>());
 
-        IEnumerable<Dice> IShipStats.Missiles => slots.SelectMany(part => part?.Missiles ?? Array.Empty<Dice>());
+        IEnumerable<Dice> IShipTypeStats.Missiles => slots.SelectMany(part => part?.Missiles ?? Array.Empty<Dice>());
 
 
         readonly static List<Blueprint> blueprints = new();

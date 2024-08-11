@@ -11,7 +11,7 @@ namespace EclipseCombatCalculator.Library.Test
         {
         }
 
-        private class TestShip : IShipStats
+        private class TestShip : IShipTypeStats
         {
             public string Name => "Test";
             public int Initiative { get; set; }
@@ -30,7 +30,7 @@ namespace EclipseCombatCalculator.Library.Test
 
             public ShipType ShipType { get; set; }
 
-            IEnumerable<Dice> IShipStats.Cannons => Weapons ?? Array.Empty<Dice>();
+            IEnumerable<Dice> IShipTypeStats.Cannons => Weapons ?? Array.Empty<Dice>();
         }
 
         static readonly RetreatAsker NoRetreat = (ICombatShip ship) => Task.FromResult((0, 0));
@@ -49,8 +49,8 @@ namespace EclipseCombatCalculator.Library.Test
             }
 
             var result = await CombatLogic.AttackerWin(
-                new[] { (blueprint: new TestShip { Initiative = 1, Weapons = new Dice[] { CommonDices.YellowDice }, Computers = 0, Shields = 0, Hulls = 0 } as IShipStats, count: 1) },
-                new[] { (blueprint: new TestShip { Initiative = 1, Weapons = Array.Empty<Dice>(), Computers = 0, Shields = 0, Hulls = 0 } as IShipStats, count: 1) },
+                new[] { (blueprint: new TestShip { Initiative = 1, Weapons = new Dice[] { CommonDices.YellowDice }, Computers = 0, Shields = 0, Hulls = 0 } as IShipTypeStats, count: 1) },
+                new[] { (blueprint: new TestShip { Initiative = 1, Weapons = Array.Empty<Dice>(), Computers = 0, Shields = 0, Hulls = 0 } as IShipTypeStats, count: 1) },
                 CombatAssingment, NoRetreat);
 
             Assert.IsTrue(result);
@@ -65,8 +65,8 @@ namespace EclipseCombatCalculator.Library.Test
             }
 
             var result = await CombatLogic.AttackerWin(
-                new[] { (blueprint: Blueprint.OrionInterceptor as IShipStats, count: 5) },
-                new[] { (blueprint: Blueprint.PlantaInterceptor as IShipStats, count: 1) },
+                new[] { (blueprint: Blueprint.OrionInterceptor as IShipTypeStats, count: 5) },
+                new[] { (blueprint: Blueprint.PlantaInterceptor as IShipTypeStats, count: 1) },
                 CombatAssignment, NoRetreat);
         }
 
@@ -74,8 +74,8 @@ namespace EclipseCombatCalculator.Library.Test
         public async Task DefaultAIPlantaVSOrion()
         {
             var result = await CombatLogic.AttackerWin(
-                new[] { (blueprint: Blueprint.OrionInterceptor as IShipStats, count: 5) },
-                new[] { (blueprint: Blueprint.PlantaInterceptor as IShipStats, count: 1) },
+                new[] { (blueprint: Blueprint.OrionInterceptor as IShipTypeStats, count: 5) },
+                new[] { (blueprint: Blueprint.PlantaInterceptor as IShipTypeStats, count: 1) },
                 AI.BasicAI, NoRetreat);
         }
 
@@ -83,8 +83,8 @@ namespace EclipseCombatCalculator.Library.Test
         public async Task LargeDefaultAIFight()
         {
             var result = await CombatLogic.AttackerWin(
-                new[] { (blueprint: new TestShip { Initiative = 1, Weapons = new Dice[] { CommonDices.YellowDice, CommonDices.YellowDice, CommonDices.YellowDice, CommonDices.YellowDice, CommonDices.YellowDice }, Computers = 0, Shields = 0, Hulls = 0 } as IShipStats, count: 5) },
-                new[] { (blueprint: new TestShip { Initiative = 1, Weapons = Array.Empty<Dice>(), Computers = 0, Shields = 0, Hulls = 10 } as IShipStats, count: 10) },
+                new[] { (blueprint: new TestShip { Initiative = 1, Weapons = new Dice[] { CommonDices.YellowDice, CommonDices.YellowDice, CommonDices.YellowDice, CommonDices.YellowDice, CommonDices.YellowDice }, Computers = 0, Shields = 0, Hulls = 0 } as IShipTypeStats, count: 5) },
+                new[] { (blueprint: new TestShip { Initiative = 1, Weapons = Array.Empty<Dice>(), Computers = 0, Shields = 0, Hulls = 10 } as IShipTypeStats, count: 10) },
                 AI.BasicAI, NoRetreat);
         }
     }

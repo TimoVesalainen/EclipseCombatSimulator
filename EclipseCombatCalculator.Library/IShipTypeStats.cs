@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace EclipseCombatCalculator.Library
 {
-    public interface IShipStats
+    public interface IShipTypeStats
     {
         public string Name { get; }
         public int Initiative { get; }
@@ -19,7 +19,7 @@ namespace EclipseCombatCalculator.Library
 
     public static class ShipStatHelpers
     {
-        public static bool CanHit(this IShipStats attacker, IShipStats target, DiceFace result)
+        public static bool CanHit(this IShipTypeStats attacker, IShipTypeStats target, DiceFace result)
         {
             if (attacker is null)
             {
@@ -44,7 +44,7 @@ namespace EclipseCombatCalculator.Library
             return result.Number + attacker.Computers - target.Shields >= 6;
         }
 
-        public static int DealtDamage(this IShipStats attacker, IShipStats target, DiceFace result)
+        public static int DealtDamage(this IShipTypeStats attacker, IShipTypeStats target, DiceFace result)
         {
             if (attacker is null)
             {
@@ -71,7 +71,7 @@ namespace EclipseCombatCalculator.Library
             throw new NotImplementedException("Not implemented");
         }
 
-        public static bool MustHaveDrive(this IShipStats attacker)
+        public static bool MustHaveDrive(this IShipTypeStats attacker)
         {
             return attacker.ShipType switch
             {
@@ -81,7 +81,7 @@ namespace EclipseCombatCalculator.Library
             };
         }
 
-        public static bool CannotHaveDrive(this IShipStats attacker)
+        public static bool CannotHaveDrive(this IShipTypeStats attacker)
         {
             return attacker.ShipType switch
             {
@@ -91,7 +91,7 @@ namespace EclipseCombatCalculator.Library
             };
         }
 
-        public static int CompareByShipType(this IShipStats ship1, IShipStats ship2)
+        public static int CompareByShipType(this IShipTypeStats ship1, IShipTypeStats ship2)
         {
             // TODO: Starbase comparison might be wrong?
 

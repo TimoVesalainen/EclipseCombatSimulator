@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace EclipseCombatCalculator.Library.Blueprints
 {
-    public sealed class NPCShip : IShipStats
+    public sealed class NPCShip : IShipTypeStats
     {
         public string Name { get; init; }
         public ShipType ShipType { get; init; }
@@ -20,6 +20,15 @@ namespace EclipseCombatCalculator.Library.Blueprints
         public int Shields { get; init; } = 0;
         public int Hulls { get; init; } = 0;
         public int Size { get; init; } = 0;
+
+        static readonly List<NPCShip> ships = new();
+
+        private NPCShip()
+        {
+            ships.Add(this);
+        }
+
+        public static IEnumerable<NPCShip> Ships => ships;
 
         // Ancients
         public static readonly NPCShip EasyAncient = new()

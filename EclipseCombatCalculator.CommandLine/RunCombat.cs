@@ -30,7 +30,7 @@ namespace EclipseCombatCalculator.CommandLine
         }
 
         private static IEnumerable<(ICombatShip, IEnumerable<DiceFace>)> PlayerDistribution(
-            IShipStats activeShipBlueprint, bool isAttacker, IEnumerable<ICombatShip> targets, IEnumerable<DiceFace> diceResult)
+            IShipTypeStats activeShipBlueprint, bool isAttacker, IEnumerable<ICombatShip> targets, IEnumerable<DiceFace> diceResult)
         {
             Console.WriteLine("Your dice are: {0}", string.Join(", ", diceResult.Select(PrintDiceFace)));
 
@@ -82,7 +82,7 @@ namespace EclipseCombatCalculator.CommandLine
         public static async Task Run(Options options)
         {
             async Task<IEnumerable<(ICombatShip, IEnumerable<DiceFace>)>> DamageAssigner(
-                IShipStats activeShipBlueprint, bool isAttacker, IEnumerable<ICombatShip> targets, IEnumerable<DiceFace> diceResult)
+                IShipTypeStats activeShipBlueprint, bool isAttacker, IEnumerable<ICombatShip> targets, IEnumerable<DiceFace> diceResult)
             {
                 if (options.Attack != isAttacker)
                 {
@@ -105,8 +105,8 @@ namespace EclipseCombatCalculator.CommandLine
                 }
             }
 
-            var attacker = Blueprint.GetBlueprints(options.Attacker).Cast<IShipStats>().Zip(options.AttackerShipCounts);
-            var defender = Blueprint.GetBlueprints(options.Defender).Cast<IShipStats>().Zip(options.DefenderShipCounts);
+            var attacker = Blueprint.GetBlueprints(options.Attacker).Cast<IShipTypeStats>().Zip(options.AttackerShipCounts);
+            var defender = Blueprint.GetBlueprints(options.Defender).Cast<IShipTypeStats>().Zip(options.DefenderShipCounts);
 
             var run = await CombatLogic.AttackerWin(attacker, defender, DamageAssigner,
                 (attacker, ships) => Task.FromResult(Enumerable.Empty<(ICombatShip ship, ShipCombatState newState)>()));

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace EclipseCombatCalculator.Library.Combat
 {
     public delegate Task<IEnumerable<(ICombatShip, IEnumerable<DiceFace>)>> DamageAssigner(
-        IShipStats activeShipBlueprint, bool isAttacker, IEnumerable<ICombatShip> targets, IEnumerable<DiceFace> diceResult);
+        IShipTypeStats activeShipBlueprint, bool isAttacker, IEnumerable<ICombatShip> targets, IEnumerable<DiceFace> diceResult);
 
     public delegate Task<IEnumerable<(ICombatShip ship, ShipCombatState newState)>> RetreatAsker(bool attacker, IEnumerable<ICombatShip> ships);
 
@@ -22,11 +22,11 @@ namespace EclipseCombatCalculator.Library.Combat
 
         private readonly struct ShipTypeCollection
         {
-            public readonly IShipStats Blueprint;
+            public readonly IShipTypeStats Blueprint;
             public readonly bool Attacker;
             public readonly CombatShip[] Ships;
 
-            public ShipTypeCollection(IShipStats blueprint, bool attacker, int count)
+            public ShipTypeCollection(IShipTypeStats blueprint, bool attacker, int count)
             {
                 Blueprint = blueprint;
                 Attacker = attacker;
@@ -53,7 +53,7 @@ namespace EclipseCombatCalculator.Library.Combat
                 return Ships.Where(ship => ship.State == ShipCombatState.Combat).Count();
             }
 
-            public readonly (IShipStats, bool isAttacker, IEnumerable<ICombatShip>) ToTuple()
+            public readonly (IShipTypeStats, bool isAttacker, IEnumerable<ICombatShip>) ToTuple()
             {
                 return (Blueprint, Attacker, Ships);
             }
@@ -61,11 +61,11 @@ namespace EclipseCombatCalculator.Library.Combat
 
         private sealed class CombatShip : ICombatShip
         {
-            public IShipStats Blueprint { get; }
+            public IShipTypeStats Blueprint { get; }
             public int Damage { get; private set; }
             public ShipCombatState State { get; set; } = ShipCombatState.Combat;
 
-            public CombatShip(IShipStats blueprint, int startDamage = 0)
+            public CombatShip(IShipTypeStats blueprint, int startDamage = 0)
             {
                 Blueprint = blueprint ?? throw new ArgumentNullException(nameof(blueprint));
                 Damage = startDamage;
@@ -82,8 +82,8 @@ namespace EclipseCombatCalculator.Library.Combat
         }
 
         public static async Task<bool> AttackerWin(
-            IEnumerable<(IShipStats blueprint, int count)> attackers,
-            IEnumerable<(IShipStats blueprint, int count)> defenders,
+            IEnumerable<(IShipTypeStats blueprint, int count)> attackers,
+            IEnumerable<(IShipTypeStats blueprint, int count)> defenders,
             DamageAssigner damageAssingment, RetreatAsker retreatAsker)
         {
             await foreach (var state in DoCombat(attackers, defenders, damageAssingment, retreatAsker))
@@ -97,8 +97,8 @@ namespace EclipseCombatCalculator.Library.Combat
         }
 
         public static async IAsyncEnumerable<CombatState> DoCombat(
-            IEnumerable<(IShipStats blueprint, int count)> attackers,
-            IEnumerable<(IShipStats blueprint, int count)> defenders,
+            IEnumerable<(IShipTypeStats blueprint, int count)> attackers,
+            IEnumerable<(IShipTypeStats blueprint, int count)> defenders,
             DamageAssigner damageAssignment, RetreatAsker retreatAsker)
         {
             var shipTypes = attackers.Select(pair => new ShipTypeCollection(pair.blueprint, true, pair.count))

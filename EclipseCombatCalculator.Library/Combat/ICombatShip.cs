@@ -2,7 +2,7 @@
 {
     public interface ICombatShip
     {
-        IShipStats Blueprint { get; }
+        IShipTypeStats Blueprint { get; }
         ShipCombatState State { get; }
         int Damage { get; }
     }
