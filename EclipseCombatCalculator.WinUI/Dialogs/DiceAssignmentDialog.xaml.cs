@@ -49,7 +49,7 @@ namespace EclipseCombatCalculator.WinUI.Dialogs
                     ship.AssignedDiceFaces.Remove(diceViewModel);
                 }
 
-                diceViewModel.CanHit = ViewModel.AttackerShip.Blueprint.CanHit(target.Blueprint, diceViewModel.Dice);
+                diceViewModel.CanHit = ViewModel.AttackerShip.ShipType.CanHit(target.Blueprint, diceViewModel.Dice);
                 target.AssignedDiceFaces.Add(diceViewModel);
             }
         }

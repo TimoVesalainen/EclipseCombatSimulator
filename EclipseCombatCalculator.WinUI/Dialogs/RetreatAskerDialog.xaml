@@ -32,43 +32,6 @@
             </Grid.RowDefinitions>
 
             <TextBlock
-                Grid.Column="0">
-                <Run>In Combat </Run>
-                <Run Text="{x:Bind ViewModel.Ship.InCombat}"></Run>
-                <Run> -> </Run>
-            </TextBlock>
-
-            <NumberBox
-                x:Name="ToRetreat"
-                Grid.Column="1"
-                Minimum="0"
-                Maximum="{x:Bind ViewModel.Ship.InCombat}"
-                Value="{x:Bind ViewModel.StartRetreat, Mode=TwoWay}"/>
-
-            <TextBlock
-                Grid.Column="2">
-                <Run> -> </Run>
-                <Run>In Retreat </Run>
-                <Run Text="{x:Bind ViewModel.Ship.InRetreat}"></Run>
-                <Run> -> </Run>
-            </TextBlock>
-
-            <NumberBox
-                x:Name="Retreat"
-                Grid.Column="3"
-                Minimum="0"
-                Maximum="{x:Bind ViewModel.Ship.InRetreat}"
-                Value="{x:Bind ViewModel.CompleteRetreat, Mode=TwoWay}"/>
-
-            <TextBlock
-                Grid.Column="4">
-                <Run> -> </Run>
-                <Run>Retreated</Run>
-                <Run Text="{x:Bind ViewModel.Ship.Retreated}"></Run>
-            </TextBlock>
-
-
-            <TextBlock
                 Grid.Column="0"
                 Grid.ColumnSpan="5"
                 Grid.Row="1"

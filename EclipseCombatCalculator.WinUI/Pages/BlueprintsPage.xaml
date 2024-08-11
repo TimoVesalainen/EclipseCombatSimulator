@@ -42,7 +42,7 @@
             ItemClick="LayoutList_ItemClick"
             Background="#326590">
             <ListView.ItemTemplate>
-                <DataTemplate x:DataType="viewmodels:LayoutListViewModel">
+                <DataTemplate x:DataType="viewmodels:BlueprintViewModel">
                     <Grid Margin="0,11,0,13">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />

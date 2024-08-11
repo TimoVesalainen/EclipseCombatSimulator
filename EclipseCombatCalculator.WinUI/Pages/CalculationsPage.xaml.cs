@@ -66,8 +66,8 @@ namespace EclipseCombatCalculator.WinUI.Pages
                 ViewModel.ProgressMax = partitionCount;
                 ViewModel.ProgressVisible = Visibility.Visible;
 
-                var attackers = ViewModel.Attackers.Select(viewModel => (viewModel.Blueprint as IShipStats, viewModel.Count)).ToList();
-                var defenders = ViewModel.Defenders.Select(viewModel => (viewModel.Blueprint as IShipStats, viewModel.Count)).ToList();
+                var attackers = ViewModel.Attackers.Select(viewModel => (viewModel.ShipType as IShipTypeStats, viewModel.Count)).ToList();
+                var defenders = ViewModel.Defenders.Select(viewModel => (viewModel.ShipType as IShipTypeStats, viewModel.Count)).ToList();
 
                 int progress = 0;
                 int completed = 0;
@@ -103,28 +103,29 @@ namespace EclipseCombatCalculator.WinUI.Pages
         }
 
         private static async Task<List<CombatState>> DoSampling(
-            IEnumerable<(IShipStats blueprint, int count)> attackers,
-            IEnumerable<(IShipStats blueprint, int count)> defenders,
+            IEnumerable<(IShipTypeStats blueprint, int count)> attackers,
+            IEnumerable<(IShipTypeStats blueprint, int count)> defenders,
             DamageAssigner attackerAi, DamageAssigner defenderAi,
             int amountToSample,
             Action<CombatState> callback)
         {
             async Task<IEnumerable<(ICombatShip, IEnumerable<DiceFace>)>> AssignDamage(
-            ICombatShip attacker, IEnumerable<ICombatShip> targets, IEnumerable<DiceFace> diceResult)
+                IShipTypeStats activeShipBlueprint, bool isAttacker,
+                IEnumerable<ICombatShip> targets, IEnumerable<DiceFace> diceResult)
             {
-                if (attacker.IsAttacker)
+                if (isAttacker)
                 {
-                    return await attackerAi(attacker, targets, diceResult);
+                    return await attackerAi(activeShipBlueprint, isAttacker, targets, diceResult);
                 }
                 else
                 {
-                    return await defenderAi(attacker, targets, diceResult);
+                    return await defenderAi(activeShipBlueprint, isAttacker, targets, diceResult);
                 }
             }
 
-            Task<(int startRetreat, int completeRetreat)> RetreatAsker(ICombatShip activeShips)
+            Task<IEnumerable<(ICombatShip ship, ShipCombatState newState)>> RetreatAsker(bool attacker, IEnumerable<ICombatShip> ships)
             {
-                return Task.FromResult((0, 0));
+                return Task.FromResult(Enumerable.Empty<(ICombatShip ship, ShipCombatState newState)>());
             }
 
             List<CombatState> states = [];

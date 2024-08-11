@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using EclipseCombatCalculator.Library.Blueprints;
 using EclipseCombatCalculator.WinUI.ViewModel;
 using EclipseCombatCalculator.Library;
 using System.Threading.Tasks;
@@ -30,54 +29,55 @@ namespace EclipseCombatCalculator.WinUI
             var defenderAi = DefenderFleet.SelectedAI.Implementation;
 
             async Task<IEnumerable<(ICombatShip, IEnumerable<DiceFace>)>> AssignDamage(
-            ICombatShip attacker, IEnumerable<ICombatShip> targets, IEnumerable<DiceFace> diceResult)
+                IShipTypeStats activeShipBlueprint, bool isAttacker,
+                IEnumerable<ICombatShip> targets, IEnumerable<DiceFace> diceResult)
             {
-                if (attacker.IsAttacker)
+                if (isAttacker)
                 {
                     if (attackerIsAI)
                     {
-                        return await attackerAi(attacker, targets, diceResult);
+                        return await attackerAi(activeShipBlueprint, isAttacker, targets, diceResult);
                     }
                     else
                     {
-                        return await ManualAssignment(attacker, targets, diceResult);
+                        return await ManualAssignment(activeShipBlueprint, isAttacker, targets, diceResult);
                     }
                 }
                 else
                 {
                     if (defenderIsAI)
                     {
-                        return await defenderAi(attacker, targets, diceResult);
+                        return await defenderAi(activeShipBlueprint, isAttacker, targets, diceResult);
                     }
                     else
                     {
-                        return await ManualAssignment(attacker, targets, diceResult);
+                        return await ManualAssignment(activeShipBlueprint, isAttacker, targets, diceResult);
                     }
                 }
             }
 
-            async Task<(int startRetreat, int completeRetreat)> RetreatAsker(ICombatShip activeShips)
+            async Task<IEnumerable<(ICombatShip ship, ShipCombatState newState)>> RetreatAsker(bool attacker, IEnumerable<ICombatShip> ships)
             {
-                if (activeShips.IsAttacker)
+                if (attacker)
                 {
                     if (attackerIsAI)
                     {
-                        return (0, 0);
+                        return [];
                     }
                     else
                     {
-                        return await Retreater(activeShips);
+                        return await Retreater(attacker, ships);
                     }
                 }
                 else
                 {
                     if (defenderIsAI)
                     {
-                        return (0, 0);
+                        return [];
                     }
                     else
                     {
-                        return await Retreater(activeShips);
+                        return await Retreater(attacker, ships);
                     }
                 }
             }
@@ -86,20 +86,21 @@ namespace EclipseCombatCalculator.WinUI
 
             bool result = false;
             await foreach (var state in CombatLogic.DoCombat(
-                ViewModel.Attackers.Select(viewModel => (viewModel.Blueprint as IShipStats, viewModel.Count)),
-                ViewModel.Defenders.Select(viewModel => (viewModel.Blueprint as IShipStats, viewModel.Count)),
+                ViewModel.Attackers.Select(viewModel => (viewModel.ShipType, viewModel.Count)),
+                ViewModel.Defenders.Select(viewModel => (viewModel.ShipType, viewModel.Count)),
                 AssignDamage, RetreatAsker))
             {
-                string PriorityLine(ICombatShip ship)
+                string PriorityLine(IShipTypeStats stats, bool isAttacker, IEnumerable<ICombatShip> ships)
                 {
-                    var prefix = state.Active == ship ? "=> " : "";
-                    return $"{prefix}{ship.Blueprint.Name} in combat {ship.InCombat} in retreat {ship.InRetreat} retreated {ship.Retreated} destroyed {ship.Defeated}";
+                    return "";
+                    // var prefix = state.Active == ship ? "=> " : "";
+                    // return $"{prefix}{ship.Blueprint.Name} in combat {ship.InCombat} in retreat {ship.InRetreat} retreated {ship.Retreated} destroyed {ship.Defeated}";
                 }
 
-                PriorityList.Text = string.Join("\n", state.EngagementRoundOrder.Select(PriorityLine));
+                PriorityList.Text = string.Join("\n", state.EngagementRoundOrder.Select(tuple => PriorityLine(tuple.Item1, tuple.Item2, tuple.Item3)));
 
-                AttackerState.Text = string.Join("\n", state.Attackers.Where(ship => ship.InCombat > 0).Select(ship => $"{ship.Blueprint.Name} count {ship.InCombat} damage {ship.Damage}"));
-                DefenderState.Text = string.Join("\n", state.Defenders.Where(ship => ship.InCombat > 0).Select(ship => $"{ship.Blueprint.Name} count {ship.InCombat} damage {ship.Damage}"));
+                //AttackerState.Text = string.Join("\n", state.Attackers.Where(ship => ship.InCombat > 0).Select(ship => $"{ship.Blueprint.Name} count {ship.InCombat} damage {ship.Damage}"));
+                //DefenderState.Text = string.Join("\n", state.Defenders.Where(ship => ship.InCombat > 0).Select(ship => $"{ship.Blueprint.Name} count {ship.InCombat} damage {ship.Damage}"));
 
                 await Task.Delay(TimeSpan.FromSeconds(1));
 
@@ -127,7 +128,8 @@ namespace EclipseCombatCalculator.WinUI
         }
 
         async Task<IEnumerable<(ICombatShip, IEnumerable<DiceFace>)>> ManualAssignment(
-            ICombatShip attacker, IEnumerable<ICombatShip> targets, IEnumerable<DiceFace> diceResult)
+                IShipTypeStats activeShipBlueprint, bool isAttacker,
+                IEnumerable<ICombatShip> targets, IEnumerable<DiceFace> diceResult)
         {
             if (!diceResult.Any())
             {
@@ -149,8 +151,8 @@ namespace EclipseCombatCalculator.WinUI
             {
                 dialog.ViewModel.Ships.Add(TargetShipViewModel.Create(target));
             }
-            var attackerVM = CombatShipType.Create(attacker.Blueprint as Blueprint);
-            attackerVM.Count = attacker.InCombat;
+            var attackerVM = CombatShipType.Create(activeShipBlueprint);
+            //attackerVM.Count = attacker.InCombat;
             dialog.ViewModel.AttackerShip = attackerVM;
 
             await dialog.ShowAsync();
@@ -158,21 +160,22 @@ namespace EclipseCombatCalculator.WinUI
             return dialog.Result;
         }
 
-        async Task<(int startRetreat, int completeRetreat)> Retreater(ICombatShip activeShips)
+        async Task<IEnumerable<(ICombatShip ship, ShipCombatState newState)>> Retreater(bool attacker, IEnumerable<ICombatShip> ships)
         {
-            if (activeShips.InCombat == 0 && activeShips.InRetreat == 0)
+            if (!ships.Any(ship => ship.State == ShipCombatState.Combat || ship.State == ShipCombatState.Retreating))
             {
-                return (0, 0);
+                return [];
             }
 
-            var dialog = new Dialogs.RetreatAskerDialog
+            var dialog = new RetreatAskerDialog
             {
                 XamlRoot = this.XamlRoot
             };
-            dialog.ViewModel.Ship = activeShips;
+            // dialog.ViewModel.Ship = ships.First().Blueprint;
 
             await dialog.ShowAsync();
-            return (dialog.ViewModel.StartRetreat, dialog.ViewModel.CompleteRetreat);
+            return [];
+            // return (dialog.ViewModel.StartRetreat, dialog.ViewModel.CompleteRetreat);
         }
     }
 }

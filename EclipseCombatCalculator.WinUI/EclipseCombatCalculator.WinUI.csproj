@@ -15,7 +15,7 @@
     <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
     <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
-    <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
+    <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
     <AppxBundle>Auto</AppxBundle>
@@ -26,12 +26,12 @@
   <ItemGroup>
 	  <None Remove="Controls\BlueprintControl.xaml" />
 	  <None Remove="Controls\FleetControl.xaml" />
+	  <None Remove="Dialogs\ShipTypeSelectionDialog.xaml" />
 	  <None Remove="Pages\BlueprintsPage.xaml" />
 	  <None Remove="Pages\CombatPage.xaml" />
 	  <None Remove="Pages\CalculationsPage.xaml" />
 	  <None Remove="Dialogs\PartSelectionDialog.xaml" />
 	  <None Remove="Dialogs\RetreatAskerDialog.xaml" />
-	  <None Remove="Dialogs\BlueprintSelectionDialog.xaml" />
 	  <None Remove="Dialogs\DiceAssignmentDialog.xaml" />
   </ItemGroup>
 
@@ -52,6 +52,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.1" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.5.240627000" />
     <PackageReference Include="System.Text.Json" Version="8.0.4" />

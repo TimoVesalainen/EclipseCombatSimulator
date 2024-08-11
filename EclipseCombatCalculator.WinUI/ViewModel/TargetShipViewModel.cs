@@ -18,9 +18,19 @@ namespace EclipseCombatCalculator.WinUI.ViewModel
             {
                 Ship = target,
                 Blueprint = target.Blueprint as Blueprint,
-                Count = target.InCombat,
+                // Count = target.InCombat,
                 Damage = target.Damage
             };
         }
     }
 }
+/*
+ TODO:
+Damage aluksittain
+Damage splitteri
+Ancientit/Guardianit/GCDP
+Combat sivu
+Oikea tekoäly
+JSON export blueprinteille
+Komentorivi JSON luku
+ */

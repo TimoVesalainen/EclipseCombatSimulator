@@ -78,7 +78,7 @@ namespace EclipseCombatCalculator.WinUI.Controls
 
         private async void AddShip_Click(object sender, RoutedEventArgs e)
         {
-            BlueprintSelectionDialog dialog = new()
+            ShipTypeSelectionDialog dialog = new()
             {
                 XamlRoot = this.XamlRoot
             };
@@ -87,9 +87,9 @@ namespace EclipseCombatCalculator.WinUI.Controls
 
             if (result == ContentDialogResult.Primary)
             {
-                if (Ships.Any(ship => ship.Blueprint == dialog.SelectedItem))
+                if (Ships.Any(ship => ship.ShipType == dialog.SelectedItem))
                 {
-                    var ship = Ships.First(ship => ship.Blueprint == dialog.SelectedItem);
+                    var ship = Ships.First(ship => ship.ShipType == dialog.SelectedItem);
                     ship.Count += 1;
                 }
                 else

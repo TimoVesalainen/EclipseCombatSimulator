@@ -1,4 +1,4 @@
-﻿using EclipseCombatCalculator.Library.Blueprints;
+﻿using EclipseCombatCalculator.Library;
 
 namespace EclipseCombatCalculator.WinUI.ViewModel
 {
@@ -17,15 +17,15 @@ namespace EclipseCombatCalculator.WinUI.ViewModel
                 NotifyPropertyChanged();
             }
         }
-        public Blueprint Blueprint { get; private set; }
-        public string Name => Blueprint.Name;
+        public IShipTypeStats ShipType { get; private set; }
+        public string Name => ShipType.Name;
 
-        public static CombatShipType Create(Blueprint blueprint)
+        public static CombatShipType Create(IShipTypeStats shipType)
         {
             return new CombatShipType
             {
                 Count = 1,
-                Blueprint = blueprint,
+                ShipType = shipType,
             };
         }
     }

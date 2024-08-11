@@ -3,7 +3,7 @@ using System;
 
 namespace EclipseCombatCalculator.WinUI.ViewModel
 {
-    public sealed class LayoutListViewModel(string name, Blueprint blueprint) : ViewModel
+    public sealed class BlueprintViewModel(string name, Blueprint blueprint) : ViewModel
     {
         private string name = name ?? throw new ArgumentNullException(nameof(name));
         public string Name
@@ -17,9 +17,9 @@ namespace EclipseCombatCalculator.WinUI.ViewModel
         }
         public Blueprint Blueprint { get; } = blueprint ?? throw new ArgumentNullException(nameof(blueprint));
 
-        public static LayoutListViewModel Create(Blueprint blueprint)
+        public static BlueprintViewModel Create(Blueprint blueprint)
         {
-            return new LayoutListViewModel(blueprint.Name, blueprint);
+            return new BlueprintViewModel(blueprint.Name, blueprint);
         }
     }
 }

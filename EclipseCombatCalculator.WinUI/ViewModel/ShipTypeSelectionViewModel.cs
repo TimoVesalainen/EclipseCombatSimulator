@@ -1,14 +1,15 @@
-﻿using EclipseCombatCalculator.Library.Blueprints;
+﻿using EclipseCombatCalculator.Library;
+using EclipseCombatCalculator.Library.Blueprints;
 using System.Collections.ObjectModel;
 
 namespace EclipseCombatCalculator.WinUI.ViewModel
 {
-    public sealed class BlueprintsSelectionViewModel : ViewModel
+    public sealed class ShipTypeSelectionViewModel : ViewModel
     {
-        public ObservableCollection<LayoutListViewModel> Blueprints { get; } = [];
+        public ObservableCollection<ShipTypeViewModel> ShipTypes { get; } = [];
 
-        Blueprint selectedItem;
-        public Blueprint SelectedItem
+        IShipTypeStats selectedItem;
+        public IShipTypeStats SelectedItem
         {
             get
             {

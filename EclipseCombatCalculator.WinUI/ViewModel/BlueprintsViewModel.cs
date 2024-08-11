@@ -66,8 +66,8 @@ namespace EclipseCombatCalculator.WinUI.ViewModel
             }
         }
 
-        public ObservableCollection<LayoutListViewModel> Blueprints { get; } =
-            new ObservableCollection<LayoutListViewModel>(Blueprint.Blueprints.Select(LayoutListViewModel.Create));
+        public ObservableCollection<BlueprintViewModel> Blueprints { get; } =
+            new ObservableCollection<BlueprintViewModel>(Blueprint.Blueprints.Select(BlueprintViewModel.Create));
 
         private void UpdateDerivedProperties()
         {

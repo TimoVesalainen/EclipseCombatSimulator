@@ -17,14 +17,13 @@ namespace EclipseCombatCalculator.WinUI
             var app = Application.Current as App;
             foreach (var blueprint in app.CustomBlueprints)
             {
-                ViewModel.Blueprints.Add(LayoutListViewModel.Create(blueprint));
+                ViewModel.Blueprints.Add(BlueprintViewModel.Create(blueprint));
             }
         }
 
         private void LayoutList_ItemClick(object sender, ItemClickEventArgs e)
         {
-            Blueprint blueprint = (e.ClickedItem as LayoutListViewModel).Blueprint;
-            ViewModel.SelectedBlueprint = blueprint;
+            ViewModel.SelectedBlueprint = (e.ClickedItem as BlueprintViewModel).Blueprint;
         }
 
         private void CloneBlueprint_Click(object sender, RoutedEventArgs e)
@@ -35,7 +34,7 @@ namespace EclipseCombatCalculator.WinUI
 
             app.CustomBlueprints.Add(newBlueprint);
             ViewModel.SelectedBlueprint = newBlueprint;
-            var viewModel = LayoutListViewModel.Create(newBlueprint);
+            var viewModel = BlueprintViewModel.Create(newBlueprint);
             ViewModel.Blueprints.Add(viewModel);
             LayoutList.SelectedItem = viewModel;
             LayoutList.ScrollIntoView(viewModel);
