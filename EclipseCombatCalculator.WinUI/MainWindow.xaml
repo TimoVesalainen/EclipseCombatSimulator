@@ -30,6 +30,7 @@
                 x:Name="Calculations"
                 Content="Calculations" />
             <NavigationViewItem
+                IsEnabled="False"
                 FontSize="28"
                 FontFamily="{StaticResource EclipseFont}"
                 x:Name="Combat"
